@@ -25,7 +25,7 @@ body {
     letter-spacing: 1px;
 }
 
-.container {
+.container-blue {
     background-color: #196D69;
     border-radius: 10px;
     padding: 10px;
@@ -55,6 +55,89 @@ body {
     color: white;
 }
 
+/*LOGIN PAGE*/
+.myform {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    padding: 1rem;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    width: 100%;
+    pointer-events: auto;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.2);
+    outline: 0;
+    max-width: 500px;
+}
+
+.login-or {
+    position: relative;
+    color: #aaa;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.span-or {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: -2px;
+    margin-left: -25px;
+    background-color: #fff;
+    width: 50px;
+    text-align: center;
+}
+
+.hr-or {
+    height: 1px;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+}
+
+.google {
+    color: #666;
+    width: 100%;
+    height: 40px;
+    text-align: center;
+    outline: none;
+    border: 1px solid lightgrey;
+}
+
+form .error {
+    color: #ff0000;
+}
+
+#second {
+    display: none;
+}
+/*LOGIN PAGE*/
+
+/*SHOPPING CART*/
+.ui-w-40 {
+    width: 40px !important;
+    height: auto;
+}
+
+.card {
+    box-shadow: 0 1px 15px 1px rgba(52,40,104,.08);
+}
+
+.ui-product-color {
+    display: inline-block;
+    overflow: hidden;
+    margin: .144em;
+    width: .875rem;
+    height: .875rem;
+    border-radius: 10rem;
+    -webkit-box-shadow: 0 0 0 1px rgba(0,0,0,0.15) inset;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.15) inset;
+    vertical-align: middle;
+}
+/*SHOPPING CART*/
 
 /*NAVBAR*/
 /*a:hover {
@@ -2312,9 +2395,9 @@ progress {
 
 .form-control {
     display: block;
-    width: 100%;
+    width: 80%;
     padding: 0.75rem 1.5rem;
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: 400;
     line-height: 1.5;
     color: #55595c;
@@ -4941,11 +5024,11 @@ textarea.form-control-lg {
     --bs-breadcrumb-padding-x: 0;
     --bs-breadcrumb-padding-y: 0;
     --bs-breadcrumb-margin-bottom: 1rem;
-    --bs-breadcrumb-bg:;
-    --bs-breadcrumb-border-radius:;
-    --bs-breadcrumb-divider-color: #919aa1;
+    --bs-breadcrumb-bg: #FFFFFF40;
+    --bs-breadcrumb-border-radius: 15;
+    --bs-breadcrumb-divider-color: #000000;
     --bs-breadcrumb-item-padding-x: 0.5rem;
-    --bs-breadcrumb-item-active-color: #919aa1;
+    --bs-breadcrumb-item-active-color: #FFFFFF;
     display: flex;
     flex-wrap: wrap;
     padding: var(--bs-breadcrumb-padding-y) var(--bs-breadcrumb-padding-x);
