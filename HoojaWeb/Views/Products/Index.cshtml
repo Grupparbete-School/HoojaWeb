@@ -1,42 +1,47 @@
 ﻿@{
     ViewData["Title"] = "Products";
 }
+<div class="container">
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
         <li class="breadcrumb-item active" aria-current="page">Products</li>
     </ol>
 </nav>
-<div class="container2 text-center">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
-        <div class="col"><button class="btn btn-primary"><a asp-action="">Shampoo</a></button></div>
-        <div class="col"><button class="btn btn-primary"><a asp-action="">Conditioner</a></button></div>
-        <div class="col"><button class="btn btn-primary"><a asp-action="">Hair wraps</a></button></div>
-        <div class="col"><button class="btn btn-primary"><a asp-action="">Sissors</a></button></div>
-    </div>
+</div>
+<div class="container my-5">
+<div text-center">
+        <div class="btn-group d-flex justify-content-center mb-1" role="group">
+            <label class="btn btn-primary" for="btncheck1">Shampoo</label>
+            <label class="btn btn-primary" for="btncheck2">Conditioner</label>
+            <label class="btn btn-primary" for="btncheck3">Hair wraps</label>
+            <label class="btn btn-primary" for="btncheck3">Accessories </label>
+        </div>
 </div>
 
-<h1 class="text-white">Products</h1>
 
-<div class="text-center">
-    <div class="row">
-        <div class="col .col-md-4">
-            <img class="img-products" src="./css/Images/P1.jpg" />
-            <p class="description-text">
-                Great new shampoo
-            </p>
-        </div>
-        <div class="col .col-md-4">
-            <img class="img-products" src="./css/Images/P2.jpg" />
-            <p class="description-text">
-                Great new hair wrap
-            </p>
-        </div>
-        <div class="col .col-md-4">
-            <img class="img-products" src="./css/Images/P3.jpg" />
-            <p class="description-text">
-                Great new conditioner
-            </p>
+    <div class="container-blue ">
+    <div class="text-center">
+        <div class="row">
+            <div class="col .col-md-4">
+                <img class="img-products" src="./css/Images/P1.jpg" />
+                <p class="description-text">
+                    Great new shampoo
+                </p>
+            </div>
+            <div class="col .col-md-4">
+                <img class="img-products" src="./css/Images/P2.jpg" />
+                <p class="description-text">
+                    Great new hair wrap
+                </p>
+            </div>
+            <div class="col .col-md-4">
+                <img class="img-products" src="./css/Images/P3.jpg" />
+                <p class="description-text">
+                    Great new conditioner
+                </p>
+            </div>
         </div>
     </div>
+</div>
 </div>
