@@ -6,17 +6,24 @@
 
 <div class="text-white">
     <h1 class="text-white">Shopping cart</h1>
-    <hr />
-    <br/>
+    <br />
+    <br />
 
     <h5 class="text-white">Your products:</h5>
+    <br />
+    <ul class="list-group list-group-horizontal">
+        <li class="list-group-item">Quantity</li>
+        <li class="list-group-item">Product</li>
+        <li class="list-group-item">Amount</li>
+    </ul>
     <p>Change quantity, delete</p>
-    <hr />
+    <br />
+    <br />
 
     <h5 class="text-white">Total:</h5>
     <hr />
 
-    <h5 class="text-white">Go to check out</h5>
+    <button class="btn btn-primary"><a asp-action="CheckOut">CHECK OUT</a></button>
     <hr />
 
 </div>

@@ -56,6 +56,12 @@ body {
 }
 
 
+/*NAVBAR*/
+/*a:hover {
+    color: white !important;
+    background-color: #196D69;
+    padding: 3px;
+}*/
 
 
 @charset "UTF-8";
@@ -313,9 +319,7 @@ a {
 }
 
     a:hover {
-        color: white!important;
-        background-color: #196D69;
-        padding: 3px;
+        color: var(--bs-link-hover-color);
     }
 
     a:not([href]):not([class]), a:not([href]):not([class]):hover {
@@ -3191,7 +3195,7 @@ textarea.form-control-lg {
     font-size: var(--bs-btn-font-size);
     font-weight: var(--bs-btn-font-weight);
     line-height: var(--bs-btn-line-height);
-    color: var(--bs-btn-color);
+    color: white;
     text-align: center;
     text-decoration: none;
     vertical-align: middle;
@@ -3255,21 +3259,29 @@ textarea.form-control-lg {
 }
 
 .btn-primary {
-    --bs-btn-color: #fff;
+    --bs-btn-color: #FFFFFF;
     --bs-btn-bg: #1a1a1a;
     --bs-btn-border-color: #1a1a1a;
-    --bs-btn-hover-color: #fff;
-    --bs-btn-hover-bg: #161616;
-    --bs-btn-hover-border-color: #151515;
+    --bs-btn-hover-color: #cbf5f3; /*another light blue #63cfcb light yellow: #e6c78e*/
+    --bs-btn-hover-bg: #000000;
+    --bs-btn-hover-border-color: #000000;
     --bs-btn-focus-shadow-rgb: 60, 60, 60;
-    --bs-btn-active-color: #fff;
+    --bs-btn-active-color: #000000;
     --bs-btn-active-bg: #151515;
     --bs-btn-active-border-color: #141414;
     --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-color: #000000;
     --bs-btn-disabled-bg: #1a1a1a;
     --bs-btn-disabled-border-color: #1a1a1a;
 }
+
+    .btn-primary:hover {
+        --bs-btn-color: #000000; /* Change the color on hover */
+    }
+
+    .btn-primary a {
+        color: inherit; /* Inherit the color from the parent */
+    }
 
 .btn-secondary {
     --bs-btn-color: #000;
@@ -3528,7 +3540,7 @@ textarea.form-control-lg {
 
 .btn-link {
     --bs-btn-font-weight: 400;
-    --bs-btn-color: var(--bs-link-color);
+    --bs-btn-color: white;
     --bs-btn-bg: transparent;
     --bs-btn-border-color: transparent;
     --bs-btn-hover-color: var(--bs-link-hover-color);
@@ -4044,8 +4056,8 @@ textarea.form-control-lg {
 .nav {
     --bs-nav-link-padding-x: 1rem;
     --bs-nav-link-padding-y: 0.5rem;
-    --bs-nav-link-font-weight:;
-    --bs-nav-link-color: var(--bs-link-color);
+    --bs-nav-link-font-weight;
+    --bs-nav-link-color: black;
     --bs-nav-link-hover-color: var(--bs-link-hover-color);
     --bs-nav-link-disabled-color: #919aa1;
     display: flex;
@@ -4072,7 +4084,9 @@ textarea.form-control-lg {
 }
 
 .nav-link:hover, .nav-link:focus {
-    color: #196D69;
+    color: white !important;
+    background-color: black;
+    padding: 3px;
 }
 
 .nav-link.disabled {

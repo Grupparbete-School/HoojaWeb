@@ -1,12 +1,18 @@
 ﻿@{
     ViewData["Title"] = "Products";
 }
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Products</li>
+    </ol>
+</nav>
 <div class="container2 text-center">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
-        <div class="col"><a href="#">Shampoo</a></div>
-        <div class="col"><a href="#">Conditioner</a></div>
-        <div class="col"><a href="#">Hair wraps</a></div>
-        <div class="col"><a href="#">Sissors</a></div>
+        <div class="col"><button class="btn btn-primary"><a asp-action="">Shampoo</a></button></div>
+        <div class="col"><button class="btn btn-primary"><a asp-action="">Conditioner</a></button></div>
+        <div class="col"><button class="btn btn-primary"><a asp-action="">Hair wraps</a></button></div>
+        <div class="col"><button class="btn btn-primary"><a asp-action="">Sissors</a></button></div>
     </div>
 </div>
 
