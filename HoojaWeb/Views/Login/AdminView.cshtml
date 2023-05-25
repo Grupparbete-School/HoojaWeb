@@ -4,6 +4,12 @@
     ViewData["Title"] = "Admin";
 }
 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-area="" asp-controller="Login" asp-action="Index">Login</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Admin</li>
+    </ol>
+</nav>
 <div class="text-white container-blue">
     <h1 class="text-white">Admin/Employee</h1>
     <h3 class="text-white">Here you can see different things based on you level of clearance</h3>

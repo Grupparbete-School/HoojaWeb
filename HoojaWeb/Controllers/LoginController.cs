@@ -18,5 +18,10 @@ namespace HoojaWeb.Controllers
         {
             return View();
         }
+
+        public IActionResult OrderDetailsCustomer()
+        {
+            return View();
+        }
     }
 }
