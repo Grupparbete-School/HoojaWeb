@@ -4,6 +4,12 @@
     ViewData["Title"] = "My page";
 }
 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-area="" asp-controller="Login" asp-action="Index">Login</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Customer</li>
+    </ol>
+</nav>
 <div class="text-white container-blue">
     <h1 class="text-white">Customer - My page</h1>
 <hr />
@@ -12,6 +18,7 @@
 <hr />
 
     <h5 class="text-white">Order history</h5>
+    <button class="btn btn-primary"><a asp-controller="Login" asp-action="OrderDetailsCustomer">Order details</a></button>
 <hr />
 
     <h5 class="text-white">Change settings</h5>

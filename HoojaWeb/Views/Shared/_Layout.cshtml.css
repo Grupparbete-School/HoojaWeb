@@ -7,15 +7,11 @@ a.navbar-brand {
   word-break: break-all;
 }
 
-/*a {
-  color: #0077cc;
-}*/
-
-/*.btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
-}*/
+/*LOGO*/
+img.logo {
+    width: 15px;
+    height: auto;
+}
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
   color: #fff;
@@ -49,5 +45,6 @@ button.accept-policy {
     color: black !important;
     font-weight: 400;
     text-align: center;
-    margin-top: 3%;
+    margin-top: 10%;
 }
+

@@ -13,5 +13,10 @@ namespace HoojaWeb.Controllers
         {
             return View();
         }
+
+        public IActionResult ProductDetails()
+        {
+            return View();
+        }
     }
 }
