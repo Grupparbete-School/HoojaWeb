@@ -1,0 +1,26 @@
+﻿@using HoojaWeb.ViewModels.Product
+@model EditProductsViewModel
+
+<div class="container">
+    <h2>Remove Product</h2>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Product Details</h4>
+
+            <p><strong>Product Name:</strong> @Model.ProductName</p>
+            <p><strong>Product Picture:</strong> @Model.ProductPicture</p>
+            <p><strong>Product Description:</strong> @Model.ProductDescription</p>
+            <p><strong>Quantity in Stock:</strong> @Model.QuantityStock</p>
+            <p><strong>Price:</strong> @Model.Price</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <form method="post" asp-action="RemoveProduct" asp-route-productId="@Model.ProductId">
+                <button type="submit" class="btn btn-danger">Confirm</button>
+            </form>
+        </div>
+    </div>
+</div>
