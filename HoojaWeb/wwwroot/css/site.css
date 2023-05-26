@@ -1,5 +1,5 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
@@ -13,13 +13,14 @@ html {
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
     background-image: url('./Images/Bg-img.jpg');
     background-size: cover;
+    background-repeat: no-repeat;
     background-position: center;
     font-weight: 200;
     letter-spacing: 1px;
@@ -31,13 +32,11 @@ body {
 .container-blue {
     background-color: #196D69;
     padding: 10px;
-    border-color: #43692A;
     margin-bottom: 10%;
 }
 .container-lightblue {
     background-color: #d0f5f3;
     padding: 10px;
-    border-color: #43692A;
     margin-bottom: 10%;
 }
 .container-white {
@@ -48,9 +47,10 @@ body {
 .container2 {
     background-color: white;
     padding: 10px;
-    border-color: #43692A;
     margin-bottom: 10%;
 }
+
+
 
 /**********************************/
 /******** IMAGES ********/
@@ -274,6 +274,30 @@ svg {
     height: 70%;
 }
 
+/**********************************/
+/******** FOOTER ********/
+/**********************************/
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.container-footer {
+    background-color: #FFFFFF;
+    width: 100%!important;
+}
+
+.link-text:hover{
+    border-bottom: 3px dotted;
+}
+
+.icon-social svg:hover {
+    color: #CA5466;
+}
+
+
 @charset "UTF-8";
 /*!
  * Bootswatch v5.2.3 (https://bootswatch.com)
@@ -354,7 +378,7 @@ svg {
     --bs-border-radius-2xl: 2rem;
     --bs-border-radius-pill: 50rem;
     --bs-link-color: #1a1a1a;
-    --bs-link-hover-color: #151515;
+    --bs-link-hover-color: #1a1a1a;
     --bs-code-color: #e83e8c;
     --bs-highlight-bg: #fcefdc;
 }
@@ -530,6 +554,7 @@ a {
 
     a:hover {
         color: var(--bs-link-hover-color);
+        text-decoration: dotted;
     }
 
     a:not([href]):not([class]), a:not([href]):not([class]):hover {
