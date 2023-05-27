@@ -263,6 +263,24 @@ svg {
     background-color: #d68d06!important;
 }
 
+.frame-img {
+    border: 1px solid #a3a3a3;
+    border-radius: 4px;
+    padding: 5px;
+    max-width: 100%;
+    height: auto;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (max-width: 768px){
+    .frame-img {
+        max-height: 450px;
+    }
+}
+
 /**********************************/
 /******** PRODUCTS ********/
 /**********************************/
@@ -276,10 +294,14 @@ svg {
     height: 70%;
 }
 
+.custom-productTypeDropdown {
+    width: 290px!important;
+}
+
+
 /**********************************/
 /******** FOOTER ********/
 /**********************************/
-
 .footer {
     position: absolute;
     bottom: 0;

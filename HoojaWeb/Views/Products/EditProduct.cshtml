@@ -2,78 +2,90 @@
 @using HoojaWeb.ViewModels.Product;
 @model EditProductsViewModel
 
+@{
+    ViewData["Title"] = "Edit product";
+}
 
+<!-- Breadcrumbs -->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+        <li class="breadcrumb-item"><a asp-area="" asp-controller="Products" asp-action="Index">Products</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Edit product</li>
+    </ol>
+</nav>
+<!-- Breadcrumbs end -->
 
-<style>
-    .faded {
-        background-color: rgba(0, 0, 0, 0.5);
-        padding: 20px;
-    }
+<div class="container container-fluid mt-5 container-lightblue">
+    <div class="text-center mt-2">
+        <h2>Edit Product</h2>
+        <hr />
+    </div>
 
-    .form-label-custom {
-        font-weight: bold;
-        color: #00B894;
-    }
-</style>
-
-<div class="container">
-    <h2 class="text-center text-white mb-3">Edit Product</h2>
-    <div class="row justify-content-center">
-        <div class="col-md-6 p-4 faded">
+    <div class="row my-3 mx-3">
+        <div class="col-md-5 mt-4">
+            <img src="https://images.pexels.com/photos/7015034/pexels-photo-7015034.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="frame-img" />
+        
+        </div>
+        
+        <div class="col-md-7">
             <form method="post" asp-action="EditProduct" class="row g-3">
                 @Html.HiddenFor(model => model.ProductId)
 
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="productName" class="form-label form-label-custom">Product Name:</label>
+
+                <div class="form-group col-md-12">
+                    <br />
+                    <label for="productName" class="form-label form-label-custom fw-bold">Product Name:</label>
                         <input type="text" class="form-control" id="productName" name="ProductName" value="@Model.ProductName" required>
                     </div>
-                </div>
 
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="productPicture" class="form-label form-label-custom">Product Picture:</label>
+
+
+                <div class="form-group col-md-12">
+                    <label for="productPicture" class="form-label form-label-custom fw-bold">Product Picture:</label>
                         <input type="text" class="form-control" id="productPicture" name="ProductPicture" value="@Model.ProductPicture">
                     </div>
-                </div>
 
-                <div class="col-md-11">
-                    <div class="form-group">
-                        <label for="productType" class="form-label form-label-custom">Product Type:</label>
-                        <select class="form-select" id="productType" name="SelectedProductTypeId">
+
+
+                <div class="form-group col-md-12">
+                    <label for="productType" class="form-label form-label-custom fw-bold">Product Type:</label>
+                    <select class="form-select custom-productTypeDropdown" id="productType" name="SelectedProductTypeId">
                             @foreach (var item in Model.ProductTypeList)
                             {
                                 <option value="@item.ProductTypeId" selected="@(item.ProductTypeId == Model.SelectedProductTypeId)">@item.ProductTypeName</option>
                             }
                         </select>
                     </div>
-                </div>
 
-                <div class="col-md-11">
-                    <div class="form-group">
-                        <label for="productDescription" class="form-label form-label-custom">Product Description:</label>
+
+
+                <div class="form-group col-md-12">
+                    <label for="productDescription" class="form-label form-label-custom fw-bold">Product Description:</label>
                         <textarea class="form-control" id="productDescription" name="ProductDescription" rows="4" required>@Model.ProductDescription</textarea>
                     </div>
-                </div>
 
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="quantityStock" class="form-label form-label-custom">Quantity in Stock:</label>
+
+
+                <div class="form-group col-md-12">
+                    <label for="quantityStock" class="form-label form-label-custom fw-bold">Quantity in Stock:</label>
                         <input type="number" class="form-control" id="quantityStock" name="QuantityStock" value="@Model.QuantityStock" required>
                     </div>
-                </div>
 
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="price" class="form-label form-label-custom">Price:</label>
-                        <input type="number" class="form-control" id="price" name="Price" value="@Model.Price" required>
+
+
+                <div class="form-group col-md-12">
+                    <label for="price" class="form-label form-label-custom fw-bold">Price:</label>
+                    <input type="number" class="form-control" id="price" name="Price" value="@Model.Price" required>
                     </div>
-                </div>
 
+                <hr />
                 <div class="col-md-12">
                     <button type="submit" class="btn btn-primary btn-block">Update</button>
                 </div>
             </form>
+            
+        
         </div>
     </div>
 </div>
