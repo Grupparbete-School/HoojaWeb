@@ -17,6 +17,8 @@ namespace HoojaWeb.Controllers
             var allProducts = await httpClient.GetAsync($"{link}api/Product/GetAllProduct");
             var productTypes = await httpClient.GetAsync($"{link}api/Product/GetProductType");
 
+//FIX? try catch med felhantering typ om inga produkter hittas säger den det eller gör den det nu??
+
             if (allProducts.IsSuccessStatusCode && productTypes.IsSuccessStatusCode)
             {
                 var productsRespBody = await allProducts.Content.ReadAsStringAsync();
@@ -70,7 +72,7 @@ namespace HoojaWeb.Controllers
 
             if (!prodTypeResp.IsSuccessStatusCode)
             {
-                //borde vara internal server error 500
+//FIX: borde vara internal server error 500
                 return BadRequest();
             }
 
@@ -135,7 +137,7 @@ namespace HoojaWeb.Controllers
 
             if (!prodTypeResp.IsSuccessStatusCode)
             {
-                //borde vara internal server error 500
+//FIX: borde vara internal server error 500
                 return BadRequest();
             }
 
@@ -187,7 +189,7 @@ namespace HoojaWeb.Controllers
 
             if (!prodTypeResp.IsSuccessStatusCode)
             {
-                //borde vara internal server error 500
+//FIX: borde vara internal server error 500
                 return BadRequest();
             }
 

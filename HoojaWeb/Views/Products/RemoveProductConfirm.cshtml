@@ -1,26 +1,51 @@
 ﻿@using HoojaWeb.ViewModels.Product
 @model EditProductsViewModel
 
-<div class="container">
-    <h2>Remove Product</h2>
+@{
+    ViewData["Title"] = "Remove product";
+}
 
-    <div class="row">
-        <div class="col-md-6">
-            <h4>Product Details</h4>
+<!-- Breadcrumbs -->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+        <li class="breadcrumb-item"><a asp-area="" asp-controller="Products" asp-action="Index">Products</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Remove product</li>
+    </ol>
+</nav>
+<!-- Breadcrumbs end -->
 
-            <p><strong>Product Name:</strong> @Model.ProductName</p>
-            <p><strong>Product Picture:</strong> @Model.ProductPicture</p>
-            <p><strong>Product Description:</strong> @Model.ProductDescription</p>
-            <p><strong>Quantity in Stock:</strong> @Model.QuantityStock</p>
-            <p><strong>Price:</strong> @Model.Price</p>
-        </div>
+<div class="container container-fluid mt-5 container-lightblue">
+    <div class="text-center mt-2">
+        <h2>Remove Product?</h2>
+        <hr />
     </div>
 
-    <div class="row">
-        <div class="col-md-6">
+    <div class="row my-3 mx-3">
+        <div class="col-md-5">
+            <p>
+                <br/>
+                <img src=@Model.ProductPicture class="frame-img" />
+                <strong>Product Picture</strong> 
+            </p>
+        </div>
+
+        <div class="col-md-7">
+            <br/>
+            <h4>Product Details</h4>
+            <br/>
+            <p><strong>Product Name:</strong> @Model.ProductName</p>
+            <p><strong>Product Description:</strong> @Model.ProductDescription</p>
+            <p><strong>Quantity in Stock:</strong> @Model.QuantityStock pcs</p>
+            <p><strong>Price:</strong> @Model.Price kr</p>
+            <hr/>
+
+            <div class="col-md-6 text-start">
             <form method="post" asp-action="RemoveProduct" asp-route-productId="@Model.ProductId">
                 <button type="submit" class="btn btn-danger">Confirm</button>
             </form>
+            </div>
         </div>
     </div>
+
 </div>
