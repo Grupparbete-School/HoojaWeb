@@ -1,0 +1,92 @@
+﻿
+@using HoojaWeb.Models
+@using HoojaWeb.ViewModels.OrderHistory;
+@model IEnumerable<OrderHistoryGetViewModel>
+
+@{
+    var products = ViewData["OrdersHistory"] as List<OrderHistoryGetViewModel>;
+    var totalPages = (int)ViewData["TotalPages"];
+    var currentPage = (int)ViewData["CurrentPage"];
+}
+
+@{
+        ViewData["Title"] = "OrderHistory";
+}
+
+<div class="bg-light">
+
+    <h1 class="text-center">Transaktionshistorik Admin view</h1>
+    <hr />
+    <form asp-action="Index" method="get">
+        <div class="input-group">
+            <input type="text" name="searchOrder" id="searchOrder" class="form-control" placeholder="Search by lastname..." />
+            <input type="number" name="searchOrderId" id="searchOrderId" class="form-control" placeholder="Search by orderId..." />
+            <button type="submit" class="btn btn-dark">Search</button>
+        </div>
+    </form>
+
+@if (Model != null && Model.Count() > 0)
+{
+    <table class="table table-striped table-hover bg-light">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.OrderId)</th>
+                <th>@Html.DisplayNameFor(model => model.OrderDate)</th>
+                <th>@Html.DisplayNameFor(model => model.DeliveryDate)</th>
+                <th>@Html.DisplayNameFor(model => model.FullName)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var orderhistory in Model)
+            {
+                <tr>
+                    <td>@orderhistory.OrderId</td>
+                    <td>@orderhistory.OrderDate</td>
+                    <td>@orderhistory.DeliveryDate</td>
+                    <td>@orderhistory.FullName</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@orderhistory.OrderId" class="btn btn-primary">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No order history found.</p>
+}
+
+</div>
+
+<!-- Pagination -->
+<nav aria-label="Page navigation example" class="d-flex justify-content-center mt-3">
+    <ul class="pagination">
+        @if (currentPage > 1)
+        {
+            <li class="page-item">
+                <a class="page-link" href="/OrderHistory?page=@(currentPage - 1)" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        }
+
+        @for (int i = 1; i <= totalPages; i++)
+        {
+            <li class="page-item @(currentPage == i ? "active" : "")">
+                <a class="page-link" href="/OrderHistory?page=@i">@i</a>
+            </li>
+        }
+
+        @if (currentPage < totalPages)
+        {
+            <li class="page-item">
+                <a class="page-link" href="/OrderHistory?page=@(currentPage + 1)" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        }
+    </ul>
+</nav>
+<!-- Pagination end -->
+
