@@ -72,7 +72,7 @@ namespace HoojaWeb.Controllers
 
             if (!prodTypeResp.IsSuccessStatusCode)
             {
-//FIX: borde vara internal server error 500
+                //FIX: borde vara internal server error 500
                 return BadRequest();
             }
 
