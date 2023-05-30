@@ -7,6 +7,9 @@ using Serilog;
 using System.Net;
 using System.Text;
 using System.Linq;
+using HoojaWeb.ViewModels;
+using HoojaWeb.ViewModels.Customer;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HoojaWeb.Controllers
 {
@@ -16,29 +19,66 @@ namespace HoojaWeb.Controllers
         string historyLink = "https://localhost:7097";
 
         //Get all history
-        public async Task<IActionResult> Index(string searchOrder, int? searchOrderId, int page = 1)
+        public async Task<IActionResult> Index(string searchOrder, int? searchOrderId, int? customerId, int page = 1)
         {
-            int ordersPerPage = 4;
+            int ordersPerPage = 5;
 
             try
             {
-                HttpResponseMessage response = await httpClient.GetAsync($"{historyLink}/api/OrderHistory/GetOrderHistory");
+                // Retrieve the list of customers
+                HttpResponseMessage customerResponse = await httpClient.GetAsync($"{historyLink}/api/Customer/GetAllCustomer");
 
-                if (response.IsSuccessStatusCode)
+                if (customerResponse.IsSuccessStatusCode)
                 {
-                    var orderHistoryJson = await response.Content.ReadAsStringAsync();
+                    var customersJson = await customerResponse.Content.ReadAsStringAsync();
+                    var customers = JsonConvert.DeserializeObject<List<CustomerGetViewModel>>(customersJson);
+
+                    ViewBag.CustomerId = new SelectList(customers, "FirstName", "FirstName");
+                    ViewData["Customers"] = customers;
+
+                }
+                else
+                {
+                    // Handle non-successful status codes with specific error messages
+                    if (customerResponse.StatusCode == HttpStatusCode.NotFound)
+                    {
+                        return View("NotFoundError");
+                    }
+                    else
+                    {
+                        return View("ServerError");
+                    }
+                }
+
+                // Fetch order history
+                HttpResponseMessage orderHistoryResponse = await httpClient.GetAsync($"{historyLink}/api/OrderHistory/GetOrderHistory");
+
+                if (orderHistoryResponse.IsSuccessStatusCode)
+                {
+                    var orderHistoryJson = await orderHistoryResponse.Content.ReadAsStringAsync();
                     var allOrderHistory = JsonConvert.DeserializeObject<List<OrderHistoryGetViewModel>>(orderHistoryJson);
 
-                    if(!string.IsNullOrEmpty(searchOrder))
+                    // Apply search filters if provided
+                    if (!string.IsNullOrEmpty(searchOrder))
                     {
-                       allOrderHistory = allOrderHistory?.Where(o => o.LastName.StartsWith(searchOrder, StringComparison.OrdinalIgnoreCase)).ToList();
+                        allOrderHistory = allOrderHistory?.Where(o => o.LastName.StartsWith(searchOrder, StringComparison.OrdinalIgnoreCase)).ToList();
                     }
-                    if(searchOrderId.HasValue)
+                    if (searchOrderId.HasValue)
                     {
-                        allOrderHistory = allOrderHistory?.Where(o => o.OrderId == searchOrderId.Value).ToList();   
+                        allOrderHistory = allOrderHistory?.Where(o => o.OrderId == searchOrderId.Value).ToList();
                     }
-                    
-                    int toaltPages = (int)Math.Ceiling((double)allOrderHistory.Count / ordersPerPage);
+
+                    // Filter by customer if a customerId is provided
+                    if (customerId.HasValue)
+                    {
+                        allOrderHistory = allOrderHistory?.Where(o => o.CustomerId == customerId.Value).ToList();
+                    }
+
+                    // Order the result by OrderDate in descending order (latest first)
+                    allOrderHistory = allOrderHistory?.OrderByDescending(o => o.OrderDate).ToList();
+
+                    int totalOrders = allOrderHistory.Count;
+                    int totalPages = (int)Math.Ceiling((double)totalOrders / ordersPerPage);
 
                     var ordersToDisplay = allOrderHistory
                         .Skip((page - 1) * ordersPerPage)
@@ -46,7 +86,7 @@ namespace HoojaWeb.Controllers
                         .ToList();
 
                     ViewData["OrderHistory"] = ordersToDisplay;
-                    ViewData["TotalPages"] = toaltPages;
+                    ViewData["TotalPages"] = totalPages;
                     ViewData["CurrentPage"] = page;
 
                     return View(ordersToDisplay);
@@ -54,7 +94,7 @@ namespace HoojaWeb.Controllers
                 else
                 {
                     // Handle non-successful status codes with specific error messages
-                    if (response.StatusCode == HttpStatusCode.NotFound)
+                    if (orderHistoryResponse.StatusCode == HttpStatusCode.NotFound)
                     {
                         return View("NotFoundError");
                     }
@@ -68,13 +108,14 @@ namespace HoojaWeb.Controllers
             {
                 // Log the exception or perform any necessary actions
                 Log.Logger = new LoggerConfiguration()
-                .WriteTo.File("Logs/applog.txt", rollingInterval: RollingInterval.Day)
-                .CreateLogger();
+                    .WriteTo.File("Logs/applog.txt", rollingInterval: RollingInterval.Day)
+                    .CreateLogger();
 
                 // You can also return a custom error view with a more detailed error message
                 return View("Error");
             }
         }
+
 
         // GET: OrderHistoryController/Details/5
         public async Task<IActionResult> Details(int? id)

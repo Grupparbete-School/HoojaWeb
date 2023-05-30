@@ -5,7 +5,8 @@
 
 <h1>Detaljerad information order </h1>
 
-
+<a asp-action="Index" class="btn btn-primary">Tillbaka till lista</a>
+<hr />
 <div class="table table-striped table-hover table-light">
     <table>
         <thead>
@@ -19,18 +20,22 @@
             </tr>
         </thead>
         <tbody>
-           @foreach (var item in Model)
+            @if (Model.Any())
             {
+                var firstCustomer = Model.First(); // Assuming at least one customer exists in the list
+
                 <tr>
-                    <td>@item.FullName</td>
-                    <td>@item.Street</td>
-                    <td>@item.PostalCode</td>
-                    <td>@item.City</td>
-                    <td>@item.Email</td>
-                    <td>@item.PhoneNumber</td>
+                    <td>@firstCustomer.FullName</td>
+                    <td>@firstCustomer.Street</td>
+                    <td>@firstCustomer.PostalCode</td>
+                    <td>@firstCustomer.City</td>
+                    <td>@firstCustomer.Email</td>
+                    <td>@firstCustomer.PhoneNumber</td>
                 </tr>
             }
         </tbody>
+    </table>
+
     </table>
 </div>
 <div class="table table-striped table-hover table-light">
