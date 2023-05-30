@@ -20,7 +20,7 @@ namespace HoojaWeb.Controllers
         {
             // Definiera API-slutpunkten och åtkomsttoken
             string chatURL = "https://api.openai.com/v1/chat/completions";
-            string apiKey = "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";
+            string apiKey = "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";
             StringBuilder sb = new StringBuilder();
 
             HttpClient oClient = new HttpClient();
