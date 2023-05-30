@@ -2,14 +2,9 @@
 
 namespace HoojaWeb.Controllers
 {
-    public class MapController : Controller
+    public class DistanceController : Controller
     {
         public IActionResult Index()
-        {
-            return View();
-        }
-        
-        public IActionResult HoojaAbLocation()
         {
             return View();
         }
