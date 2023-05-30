@@ -1,14 +1,12 @@
-
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Net.Http;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Serilog;
 using System;
 using System.IO;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
-using Serilog;
 
 namespace HoojaWeb
 {
@@ -17,8 +15,6 @@ namespace HoojaWeb
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
-            DotNetEnv.Env.Load();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
@@ -39,39 +35,32 @@ namespace HoojaWeb
                     options.Cookie.MaxAge = TimeSpan.FromMinutes(30);
                     options.Cookie.IsEssential = true;
                 });
+
             var app = builder.Build();
-            // Sätter upp sökvägen till loggfilen
+
+            // Set up the path to the log file
             var logFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Logs", "applog.txt");
 
-            // Konfigurerar Serilog för att skriva till loggfilen
+            // Configure Serilog to write to the log file
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.File(logFilePath, rollingInterval: RollingInterval.Day)
                 .CreateLogger();
 
             try
             {
-                var builder = WebApplication.CreateBuilder(args);
-
-                // Lägger till tjänster i behållaren
-                builder.Services.AddControllersWithViews();
-
-                var app = builder.Build();
-
-                // Konfigurerar HTTP-anropspipelinen
+                // Configure HTTP request pipeline
                 if (!app.Environment.IsDevelopment())
                 {
                     app.UseExceptionHandler("/Home/Error");
-                    // Standardvärdet för HSTS är 30 dagar. Du kan ändra detta för produktionsscenarier, se https://aka.ms/aspnetcore-hsts.
+                    // The default value for HSTS is 30 days. You can change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                     app.UseHsts();
                 }
 
                 app.UseHttpsRedirection();
                 app.UseStaticFiles();
-
                 app.UseRouting();
-                app.UseSession();
                 app.UseAuthorization();
-
+                app.UseSession();
 
                 app.MapControllerRoute(
                     name: "default",
@@ -81,12 +70,12 @@ namespace HoojaWeb
             }
             catch (Exception ex)
             {
-                // Loggar allvarliga fel när värdet avslutas oväntat
-                Log.Fatal(ex, "Värd avslutades oväntat");
+                // Log serious errors when the host is unexpectedly terminated
+                Log.Fatal(ex, "Host terminated unexpectedly");
             }
             finally
             {
-                // Stänger loggen och skriver eventuella kvarvarande loggevent
+                // Close the log and flush any remaining log events
                 Log.CloseAndFlush();
             }
         }
