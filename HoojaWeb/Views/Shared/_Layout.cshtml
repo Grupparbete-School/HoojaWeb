@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/HoojaWeb.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/chatStyle.css" asp-append-version="true" />
     <!-- For login page -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- For login page -->
@@ -31,6 +32,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Brands">Brands</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="OrderHistory" asp-action="Index">History</a>
+                        </li>
                         <!-- dropdown menu - fix active button turning black-->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -52,6 +56,9 @@
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
                                 <a class="dropdown-item" asp-area="" asp-controller="Products" asp-action="CreateProduct">Add new product</a>
+                                <hr />
+                                <a class="dropdown-item" asp-area="" asp-controller="Chat" asp-action="Index">Support</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="SendEmail" asp-action="SendEmail">Email</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" asp-area="" asp-controller="#" asp-action="#">Log out</a>
                             </div>
