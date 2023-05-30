@@ -1,3 +1,9 @@
+
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Net.Http;
 using System;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
@@ -10,10 +16,34 @@ namespace HoojaWeb
     {
         public static void Main(string[] args)
         {
-            // S‰tter upp sˆkv‰gen till loggfilen
+            var builder = WebApplication.CreateBuilder(args);
+
+            DotNetEnv.Env.Load();
+
+            // Add services to the container.
+            builder.Services.AddControllersWithViews();
+
+            builder.Services.AddSession(options =>
+            {
+                options.Cookie.Name = "AuthSession";
+                options.Cookie.IsEssential = true;
+            });
+            builder.Services.AddHttpClient();
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.Cookie.Name = "Authenticated";
+                    options.LoginPath = "/login/index";
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                    options.Cookie.MaxAge = TimeSpan.FromMinutes(30);
+                    options.Cookie.IsEssential = true;
+                });
+            var app = builder.Build();
+            // S√§tter upp s√∂kv√§gen till loggfilen
             var logFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Logs", "applog.txt");
 
-            // Konfigurerar Serilog fˆr att skriva till loggfilen
+            // Konfigurerar Serilog f√∂r att skriva till loggfilen
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.File(logFilePath, rollingInterval: RollingInterval.Day)
                 .CreateLogger();
@@ -22,7 +52,7 @@ namespace HoojaWeb
             {
                 var builder = WebApplication.CreateBuilder(args);
 
-                // L‰gger till tj‰nster i behÂllaren
+                // L√§gger till tj√§nster i beh√•llaren
                 builder.Services.AddControllersWithViews();
 
                 var app = builder.Build();
@@ -31,7 +61,7 @@ namespace HoojaWeb
                 if (!app.Environment.IsDevelopment())
                 {
                     app.UseExceptionHandler("/Home/Error");
-                    // Standardv‰rdet fˆr HSTS ‰r 30 dagar. Du kan ‰ndra detta fˆr produktionsscenarier, se https://aka.ms/aspnetcore-hsts.
+                    // Standardv√§rdet f√∂r HSTS √§r 30 dagar. Du kan √§ndra detta f√∂r produktionsscenarier, se https://aka.ms/aspnetcore-hsts.
                     app.UseHsts();
                 }
 
@@ -39,8 +69,9 @@ namespace HoojaWeb
                 app.UseStaticFiles();
 
                 app.UseRouting();
-
+                app.UseSession();
                 app.UseAuthorization();
+
 
                 app.MapControllerRoute(
                     name: "default",
@@ -50,12 +81,12 @@ namespace HoojaWeb
             }
             catch (Exception ex)
             {
-                // Loggar allvarliga fel n‰r v‰rdet avslutas ov‰ntat
-                Log.Fatal(ex, "V‰rd avslutades ov‰ntat");
+                // Loggar allvarliga fel n√§r v√§rdet avslutas ov√§ntat
+                Log.Fatal(ex, "V√§rd avslutades ov√§ntat");
             }
             finally
             {
-                // St‰nger loggen och skriver eventuella kvarvarande loggevent
+                // St√§nger loggen och skriver eventuella kvarvarande loggevent
                 Log.CloseAndFlush();
             }
         }

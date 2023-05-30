@@ -1,6 +1,9 @@
 ﻿using HoojaWeb.ViewModels.Product;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace HoojaWeb.Controllers
@@ -9,12 +12,24 @@ namespace HoojaWeb.Controllers
     {
         HttpClient httpClient = new HttpClient();
         string link = "https://localhost:7097/";
+        private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly ISession session;
 
+        public ProductsController(IHttpContextAccessor _httpContextAccessor)
+        {
+            httpContextAccessor = _httpContextAccessor;
+            session = _httpContextAccessor.HttpContext.Session;
+        }
+        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Index(int page = 1)
         {
             int productsPerPage = 5;
+            //hämtar "cookie" som sparas med vår token vid inloggningen.
+            var sessiontoken = Request.Cookies["Token"];
+            //Lägger in denna token som vi får tillbaka via cookien i vår httpClient så att den skickas till apiet.
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
 
-            var allProducts = await httpClient.GetAsync($"{link}api/Product/GetAllProduct");
+            var allProducts = await httpClient.GetAsync("https://localhost:7097/api/Product/GetAllProduct");
             var productTypes = await httpClient.GetAsync($"{link}api/Product/GetProductType");
 
 //FIX? try catch med felhantering typ om inga produkter hittas säger den det eller gör den det nu??
