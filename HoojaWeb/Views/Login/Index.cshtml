@@ -1,4 +1,5 @@
-﻿
+﻿@using HoojaWeb.ViewModels;
+@model LoginViewModel;
 
 @{
     ViewData["Title"] = "Login";
@@ -14,105 +15,106 @@
 </nav>
 
 <body>
-<div class="container">
-    <div class="container my-4">
-        <br />
-        <div class="row">
-			<div class="col-md-5 mx-auto">
-			<div id="first">
-				<div class="myform form ">
-					 <div class="logo mb-3">
-						 <div class="col-md-12 text-center">
-							<h1>Login</h1>
-						 </div>
-					</div>
-                   <form asp-action="" asp-controller="" method="post" name="login">
-                           <div class="form-group">
-                              <label for="exampleInputEmail1">Email address</label>
-                              <input type="email" name="email"  class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
-                           </div>
-                            <br />
-                           <div class="form-group">
-                              <label for="exampleInputEmail1">Password</label>
-                              <input type="password" name="password" id="password"  class="form-control" aria-describedby="emailHelp" placeholder="Enter Password">
-                           </div>
-                            <br />
-                           <div class="form-group">
-                              <p class="text-center">By signing up you accept our <a href="#">Terms Of Use</a></p>
-                           </div>
-                            <br />
-                           <div class="col-md-12 text-center ">
-                              <button type="submit" class=" btn btn-primary">Login</button>
-                           </div>
-                            <br />
-                           <div class="col-md-12 ">
-                              <div class="login-or">
-                                 <hr class="hr-or">
-                                 <span class="span-or">or</span>
-                              </div>
-                           </div>
-                           <div class="col-md-12 mb-3">
-                              <p class="text-center">
-                                 <a href="javascript:void();" class="google btn mybtn"><i class="fa fa-google-plus">
-                                 </i> Signup using Google
-                                 </a>
-                              </p>
-                           </div>
-                           <div class="form-group">
-                              <p class="text-center">Don't have account? <a href="#" id="signup">Sign up here</a></p>
-                           </div>
-                    </form>
-                 
-				</div>
-			</div>
-			  <div id="second">
-			      <div class="myform form ">
-                        <div class="logo mb-3">
-                           <div class="col-md-12 text-center">
-                              <h1 >Signup</h1>
-                           </div>
+    <div class="container">
+        <div class="container my-4">
+            <br />
+            <div class="row">
+                <div class="col-md-5 mx-auto">
+                    <div id="first">
+                        <div class="myform form ">
+                            <div class="logo mb-3">
+                                <div class="col-md-12 text-center">
+                                    <h1>Login</h1>
+                                </div>
+                            </div>
+                            <form asp-action="Index" method="post" name="login">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="form-group">
+                                    <label asp-for="Email" class="control-label"></label>
+                                    <input asp-for="Email" type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" />
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                                <br />
+                                <div class="form-group">
+                                    <label asp-for="Password" class="control-label"></label>
+                                    <input asp-for="Password" type="password" name="password" id="password" class="form-control" aria-describedby="emailHelp" placeholder="Enter Password" />
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+                                <br />
+                                <div class="form-group">
+                                    <p class="text-center">By signing up you accept our <a href="#">Terms Of Use</a></p>
+                                </div>
+                                <br />
+                                <div class="form-group col-md-12 text-center">
+                                    <input class="btn btn-primary" type="submit" value="log in" />
+                                    <a class="btn btn-danger" asp-controller="Home" asp-action="Index">Cancel</a>
+                                </div>
+                                <br />
+                                <div class="col-md-12 ">
+                                    <div class="login-or">
+                                        <hr class="hr-or">
+                                        <span class="span-or">or</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <p class="text-center">
+                                        <a href="javascript:void();" class="google btn mybtn">
+                                            <i class="fa fa-google-plus">
+                                            </i>
+                                        </a>
+                                    </p>
+                                </div>
+                                <div class="form-group">
+                                    <p class="text-center">Don't have account? <a href="#" id="signup">Sign up here</a></p>
+                                </div>
+                            </form>
                         </div>
-                        <form asp-action="" asp-controller="" method="post" name="registration">
-                           <div class="form-group">
-                              <label for="exampleInputEmail1">First Name</label>
-                              <input type="text"  name="firstname" class="form-control" id="firstname" aria-describedby="emailHelp" placeholder="Enter Firstname">
-                           </div>
-                            <br />
-                           <div class="form-group">
-                              <label for="exampleInputEmail1">Last Name</label>
-                              <input type="text"  name="lastname" class="form-control" id="lastname" aria-describedby="emailHelp" placeholder="Enter Lastname">
-                           </div>
-                            <br />
-                           <div class="form-group">
-                              <label for="exampleInputEmail1">Email address</label>
-                              <input type="email" name="email"  class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
-                           </div>
-                            <br />
-                           <div class="form-group">
-                              <label for="exampleInputEmail1">Password</label>
-                              <input type="password" name="password" id="password"  class="form-control" aria-describedby="emailHelp" placeholder="Enter Password">
-                           </div>
-                            <br />
-                           <div class="col-md-12 text-center mb-3">
-                              <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Sign up</button>
-                           </div>
-                            <br />
-                           <div class="col-md-12 ">
-                              <div class="form-group">
-                                 <p class="text-center"><a href="#" id="signin">Already have an account?</a></p>
-                              </div>
-                           </div>
-                        </form>
-                  </div>
-                         
-              </div>
-			</div>
-		</div>
-         
+                    </div>
+                    <div id="second">
+                        <div class="myform form ">
+                            <div class="logo mb-3">
+                                <div class="col-md-12 text-center">
+                                    <h1>Signup</h1>
+                                </div>
+                            </div>
+                            <form asp-action="" asp-controller="" method="post" name="registration">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">First Name</label>
+                                    <input type="text" name="firstname" class="form-control" id="firstname" aria-describedby="emailHelp" placeholder="Enter Firstname">
+                                </div>
+                                <br />
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Last Name</label>
+                                    <input type="text" name="lastname" class="form-control" id="lastname" aria-describedby="emailHelp" placeholder="Enter Lastname">
+                                </div>
+                                <br />
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Email address</label>
+                                    <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+                                </div>
+                                <br />
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Password</label>
+                                    <input type="password" name="password" id="password" class="form-control" aria-describedby="emailHelp" placeholder="Enter Password">
+                                </div>
+                                <br />
+                                <div class="col-md-12 text-center mb-3">
+                                    <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Sign up</button>
+                                </div>
+                                <br />
+                                <div class="col-md-12 ">
+                                    <div class="form-group">
+                                        <p class="text-center"><a href="#" id="signin">Already have an account?</a></p>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
 
-
-<button class="btn btn-primary"><a asp-action="AdminView">Admin</a></button>
-<button class="btn btn-primary"><a asp-action="CustomerView">Customer</a></button>
-</div>   
-</div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary"><a asp-action="AdminView">Admin</a></button>
+            <button class="btn btn-primary"><a asp-action="CustomerView">Customer</a></button>
+        </div>
+    </div>
 </body>
