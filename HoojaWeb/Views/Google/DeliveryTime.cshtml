@@ -19,6 +19,8 @@
             <div>
                 <button class="btn btn-primary" onclick="calculateTime()">Calculate Time</button>
             </div>
+
+            @*Resultat visas*@
             <div class="mt-3">
                 <div class="card bg-info text-white">
                     <div class="card-body" id="result"></div>
@@ -29,7 +31,7 @@
 </div>
 
 @{
-    var apiKey = "AIzaSyBO-oIdPLRQzVal9jt99YIZ3ueChVNiWPo";
+    string apiKey = Environment.GetEnvironmentVariable("API_KEY_GOOGLE");
 }
 
 @section Scripts {

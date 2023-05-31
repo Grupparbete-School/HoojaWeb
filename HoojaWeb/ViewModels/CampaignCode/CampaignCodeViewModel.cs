@@ -1,4 +1,4 @@
-﻿namespace HoojaWeb.ViewModels.CampaignCode
+namespace HoojaWeb.ViewModels.CampaignCode
 {
     public class CampaignCodeViewModel
     {
