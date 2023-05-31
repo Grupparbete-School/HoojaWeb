@@ -55,7 +55,7 @@ namespace HoojaWeb.ViewModels.OrderHistory
 
         //Kund
         [DisplayName("Kund Id")]
-        public int? CustomerId { get; set; }
+        public int customerId { get; set; }
 
         [DisplayName("Förnamn")]
         public string? FirstName { get; set; }
