@@ -20,7 +20,7 @@ namespace HoojaWeb.Controllers
         {
             // Definiera API-slutpunkten och åtkomsttoken
             string chatURL = "https://api.openai.com/v1/chat/completions";
-            string apiKey = "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";
+            string apiKey = "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";
             StringBuilder sb = new StringBuilder();
 
             HttpClient oClient = new HttpClient();
@@ -30,11 +30,17 @@ namespace HoojaWeb.Controllers
             oRequest.model = "gpt-3.5-turbo";
 
             // Ange en prompt för att kontrollera det aktuella året
+
             oRequest.messages = new Message[]
             {
-                new Message { role = "system", content = "Vad är det aktuella året?" },
-                new Message { role = "user", content = query }
+                new Message { role = "system", content = "Behöver du hjälp med hårvårdsprodukter?" },
+                new Message { role = "user", content = "Ja" },
+                new Message { role = "system", content = "Vilken produkt handlar det om?" },
+                new Message { role = "user", content = "Ja" },
+                new Message { role = "system", content = "Ok, låt mig söka!" },
+                new Message { role = "user", content = "Ja" },
             };
+
 
             // Serialisera förfrågan till JSON
             string oReqJSON = JsonConvert.SerializeObject(oRequest);

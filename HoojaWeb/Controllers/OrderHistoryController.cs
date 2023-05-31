@@ -21,7 +21,7 @@ namespace HoojaWeb.Controllers
         //Get all history
         public async Task<IActionResult> Index(string searchOrder, int? searchOrderId, int? customerId, int page = 1)
         {
-            int ordersPerPage = 5;
+            int ordersPerPage = 10;
 
             try
             {
@@ -33,7 +33,7 @@ namespace HoojaWeb.Controllers
                     var customersJson = await customerResponse.Content.ReadAsStringAsync();
                     var customers = JsonConvert.DeserializeObject<List<CustomerGetViewModel>>(customersJson);
 
-                    ViewBag.CustomerId = new SelectList(customers, "FirstName", "FirstName");
+                    ViewBag.CustomerId = new SelectList(customers, "FullName", "FullName");
                     ViewData["Customers"] = customers;
 
                 }

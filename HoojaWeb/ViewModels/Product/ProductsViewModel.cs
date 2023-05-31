@@ -4,9 +4,9 @@
     {
         public int ProductId { get; set; }
 
-        public string ProductName { get; set; }
+        public string? ProductName { get; set; }
 
-        public string ProductDescription { get; set; }
+        public string? ProductDescription { get; set; }
 
         public int Price { get; set; }
 
@@ -14,7 +14,7 @@
 
         public string? ProductPicture { get; set; }
 
-        public string ProductTypeName { get; set; }
+        public string? ProductTypeName { get; set; }
 
         public int fK_ProductTypeId { get; set; }
 
