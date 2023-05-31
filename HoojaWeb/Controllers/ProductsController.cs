@@ -29,7 +29,7 @@ namespace HoojaWeb.Controllers
             //Lägger in denna token som vi får tillbaka via cookien i vår httpClient så att den skickas till apiet.
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
 
-            var allProducts = await httpClient.GetAsync("https://localhost:7097/api/Product/GetAllProduct");
+            var allProducts = await httpClient.GetAsync($"{link}api/Product/GetAllProduct");
             var productTypes = await httpClient.GetAsync($"{link}api/Product/GetProductType");
 
 //FIX? try catch med felhantering typ om inga produkter hittas säger den det eller gör den det nu??
@@ -44,7 +44,7 @@ namespace HoojaWeb.Controllers
 
                 foreach (var product in productData)
                 {
-                    var matchingProductType = productTypesData.FirstOrDefault(pt => pt.ProductTypeId == product.fK_ProductTypeId);
+                    var matchingProductType = productTypesData?.FirstOrDefault(pt => pt.ProductTypeId == product.fK_ProductTypeId);
                     if (matchingProductType != null)
                     {
                         product.ProductTypeName = matchingProductType.ProductTypeName;

@@ -52,7 +52,7 @@
                 <form asp-action="Index" method="get">
                     <div class="input-group">
                         <select name="customerId" id="customerId" class="form-select">
-                            <option value="" diable selected>Kundlista</option>
+                            <option value="" disable selected>Kundlista</option>
                             @foreach (var customer in ViewData["Customers"] as List<CustomerGetViewModel>)
                             {
                                 <option value="@customer.CustomerId">@customer.FullName</option>

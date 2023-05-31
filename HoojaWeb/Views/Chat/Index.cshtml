@@ -1,8 +1,17 @@
-﻿
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <section class="msger">
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>ChatGPT</title>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
                 <section class="msger">
                     <header class="msger-header">
                         <div class="msger-header-title">
@@ -17,16 +26,24 @@
                     </main>
 
                     <form class="msger-inputarea">
-                        <input id="messageInput" type="text" class="msger-input" placeholder="Enter your query..." />
-                        <button id="sendButton" class="msger-send-btn">Send</button>
+                        <div class="input-group">
+                            <input id="messageInput" type="text" class="form-control" placeholder="Enter your query...">
+                            <div class="input-group-append">
+                                <button id="sendButton" class="btn btn-primary">Send</button>
+                            </div>
+                        </div>
                     </form>
                 </section>
-            </section>
+            </div>
         </div>
     </div>
-</div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+</body>
+</html>
 
 
 
@@ -39,7 +56,7 @@
     const namePerson = "HoojaAb";
 
     $(function () {
-        addChatMessage(nameBOT, imgBOT, "right", "Hello");
+        addChatMessage(nameBOT, imgBOT, "right", "Hej, hur kan jag hjälpa dig?");
 
         $('#sendButton').click(function () {
             var message = $('#messageInput').val();
