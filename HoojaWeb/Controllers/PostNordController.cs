@@ -2,6 +2,7 @@
 using HoojaWeb.ViewModels.PostNord;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Serilog;
 using System.Net;
 using System.Threading.Tasks;
@@ -34,17 +35,15 @@ namespace HoojaWeb.Controllers
                     if (response.IsSuccessStatusCode)
                     {
                         var content = await response.Content.ReadAsStringAsync();
-
-                        var result = content;
-
-                        //return Content(result, "application/json"); // Return the result as JSON
-                        return View("Result", result);
+                        ViewBag.TransitTimeInfo = JsonConvert.DeserializeObject<JObject>(content);
                     }
                     else
                     {
                         var errorMessage = "Error occurred while fetching data from the PostNord API.";
-                        return Content(errorMessage, "text/plain"); // Return the error message as plain text
+                        ViewBag.ErrorMessage = errorMessage;
                     }
+
+                    return View("Index", request);
                 }
             }
             catch (Exception ex)
@@ -58,6 +57,7 @@ namespace HoojaWeb.Controllers
                 return View("Error");
             }
         }
+
 
     }
 }

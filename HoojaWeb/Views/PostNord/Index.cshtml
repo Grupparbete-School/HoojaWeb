@@ -12,70 +12,54 @@
             @using (Html.BeginForm("GetTransitTimeInformation", "PostNord", FormMethod.Post))
             {
                 <div class="form-group">
-                    @Html.LabelFor(m => m.FromAddressPostalCode, "From Postal Code:")
-                    @Html.TextBoxFor(m => m.FromAddressPostalCode, new { @class = "form-control", @id = "origin" })
-                    @Html.ValidationMessageFor(m => m.FromAddressPostalCode)
+                    <label asp-for="FromAddressPostalCode">From Postal Code:</label>
+                    <input asp-for="FromAddressPostalCode" class="form-control" id="origin" />
+                    <span asp-validation-for="FromAddressPostalCode" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.ToAddressPostalCode, "To Postal Code:")
-                    @Html.TextBoxFor(m => m.ToAddressPostalCode, new { @class = "form-control", @id = "destination" })
-                    @Html.ValidationMessageFor(m => m.ToAddressPostalCode)
+                    <label asp-for="ToAddressPostalCode">To Postal Code:</label>
+                    <input asp-for="ToAddressPostalCode" class="form-control" id="destination" />
+                    <span asp-validation-for="ToAddressPostalCode" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.DateOfDeparture, "Date:")
-                    @Html.TextBoxFor(m => m.DateOfDeparture, new { @class = "form-control", @id = "dateOfDeparture" })
-                    @Html.ValidationMessageFor(m => m.DateOfDeparture)
+                    <label asp-for="DateOfDeparture">Date:</label>
+                    <input asp-for="DateOfDeparture" class="form-control" id="dateOfDeparture" />
+                    <span asp-validation-for="DateOfDeparture" class="text-danger"></span>
                 </div>
+
 
                 <!-- Add other input fields for the remaining request parameters -->
 
                 <button type="submit" class="btn btn-primary">Calculate Transit Time</button>
             }
 
-            <div class="mt-3">
-                <div class="card bg-info text-white">
-                    <div class="card-body" id="result"></div>
+            @if (ViewBag.TransitTimeInfo != null)
+            {
+                <div class="mt-3">
+                    <div class="card bg-info text-white">
+                        <div class="card-body">
+                            <h5 class="card-title">Transit Time Information</h5>
+                            <p class="card-text">Latest Time of Booking: @ViewBag.TransitTimeInfo["se.posten.loab.lisp.notis.publicapi.serviceapi.TransitTimeResponse"]["transitTimes"][0]["latestTimeOfBooking"]</p>
+                            <p class="card-text">Delivery Time: @ViewBag.TransitTimeInfo["se.posten.loab.lisp.notis.publicapi.serviceapi.TransitTimeResponse"]["transitTimes"][0]["deliveryTime"]</p>
+                            <p class="card-text">Delivery Date: @ViewBag.TransitTimeInfo["se.posten.loab.lisp.notis.publicapi.serviceapi.TransitTimeResponse"]["transitTimes"][0]["deliveryDate"]</p>
+                            <p class="card-text">Transit time in days: @ViewBag.TransitTimeInfo["se.posten.loab.lisp.notis.publicapi.serviceapi.TransitTimeResponse"]["transitTimes"][0]["transitTimeInDays"]</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            }
+            else if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+            {
+                <div class="mt-3">
+                    <div class="card bg-danger text-white">
+                        <div class="card-body">
+                            <h5 class="card-title">Error</h5>
+                            <p class="card-text">@ViewBag.ErrorMessage</p>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     </div>
 </div>
-
-@*
-@{
-    ViewData["Title"] = "Time Calculation";
-}
-
-<div class="container">
-    <div class="card text-center mt-5">
-        <div class="card-header">
-            <h1>Transit Time Calculation</h1>
-        </div>
-        <div class="card-body">
-            <div class="form-group">
-                <label for="origin">From Postal Code:</label>
-                <input type="text" class="form-control" id="origin" name="origin" />
-            </div>
-            <div class="form-group">
-                <label for="destination">To Postal Code:</label>
-                <input type="text" class="form-control" id="destination" name="destination" />
-            </div>
-            <div class="form-group">
-                <label for="dateOfDepartue">Date:</label>
-                <input type="text" class="form-control" id="dateOfDepartue" name="dateOfDepartue" />
-            </div>
-            <div>
-                <button class="btn btn-primary" onclick="calculateTransitTime()">Calculate Transit Time</button>
-            </div>
-
-            <div class="mt-3">
-                <div class="card bg-info text-white">
-                    <div class="card-body" id="result"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-}*@
