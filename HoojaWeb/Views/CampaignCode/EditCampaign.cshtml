@@ -1,0 +1,60 @@
+﻿@using HoojaWeb.ViewModels;
+@using HoojaWeb.ViewModels.CampaignCode;
+@model EditCampaignViewModel
+
+@{
+    ViewData["Title"] = "Edit campaign";
+}
+
+<!-- Breadcrumbs -->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        @*<li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>*@
+        <li class="breadcrumb-item"><a asp-area="" asp-controller="CampaignCode" asp-action="Index">Campaigns</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Edit campaign</li>
+    </ol>
+</nav>
+<!-- Breadcrumbs end -->
+
+<div class="container container-fluid mt-5 container-lightblue">
+    <div class="text-center mt-2">
+        <h2>Edit Campaign</h2>
+        <hr />
+    </div>
+
+    <div class="row my-3 mx-3">
+        <div class="col-md-7">
+            <form method="post" asp-action="EditCampaign" class="row g-3">
+                @Html.HiddenFor(model => model.CampaignCodeId)
+
+                <div class="form-group col-md-12">
+                    <br />
+                    <label for="CampaignName" class="form-label form-label-custom fw-bold">Campaign Name:</label>
+                    <input type="text" class="form-control" id="CampaignName" name="CampaignName" value="@Model.CampaignName">
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label for="CampaignStart" class="form-label form-label-custom fw-bold">Campaign start:</label>
+                    <input type="datetime" class="form-control" id="CampaignStart" name="CampaignStart" value="@Model.CampaignStart" required>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label for="CampaignEnd" class="form-label form-label-custom fw-bold">Campaign end:</label>
+                    <input type="datetime" class="form-control" id="CampaignEnd" name="CampaignEnd" value="@Model.CampaignEnd" required>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label for="DiscountPrecentage" class="form-label form-label-custom fw-bold">Discount precentage:</label>
+                    <input type="number" class="form-control" id="DiscountPrecentage" name="DiscountPrecentage" value="@Model.DiscountPercentage">
+                </div>
+
+                <hr />
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary btn-block">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

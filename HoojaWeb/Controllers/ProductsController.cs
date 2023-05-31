@@ -110,12 +110,14 @@ namespace HoojaWeb.Controllers
             theproduct.Price = product.Price;
             theproduct.ProductTypeList = prodTypeList;
             theproduct.SelectedProductTypeId = product.fK_ProductTypeId;
-
+            theproduct.FK_CampaignCodeId = product.FK_CampaignCodeId;
+            theproduct.CampaignName = product.CampaignName;
+            theproduct.IsActive = product.IsActive;
             return View(theproduct);
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditProduct(EditProductsViewModel editProduct)
+        public async Task<IActionResult> EditProduct(EditProductsViewModel editProduct, bool isActive)
         {
             var apiProductToEdit = new
             {
@@ -125,7 +127,10 @@ namespace HoojaWeb.Controllers
                 ProductDescription = editProduct.ProductDescription,
                 QuantityStock = editProduct.QuantityStock,
                 Price = editProduct.Price,
-                ProductTypeId = editProduct.SelectedProductTypeId
+                ProductTypeId = editProduct.SelectedProductTypeId,
+                FK_CampaignCodeId = editProduct.FK_CampaignCodeId,
+                CampaignName = editProduct.CampaignName,
+                IsActive = editProduct.FK_CampaignCodeId,
             };
 
             var jsonProduct = JsonConvert.SerializeObject(apiProductToEdit);
