@@ -30,7 +30,7 @@ namespace HoojaWeb.Controllers
 
         public async Task<IActionResult> EditCampaign(int campaignCodeId)
         {
-            var campaignCode = await httpClient.GetAsync("https://localhost:7097/api/CampaignCode/CampaignCode-By");
+            var campaignCode = await httpClient.GetAsync($"{link}api/CampaignCode/CampaignCode-By{campaignCodeId}");
 
             if (!campaignCode.IsSuccessStatusCode)
             {
@@ -39,13 +39,7 @@ namespace HoojaWeb.Controllers
 
             var campaignList = await campaignCode.Content.ReadAsStringAsync();
 
-            //List<CampaignCodeViewModel> campaignCodeList = JsonConvert.DeserializeObject<List<CampaignCodeViewModel>>(campaignList);
-
-            var campaignById = await httpClient.GetAsync($"{link}api/CampaignCode/CampaignCode-By{campaignCodeId}");
-
-            var resp = await campaignById.Content.ReadAsStringAsync();
-
-            var campaign = JsonConvert.DeserializeObject<EditCampaignViewModel>(resp);
+            var campaign = JsonConvert.DeserializeObject<EditCampaignViewModel>(campaignList);
 
             var theCampaign = new EditCampaignViewModel();
             theCampaign.CampaignCodeId = campaign.CampaignCodeId;
