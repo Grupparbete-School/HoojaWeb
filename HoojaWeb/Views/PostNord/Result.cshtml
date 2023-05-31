@@ -1,0 +1,22 @@
+﻿@using Newtonsoft.Json;
+@using Newtonsoft.Json.Linq;
+
+@model string
+
+@{
+    ViewData["Title"] = "Transit Time Information";
+}
+
+<div class="bg-light">
+    <h1>Transit Time Information</h1>
+
+    @if (!string.IsNullOrEmpty(Model))
+    {
+        var result = JsonConvert.DeserializeObject<JObject>(Model);
+
+        <p>Latest Time of Booking: @result["se.posten.loab.lisp.notis.publicapi.serviceapi.TransitTimeResponse"]["transitTimes"][0]["latestTimeOfBooking"]</p>
+        <p>Delivery Time: @result["se.posten.loab.lisp.notis.publicapi.serviceapi.TransitTimeResponse"]["transitTimes"][0]["deliveryTime"]</p>
+        <p>Delivery Date: @result["se.posten.loab.lisp.notis.publicapi.serviceapi.TransitTimeResponse"]["transitTimes"][0]["deliveryDate"]</p>
+        <p>Transit time in days: @result["se.posten.loab.lisp.notis.publicapi.serviceapi.TransitTimeResponse"]["transitTimes"][0]["transitTimeInDays"]</p>
+    }
+</div>
