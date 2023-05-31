@@ -1,6 +1,6 @@
-namespace HoojaWeb.ViewModels.CampaignCode
+﻿namespace HoojaWeb.ViewModels.CampaignCode
 {
-    public class CampaignCodeViewModel
+    public class EditCampaignViewModel
     {
         public int? CampaignCodeId { get; set; }
 
@@ -11,5 +11,7 @@ namespace HoojaWeb.ViewModels.CampaignCode
         public DateTime? CampaignEnd { get; set; }
 
         public decimal? DiscountPercentage { get; set; }
+
+        public bool IsActive { get; set; } = false;
     }
 }

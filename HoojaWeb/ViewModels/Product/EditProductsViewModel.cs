@@ -18,5 +18,10 @@
         public int fK_ProductTypeId { get; set; }
 
         public int SelectedProductTypeId { get; set; }
+
+        public string? CampaignName { get; set; }
+        public int? FK_CampaignCodeId { get; set; }
+
+        public bool? IsActive { get; set; }
     }
 }

@@ -1,32 +1,77 @@
-﻿@*@using HoojaWeb.Models*@
-@using HoojaWeb.ViewModels.CampaignCode
+@using HoojaWeb.ViewModels;
+@using HoojaWeb.ViewModels.CampaignCode;
+
+@{
+	ViewData["Title"] = "CampaignCode";
+}
 
 @model IEnumerable<CampaignCodeViewModel>
 
-    @{
-        var campaign = ViewData["Campaigns"] as List<CampaignCodeViewModel>;
-    }
+<!-- Breadcrumbs -->
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a asp-area="" asp-controller="CampaignCode" asp-action="Index">Campaigns</a></li>
+		<li class="breadcrumb-item active" aria-current="page">Campaigns</li>
+	</ol>
+</nav>
+<!-- Breadcrumbs end -->
 
-    <div class="bg-light">
-       <table class="table">
-           <thead>
-               <tr>
-                   <td>@Html.DisplayNameFor(model => model.CampaignCodeId)</td>
-                   <td>@Html.DisplayNameFor(model => model.CampaignName)</td>
-                   <td>@Html.DisplayNameFor(model => model.CampaignStart)</td>
-                   <td>@Html.DisplayNameFor(model => model.CampaignEnd)</td>
-               </tr>
-           </thead>
-           <tbody>
-        @foreach (var item in campaign)
+<!-- sidebar + content -->
+<section class="">
+    <div class="container">
+
+        <!-- Search bar -->
+        <div class="col-lg-3 col-md-12 col-12 mt-5">
+            <div class="input-group float-center">
+                <input type="search" id="form1" class="form-control" placeholder="Search" />
+                <div class="input-group-append">
+                    <button type="button" class="btn btn-primary" style="width: 40px; height: 29px; position: relative;">
+                        <div class="svg-container">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-search" viewBox="0 0 16 16" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                            </svg>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+            <!-- Search bar -->
+        <div class="container container-fluid mt-5 container-lightblue">
+	        <div class="text-center mt-2">
+		        <h2>Campaign</h2>
+		        <hr />
+	        </div>
+        </div>
+
+
+        @if (Model != null)
+        @foreach (var item in Model)
         {
-            <tr>
-                <td>@item.CampaignCodeId</td>
-                <td>@item.CampaignName</td>
-                <td>@item.CampaignStart</td>
-                <td>@item.CampaignEnd</td>
-            </tr>
+            <div class="row justify-content-center mb-3">
+                <div class="col-md-12">
+                    <div class="card shadow-0 border rounded-3">
+                        <div class="card-body">
+                            <div class="row g-0">
+                                <div class="col-xl-3 col-md-4 d-flex justify-content-center">
+                                    <div class="bg-image hover-zoom ripple rounded ripple-surface me-md-3 mb-3 mb-md-0">
+                                        <a asp-area="" asp-controller="CampaignCode" asp-action="Index">
+                                            <p>@item.CampaignName</p>
+                                            <h5>@item.CampaignStart</h5>
+                                            <h5>@item.CampaignEnd</h5>
+                                            <h5>@item.DiscountPercentage</h5>
+                                        </a>
+                                    </div>
+                                        <a asp-controller="CampaignCode" asp-action="EditCampaign" asp-route-campaignCodeId="@item.CampaignCodeId" class="btn btn-primary yellow shadow-0">Edit campaign</a>
+                                    <br/>
+                                    <br />
+                                       @* <a asp-controller="CampaignCode" asp-action="RemoveCampaignConfirm" asp-route-productId="@item.CampaignCodeId" class="btn btn-primary yellow shadow-0">Remove Product</a>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         }
-    </tbody> 
-       </table>
-</div>
+    </div>
+</section>
