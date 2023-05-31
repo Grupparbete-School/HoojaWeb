@@ -29,6 +29,13 @@ namespace HoojaWeb.Models.PostNord
         [Required]
         public string ToAddressCountryCode { get; set; }
 
+
+        public string? FromAddressStreetName { get; set; }
+        public string? FromAddressStreetNumber { get; set; }
+
+        public string? ToAddressStreetName { get; set; }
+        public string? ToAddressStreetNumber { get; set; }
+
         public PostNordRequestModel()
         {
             ServiceCode = "18";

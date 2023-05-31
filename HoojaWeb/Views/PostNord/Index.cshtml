@@ -1,10 +1,16 @@
 ﻿@model HoojaWeb.Models.PostNord.PostNordRequestModel
 @using HoojaWeb.ViewModels.PostNord
 
-<h1>PostNord API - Transit Time Information</h1>
+@*@{
+    var transResult = ViewData["Transit"] as List<PostNordResultViewModel>;
+}*@
+
+
 
 <div class="container">
+    
     <div class="card text-center mt-5">
+        <h1>PostNord API - Transit Time Information</h1>
         <div class="card-header">
             <h1>Transit Time Calculation</h1>
         </div>
@@ -13,41 +19,44 @@
             {
                 <div class="form-group">
                     <label asp-for="FromAddressPostalCode">From Postal Code:</label>
-                    <input asp-for="FromAddressPostalCode" class="form-control" id="origin" />
+                    <input asp-for="FromAddressPostalCode" class="form-control" id="origin" placeholder="xxxxx" />
                     <span asp-validation-for="FromAddressPostalCode" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
                     <label asp-for="ToAddressPostalCode">To Postal Code:</label>
-                    <input asp-for="ToAddressPostalCode" class="form-control" id="destination" />
+                    <input asp-for="ToAddressPostalCode" class="form-control" id="destination" placeholder="xxxxx"/>
                     <span asp-validation-for="ToAddressPostalCode" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
                     <label asp-for="DateOfDeparture">Date:</label>
-                    <input asp-for="DateOfDeparture" class="form-control" id="dateOfDeparture" />
+                    <input asp-for="DateOfDeparture" class="form-control" id="dateOfDeparture" placeholder="yyyy-mm-dd" />
                     <span asp-validation-for="DateOfDeparture" class="text-danger"></span>
                 </div>
-
-
                 <!-- Add other input fields for the remaining request parameters -->
 
                 <button type="submit" class="btn btn-primary">Calculate Transit Time</button>
             }
 
-            @if (ViewBag.TransitTimeInfo != null)
+            @if (ViewData["Transit"] != null)
             {
+                var transitInfo = ViewData["Transit"] as PostNordResultViewModel;
                 <div class="mt-3">
                     <div class="card bg-info text-white">
                         <div class="card-body">
                             <h5 class="card-title">Transit Time Information</h5>
-                            <p class="card-text">Latest Time of Booking: @ViewBag.TransitTimeInfo["se.posten.loab.lisp.notis.publicapi.serviceapi.TransitTimeResponse"]["transitTimes"][0]["latestTimeOfBooking"]</p>
-                            <p class="card-text">Delivery Time: @ViewBag.TransitTimeInfo["se.posten.loab.lisp.notis.publicapi.serviceapi.TransitTimeResponse"]["transitTimes"][0]["deliveryTime"]</p>
-                            <p class="card-text">Delivery Date: @ViewBag.TransitTimeInfo["se.posten.loab.lisp.notis.publicapi.serviceapi.TransitTimeResponse"]["transitTimes"][0]["deliveryDate"]</p>
-                            <p class="card-text">Transit time in days: @ViewBag.TransitTimeInfo["se.posten.loab.lisp.notis.publicapi.serviceapi.TransitTimeResponse"]["transitTimes"][0]["transitTimeInDays"]</p>
+                            <p class="card-text">Latest Time of Booking: @transitInfo.latestTimeOfBooking</p>
+                            <p class="card-text">Delivery Time: @transitInfo.deliveryTime</p>
+                            <p class="card-text">Delivery Date: @transitInfo.deliveryDate</p>
+                            <p class="card-text">Transit time in days: @transitInfo.transitTimeInDays</p>
                         </div>
                     </div>
                 </div>
+                //Rensar formuläret efter submit
+                @Html.Raw("<script>document.getElementById('origin').value = '';</script>")
+                @Html.Raw("<script>document.getElementById('destination').value = '';</script>")
+                @Html.Raw("<script>document.getElementById('dateOfDeparture').value = '';</script>")
             }
             else if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
             {

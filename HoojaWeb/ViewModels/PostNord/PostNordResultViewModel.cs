@@ -1,4 +1,6 @@
-﻿namespace HoojaWeb.ViewModels.PostNord
+﻿using Newtonsoft.Json.Linq;
+
+namespace HoojaWeb.ViewModels.PostNord
 {
     public class PostNordResultViewModel
     {
