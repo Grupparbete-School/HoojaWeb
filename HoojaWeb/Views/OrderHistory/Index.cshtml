@@ -1,0 +1,140 @@
+﻿
+@using HoojaWeb.Models
+@using HoojaWeb.ViewModels.OrderHistory;
+@using HoojaWeb.ViewModels.Customer;
+@model IEnumerable<OrderHistoryGetViewModel>
+
+@{
+    var products = ViewData["OrdersHistory"] as List<OrderHistoryGetViewModel>;
+    var totalPages = (int)ViewData["TotalPages"];
+    var currentPage = (int)ViewData["CurrentPage"];
+}
+
+@{
+        ViewData["Title"] = "OrderHistory";
+}
+
+<div class="bg-light">
+    <div class="bg-light">
+        <h1 class="text-center">Transaktionshistorik Admin view</h1>
+        <hr />
+
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Search Orders</h3>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Index" method="get">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            @*<span class="input-group-text">Sök på efternamn:</span>*@
+                        </div>
+                        <input type="text" name="searchOrder" id="searchOrder" class="form-control" placeholder="Enter lastname..." />
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-4">
+                <form asp-action="Index" method="get">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            @*<span class="input-group-text">Sök på order Id:</span>*@
+                        </div>
+                        <input type="number" name="searchOrderId" id="searchOrderId" class="form-control" placeholder="Enter order Id..." />
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-4">
+                <form asp-action="Index" method="get">
+                    <div class="input-group">
+                        <select name="customerId" id="customerId" class="form-select">
+                            <option value="" disable selected>Kundlista</option>
+                            @foreach (var customer in ViewData["Customers"] as List<CustomerGetViewModel>)
+                            {
+                                <option value="@customer.CustomerId">@customer.FullName</option>
+                            }
+                        </select>
+
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-dark">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    @if (Model != null && Model.Count() > 0)
+    {
+        <table class="table table-striped table-hover bg-light">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.OrderId)</th>
+                    <th>@Html.DisplayNameFor(model => model.OrderDate)</th>
+                    <th>@Html.DisplayNameFor(model => model.DeliveryDate)</th>
+                    <th>@Html.DisplayNameFor(model => model.FullName)</th>
+                    <th>Number of Products</th> <!-- Add new column for product count -->
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var orderhistory in Model.GroupBy(x => x.OrderId)) // Grouping by OrderId
+                {
+                    var firstOrder = orderhistory.First(); // Assuming at least one order exists for each OrderId
+
+                    <tr>
+                        <td>@firstOrder.OrderId</td>
+                        <td>@firstOrder.OrderDate</td>
+                        <td>@firstOrder.DeliveryDate</td>
+                        <td>@firstOrder.FullName</td>
+                        <td>@orderhistory.Count()</td> <!-- Display the product count -->
+                        <td>
+                            <a asp-action="Details" asp-route-id="@firstOrder.OrderId" class="btn btn-primary">Details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No order history found.</p>
+    }
+
+
+</div>
+
+<!-- Pagination -->
+<nav aria-label="Page navigation example" class="d-flex justify-content-center mt-3">
+    <ul class="pagination">
+        @if (currentPage > 1)
+        {
+            <li class="page-item">
+                <a class="page-link" href="/OrderHistory?page=@(currentPage - 1)" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        }
+
+        @for (int i = 1; i <= totalPages; i++)
+        {
+            <li class="page-item @(currentPage == i ? "active" : "")">
+                <a class="page-link" href="/OrderHistory?page=@i">@i</a>
+            </li>
+        }
+
+        @if (currentPage < totalPages)
+        {
+            <li class="page-item">
+                <a class="page-link" href="/OrderHistory?page=@(currentPage + 1)" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        }
+    </ul>
+</nav>
+<!-- Pagination end -->
+
