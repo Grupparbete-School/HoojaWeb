@@ -11,9 +11,6 @@ namespace HoojaWeb.Controllers
 {
     public class PostNordController : Controller
     {
-        HttpClient httpClient = new HttpClient();
-        string ApiKey = "0452cc935bd692d320649579ac022746";
-
         public IActionResult Index()
         {
             return View();
@@ -23,7 +20,7 @@ namespace HoojaWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> GetTransitTimeInformation(PostNordRequestModel request)
         {
-            string ApiKey = "0452cc935bd692d320649579ac022746";
+            string ApiKey = Environment.GetEnvironmentVariable("API_KEY_POSTNORD");
 
             try
             {
