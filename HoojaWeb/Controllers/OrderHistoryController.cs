@@ -33,7 +33,7 @@ namespace HoojaWeb.Controllers
                     var customersJson = await customerResponse.Content.ReadAsStringAsync();
                     var customers = JsonConvert.DeserializeObject<List<CustomerGetViewModel>>(customersJson);
 
-                    ViewBag.CustomerId = new SelectList(customers, "FullName", "FullName");
+                    ViewBag.CustomerId = new SelectList(customers, "CustomerId", "FullName");
                     ViewData["Customers"] = customers;
 
                 }
