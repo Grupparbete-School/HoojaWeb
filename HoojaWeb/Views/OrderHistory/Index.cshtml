@@ -5,7 +5,7 @@
 @model IEnumerable<OrderHistoryGetViewModel>
 
 @{
-    var products = ViewData["OrdersHistory"] as List<OrderHistoryGetViewModel>;
+    //var customers = ViewData["OrdersHistory"] as List<OrderHistoryGetViewModel>;
     var totalPages = (int)ViewData["TotalPages"];
     var currentPage = (int)ViewData["CurrentPage"];
 }
@@ -63,13 +63,14 @@
                 
                 <form asp-action="Index" method="get">
                     <div class="input-group">
-                                <select name="customerId" id="customerId" class="form-select">
-                                    <option value="" disabled selected>Customers</option>
-                                    @foreach (var customer in ViewData["Customers"] as List<CustomerGetViewModel>)
-                                    {
-                                        <option value="@customer.CustomerId">@customer.FullName</option>
-                                    }
-                                </select>
+                        <select name="customerId" id="customerId" class="form-select">
+                            <option value="" disable selected>Customers</option>
+                            @foreach (var customer in ViewData["Customers"] as List<CustomerGetViewModel>)
+                            {
+                                <option value="@customer.Id">@customer.FullName</option>
+                            }
+                        </select>
+                          
                         <div class="input-group-append">
                             <button type="submit" value="submit" class="btn btn-dark">Search</button>
                         </div>

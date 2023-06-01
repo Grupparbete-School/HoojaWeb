@@ -21,7 +21,7 @@ namespace HoojaWeb.Controllers
         //Get all history
         public async Task<IActionResult> Index(string searchOrder, int? searchOrderId, int? customerId, int page = 1)
         {
-            int ordersPerPage = 10;
+            int ordersPerPage = 12;
 
             try
             {
@@ -71,7 +71,7 @@ namespace HoojaWeb.Controllers
                     // Filter by customer if a customerId is provided
                     if (customerId.HasValue)
                     {
-                        allOrderHistory = allOrderHistory?.Where(o => o.CustomerId == customerId.Value).ToList();
+                        allOrderHistory = allOrderHistory?.Where(o => o.customerId == customerId.Value).ToList();
                     }
 
                     // Order the result by OrderDate in descending order (latest first)

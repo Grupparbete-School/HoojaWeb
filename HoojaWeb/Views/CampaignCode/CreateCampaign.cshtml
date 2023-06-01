@@ -1,0 +1,55 @@
+﻿@using HoojaWeb.ViewModels.CampaignCode
+@model AddCampaignViewModel
+
+@{
+    ViewData["Title"] = "Create campaign code";
+}
+
+<!-- Breadcrumbs -->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-area="" asp-controller="CampaignCode" asp-action="Index">Campaign codes</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Add new campaign code</li>
+    </ol>
+</nav>
+<!-- Breadcrumbs end -->
+
+<div class="container container-fluid mt-5 container-lightblue">
+    <div class="text-center mt-2">
+        <h2>Add new campaign code</h2>
+        <hr />
+    </div>
+
+        <div class="col-md-7">
+            <form method="post" asp-action="CreateCampaign" class="row g-3">
+
+                <div class="form-group col-md-12">
+                    <br />
+                    <label for="CampaignName" class="form-label form-label-custom">Campaign Name:</label>
+                    <input type="text" class="form-control" id="CampaignName" name="CampaignName" value="@Model.CampaignName">
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label for="CampaignStart" class="form-label form-label-custom">Campaign Start:</label>
+                    <input type="datetime" class="form-control" id="CampaignStart" name="campaignStart" rows="4" required @Model.CampaignStart>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label for="CampaignEnd" class="form-label form-label-custom">Campaign End:</label>
+                    <input type="datetime" class="form-control" id="CampaignEnd" name="CampaignEnd" value="@Model.CampaignEnd" required>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label for="DiscountPercentage" class="form-label form-label-custom">Discount Percentage:</label>
+                    <input type="number" class="form-control" id="DiscountPercentage" name="DiscountPercentage" value="@Model.DiscountPercentage" required>
+                </div>
+
+                <hr />
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary btn-block">Create</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
