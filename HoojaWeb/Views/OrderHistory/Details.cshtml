@@ -2,74 +2,88 @@
 @using HoojaWeb.ViewModels.OrderHistory;
 @model IEnumerable<HoojaWeb.ViewModels.OrderHistory.OrderHistoryGetViewModel>
 
+    <!-- Breadcrumbs -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item"><a asp-area="" asp-controller="Login" asp-action="Index">Login</a></li>
+            <li class="breadcrumb-item"><a asp-area="" asp-controller="OrderHistory" asp-action="Index">Order history</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Order details</li>
+        </ol>
+    </nav>
+    <!-- Breadcrumbs end -->
 
-<h1>Detaljerad information order </h1>
 
-<a asp-action="Index" class="btn btn-primary">Tillbaka till lista</a>
-<hr />
-<div class="table table-striped table-hover table-light">
-    <table>
-        <thead>
-            <tr>
-                <th>@Html.DisplayNameFor(model => model.FullName)</th>
-                <th>@Html.DisplayNameFor(model => model.Street)</th>
-                <th>@Html.DisplayNameFor(model => model.PostalCode)</th>
-                <th>@Html.DisplayNameFor(model => model.City)</th>
-                <th>@Html.DisplayNameFor(model => model.Email)</th>
-                <th>@Html.DisplayNameFor(model => model.PhoneNumber)</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model.Any())
-            {
-                var firstCustomer = Model.First(); // Assuming at least one customer exists in the list
+<section class="container container-fluid container-blue">
+    <div class="d-flex flex-column flex-shrink-0 p-3">
+        <h1>Detaljerad information order </h1>
 
-                <tr>
-                    <td>@firstCustomer.FullName</td>
-                    <td>@firstCustomer.Street</td>
-                    <td>@firstCustomer.PostalCode</td>
-                    <td>@firstCustomer.City</td>
-                    <td>@firstCustomer.Email</td>
-                    <td>@firstCustomer.PhoneNumber</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+        @*<a asp-action="Index" class="btn btn-primary">Tillbaka till lista</a>*@
+        <hr />
+        <div class="table table-striped table-hover table-light">
+            <table>
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.FullName)</th>
+                        <th>@Html.DisplayNameFor(model => model.Street)</th>
+                        <th>@Html.DisplayNameFor(model => model.PostalCode)</th>
+                        <th>@Html.DisplayNameFor(model => model.City)</th>
+                        <th>@Html.DisplayNameFor(model => model.Email)</th>
+                        <th>@Html.DisplayNameFor(model => model.PhoneNumber)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Any())
+                    {
+                        var firstCustomer = Model.First(); // Assuming at least one customer exists in the list
 
-    </table>
-</div>
-<div class="table table-striped table-hover table-light">
-    <table>
-        <thead>
-            <tr>
-                <th>@Html.DisplayNameFor(model => model.OrderId)</th>
-                <th>@Html.DisplayNameFor(model => model.OrderDate)</th>
-                <th>@Html.DisplayNameFor(model => model.DeliveryDate)</th>
-                <th>@Html.DisplayNameFor(model => model.ProductId)</th>
-                <th>@Html.DisplayNameFor(model => model.ProductName)</th>
-                <th>@Html.DisplayNameFor(model => model.ProductDescription)</th>
-                <th>@Html.DisplayNameFor(model => model.Price)</th>
-                <th>@Html.DisplayNameFor(model => model.Amount)</th>
-                <th>@Html.DisplayNameFor(model => model.TotalPrice)</th>
-            </tr>
-        </thead>
-        <tbody>
-           @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.OrderId</td>
-                    <td>@item.OrderDate</td>
-                    <td>@item.DeliveryDate</td>
-                    <td>@item.ProductId</td>
-                    <td>@item.ProductName</td>
-                    <td>@item.ProductDescription</td>
-                    <td>@string.Format("{0:N2} kr", item.Price)</td>
+                        <tr>
+                            <td>@firstCustomer.FullName</td>
+                            <td>@firstCustomer.Street</td>
+                            <td>@firstCustomer.PostalCode</td>
+                            <td>@firstCustomer.City</td>
+                            <td>@firstCustomer.Email</td>
+                            <td>@firstCustomer.PhoneNumber</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
 
-                    <td>@item.Amount</td>
-                    <td>@string.Format("{0:N2} kr", item.TotalPrice)</td>
+        </div>
+        <div class="table table-striped table-hover table-light">
+            <table>
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.OrderId)</th>
+                        <th>@Html.DisplayNameFor(model => model.OrderDate)</th>
+                        <th>@Html.DisplayNameFor(model => model.DeliveryDate)</th>
+                        <th>@Html.DisplayNameFor(model => model.ProductId)</th>
+                        <th>@Html.DisplayNameFor(model => model.ProductName)</th>
+                        <th>@Html.DisplayNameFor(model => model.ProductDescription)</th>
+                        <th>@Html.DisplayNameFor(model => model.Price)</th>
+                        <th>@Html.DisplayNameFor(model => model.Amount)</th>
+                        <th>@Html.DisplayNameFor(model => model.TotalPrice)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.OrderId</td>
+                            <td>@item.OrderDate</td>
+                            <td>@item.DeliveryDate</td>
+                            <td>@item.ProductId</td>
+                            <td>@item.ProductName</td>
+                            <td>@item.ProductDescription</td>
+                            <td>@string.Format("{0:N2} kr", item.Price)</td>
 
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+                            <td>@item.Amount</td>
+                            <td>@string.Format("{0:N2} kr", item.TotalPrice)</td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
