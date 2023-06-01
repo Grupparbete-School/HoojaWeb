@@ -116,6 +116,111 @@ namespace HoojaWeb.Controllers
             return View(theproduct);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> FilterProductsOnSearch(string searchTerm)
+        {
+            int productsPerPage = 5;
+
+            var sessiontoken = Request.Cookies["Token"];
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
+
+            var allProducts = await httpClient.GetAsync($"{link}api/Product/GetAllProduct");
+            var productTypes = await httpClient.GetAsync($"{link}api/Product/GetProductType");
+
+            if (allProducts.IsSuccessStatusCode && productTypes.IsSuccessStatusCode)
+            {
+                var productsRespBody = await allProducts.Content.ReadAsStringAsync();
+                var productTypesRespBody = await productTypes.Content.ReadAsStringAsync();
+
+                var productData = JsonConvert.DeserializeObject<List<ProductsViewModel>>(productsRespBody);
+                var productTypesData = JsonConvert.DeserializeObject<List<ProductsViewModel>>(productTypesRespBody);
+
+                foreach (var product in productData)
+                {
+                    var matchingProductType = productTypesData?.FirstOrDefault(pt => pt.ProductTypeId == product.fK_ProductTypeId);
+                    if (matchingProductType != null)
+                    {
+                        product.ProductTypeName = matchingProductType.ProductTypeName;
+                        product.ProductTypeId = matchingProductType.ProductTypeId;
+                    }
+                }
+
+                //Only takes the products that matches that contains of the searchterm applies tolower on both so caps does not matter
+                var filteredList = productData.Where(x => x.ProductName.ToLower().Contains(searchTerm.ToLower())).ToList();
+
+                int totalPages = (int)Math.Ceiling((double)filteredList.Count / productsPerPage);
+
+
+                var productsToDisplay = filteredList
+                    .Skip((1 - 1) * productsPerPage)
+                    .Take(productsPerPage)
+                    .ToList();
+                ViewData["Products"] = productsToDisplay;
+                ViewData["TotalPages"] = totalPages;
+                ViewData["CurrentPage"] = 1;
+                if (filteredList != null)
+                {
+                    return View("Index", filteredList);
+
+                }
+            }
+            return View("Index", null);
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> FilterOnSideOptions(List<int> categories, double minPrice = 0, double maxPrice = 1000000000)
+        {
+            int productsPerPage = 5;
+            ViewBag.SelectedCategories = categories;
+            ViewBag.MinPrice = minPrice;
+            ViewBag.MaxPrice = maxPrice;
+
+            var sessiontoken = Request.Cookies["Token"];
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
+
+            var allProducts = await httpClient.GetAsync($"{link}api/Product/GetAllProduct");
+            var productTypes = await httpClient.GetAsync($"{link}api/Product/GetProductType");
+
+            if (allProducts.IsSuccessStatusCode && productTypes.IsSuccessStatusCode)
+            {
+                var productsRespBody = await allProducts.Content.ReadAsStringAsync();
+                var productTypesRespBody = await productTypes.Content.ReadAsStringAsync();
+
+                var productData = JsonConvert.DeserializeObject<List<ProductsViewModel>>(productsRespBody);
+                var productTypesData = JsonConvert.DeserializeObject<List<ProductsViewModel>>(productTypesRespBody);
+
+                foreach (var product in productData)
+                {
+                    var matchingProductType = productTypesData?.FirstOrDefault(pt => pt.ProductTypeId == product.fK_ProductTypeId);
+                    if (matchingProductType != null)
+                    {
+                        product.ProductTypeName = matchingProductType.ProductTypeName;
+                        product.ProductTypeId = matchingProductType.ProductTypeId;
+                    }
+                }
+                //Only takes the products that matches the categories and has a interval within the price min and max values
+                var filteredList = productData.Where(x => categories.Contains(x.ProductTypeId) && x.Price >= minPrice && maxPrice >= x.Price).ToList();
+
+                int totalPages = (int)Math.Ceiling((double)filteredList.Count / productsPerPage);
+
+
+                var productsToDisplay = filteredList
+                    .Skip((1 - 1) * productsPerPage)
+                    .Take(productsPerPage)
+                    .ToList();
+                ViewData["Products"] = productsToDisplay;
+                ViewData["TotalPages"] = totalPages;
+                ViewData["CurrentPage"] = 1;
+                if (filteredList != null)
+                {
+                    return View("Index", filteredList);
+
+                }
+            }
+            return View("Index", null);
+        }
+
         [HttpPost]
         public async Task<IActionResult> EditProduct(EditProductsViewModel editProduct, bool isActive)
         {
