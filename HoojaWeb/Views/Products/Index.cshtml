@@ -25,23 +25,28 @@
   <div class="container">
 
         <!-- Search bar -->
-        <div class="col-lg-3 col-md-12 col-12 mt-5">
-            <div class="input-group float-center">
-                <input type="search" id="form1" class="form-control" placeholder="Search" />
-                <div class="input-group-append">
-                    <button type="button" class="btn btn-primary" style="width: 40px; height: 29px; position: relative;">
-                        <div class="svg-container">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-search" viewBox="0 0 16 16" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                            </svg>
-                        </div>
-                    </button>
+        @using (Html.BeginForm("FilterProductsOnSearch", "Products", FormMethod.Get))
+        {
+            <div class="col-lg-3 col-md-12 col-12 mt-5">
+                <div class="input-group float-center">
+                    <input type="search" id="form1" name="searchTerm" class="form-control" placeholder="Search" />
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary" style="width: 40px; height: 29px; position: relative;">
+                            <div class="svg-container">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-search" viewBox="0 0 16 16" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                </svg>
+                            </div>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
         <!-- Search bar -->
 
+       
     <div class="row">
+       
       <!-- sidebar -->
       <div class="col-lg-3">
 
@@ -62,7 +67,8 @@
         <!-- Collapsible wrapper -->
         <div class="collapse card d-lg-block mb-5" id="navbarSupportedContent">
           <div class="accordion" id="accordionPanelsStayOpenExample">
-
+                        @using (Html.BeginForm("FilterOnSideOptions", "Products", FormMethod.Get))
+                        {
             <!-- Categories -->
             <div class="accordion-item">
               <h2 class="accordion-header" id="headingOne">
@@ -77,20 +83,45 @@
                   Categories
                 </button>
               </h2>
-              <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne">
-                <div class="accordion-body">
-                  <ul class="list-unstyled">
-                    <li><a href="#" class="text-dark">Shampoo </a></li>
-                    <li><a href="#" class="text-dark">Conditioner</a></li>
-                    <li><a href="#" class="text-dark">Hair mask </a></li>
-                    <li><a href="#" class="text-dark">Accessories </a></li>
-                    <li><a href="#" class="text-dark">Sets </a></li>
-                  </ul>
+                <div id="panelsStayOpen-collapseCategory" class="accordion-collapse collapse show" aria-labelledby="headingTwo">
+                    <div class="accordion-body">
+                        <div>
+                            <!-- Category checkbox -->
+                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="1" id="CatCheckChecked1" name="categories" @(ViewBag.SelectedCategories != null && ViewBag.SelectedCategories.Contains(1) ? "checked" : "") />
+                                <label class="form-check-label" for="CatCheckChecked1">Hair Care</label>
+                                <span class="badge badge-secondary float-end">120</span>
+                            </div>
+                            <!-- Category checkbox -->
+                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="2" id="CatCheckChecked2" name="categories" @(ViewBag.SelectedCategories != null && ViewBag.SelectedCategories.Contains(2) ? "checked" : "") />
+                                <label class="form-check-label" for="CatCheckChecked2">Beauty Products</label>
+                                <span class="badge badge-secondary float-end">15</span>
+                            </div>
+                            <!-- Category checkbox -->
+                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="3" id="CatCheckChecked3" name="categories" @(ViewBag.SelectedCategories != null && ViewBag.SelectedCategories.Contains(3) ? "checked" : "") />
+                                <label class="form-check-label" for="CatCheckChecked3">Perfume</label>
+                                <span class="badge badge-secondary float-end">35</span>
+                            </div>
+                            <!-- Category checkbox -->
+                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="4" id="CatCheckChecked4" name="categories" @(ViewBag.SelectedCategories != null && ViewBag.SelectedCategories.Contains(4) ? "checked" : "") />
+                                <label class="form-check-label" for="CatCheckChecked4">Makeup</label>
+                                <span class="badge badge-secondary float-end">89</span>
+                            </div>
+                            <!-- Category checkbox -->
+                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="5" id="CatCheckChecked5" name="categories" @(ViewBag.SelectedCategories != null && ViewBag.SelectedCategories.Contains(5) ? "checked" : "") />
+                                <label class="form-check-label" for="CatCheckChecked5">Skin Care</label>
+                                <span class="badge badge-secondary float-end">30</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
             <!-- Categories end -->
-
+           
             <!-- Brands -->
             <div class="accordion-item">
               <h2 class="accordion-header" id="headingTwo">
@@ -105,36 +136,37 @@
                   Brands
                 </button>
               </h2>
-                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo">
+                <div id="panelsStayOpen-collapseBrand" class="accordion-collapse collapse show" aria-labelledby="headingTwo">
+                @*Added support for brandfiltering if the data is included in the future*@
                 <div class="accordion-body">
                   <div>
                     <!-- Brand checkbox -->
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked1" checked />
+                                                <input class="form-check-input" type="checkbox" value="Hair|Care" id="flexCheckChecked1" name="brands" checked />
                       <label class="form-check-label" for="flexCheckChecked1">Hair|Care</label>
                       <span class="badge badge-secondary float-end">120</span>
                     </div>
                     <!-- Brand checkbox -->
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked2" checked />
+                                                <input class="form-check-input" type="checkbox" value="Coco" id="flexCheckChecked2" name="brands" checked />
                       <label class="form-check-label" for="flexCheckChecked2">Coco</label>
                       <span class="badge badge-secondary float-end">15</span>
                     </div>
                     <!-- Brand checkbox -->
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked3" checked />
+                                                <input class="form-check-input" type="checkbox" value="Hooya" id="flexCheckChecked3" name="brands" checked />
                       <label class="form-check-label" for="flexCheckChecked3">Hooya</label>
                       <span class="badge badge-secondary float-end">35</span>
                     </div>
                     <!-- Brand checkbox -->
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked4" checked />
+                                                <input class="form-check-input" type="checkbox" value="Mårdhund" id="flexCheckChecked4" name="brands" checked />
                       <label class="form-check-label" for="flexCheckChecked4">Mårdhund</label>
                       <span class="badge badge-secondary float-end">89</span>
                     </div>
-                                        <!-- Brand checkbox -->
+                    <!-- Brand checkbox -->
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                      <input class="form-check-input" type="checkbox" value="Crystal" id="flexCheckDefault" name="brands" checked />
                       <label class="form-check-label" for="flexCheckDefault">Crystal</label>
                       <span class="badge badge-secondary float-end">30</span>
                     </div>
@@ -145,6 +177,7 @@
             <!-- Brands end -->
 
             <!-- Price -->
+                     
             <div class="accordion-item">
               <h2 class="accordion-header" id="headingThree">
                 <button
@@ -158,6 +191,7 @@
                   Price
                 </button>
               </h2>
+
               <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree">
                 <div class="accordion-body">
                   <div class="range">
@@ -169,7 +203,7 @@
                         Min
                       </p>
                       <div class="form-outline">
-                        <input type="number" id="typeNumber" class="form-control" />
+                        <input type="number" id="typeNumber" class="form-control" name="minPrice" value="@(ViewBag.MinPrice ?? 0)" />
                         <label class="form-label" for="typeNumber">0</label>
                       </div>
                     </div>
@@ -178,15 +212,16 @@
                         Max
                       </p>
                       <div class="form-outline">
-                        <input type="number" id="typeNumber" class="form-control" />
-                        <label class="form-label" for="typeNumber">1,0000</label>
+                        <input type="number" id="typeNumber" class="form-control" name="maxPrice" value="@(ViewBag.MaxPrice ?? 10000)" />
+                        <label class="form-label" for="typeNumber">10000</label>
                       </div>
                     </div>
                   </div>
-                <button type="button" class="btn btn-primary w-100 border border-secondary">apply</button>
+                      <button type="submit" class="btn btn-primary w-100 border border-secondary">apply</button>
                 </div>
               </div>
             </div>
+            }
             <!-- Price end -->
 
             <!-- Size -->

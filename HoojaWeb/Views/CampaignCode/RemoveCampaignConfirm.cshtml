@@ -1,0 +1,41 @@
+﻿@using HoojaWeb.ViewModels.CampaignCode
+@model EditCampaignViewModel
+
+@{
+    ViewData["Title"] = "Remove campaign code";
+}
+
+<!-- Breadcrumbs -->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-area="" asp-controller="CampaignCode" asp-action="Index">Campaign code</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Remove campaign code</li>
+    </ol>
+</nav>
+<!-- Breadcrumbs end -->
+
+<div class="container container-fluid mt-5 container-lightblue">
+    <div class="text-center mt-2">
+        <h2>Remove campaign code?</h2>
+        <hr />
+    </div>
+
+        <div class="col-md-7">
+            <br />
+            <h4>Campaign Details</h4>
+            <br />
+            <p><strong>Campaign Name:</strong> @Model.CampaignName</p>
+            <p><strong>Campaign start:</strong> @Model.CampaignStart</p>
+            <p><strong>Campaign end:</strong> @Model.CampaignEnd</p>
+            <p><strong>Discount :</strong> @Model.DiscountPercentage</p>
+            <hr />
+
+            <div class="col-md-6 text-start">
+                <form method="post" asp-action="RemoveCampaign" asp-route-campaignCodeId="@Model.CampaignCodeId">
+                    <button type="submit" class="btn btn-danger">Confirm</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -7,6 +7,8 @@
 
 @model IEnumerable<CampaignCodeViewModel>
 
+
+
 <!-- Breadcrumbs -->
 <nav aria-label="breadcrumb">
 	<ol class="breadcrumb">
@@ -44,6 +46,9 @@
 	        </div>
         </div>
 
+        <p>
+            <a asp-action="CreateCampaign">Create New A Campaign</a>
+        </p>
 
         @if (Model != null)
         @foreach (var item in Model)
@@ -66,7 +71,7 @@
                                         <a asp-controller="CampaignCode" asp-action="CreateCampaign" asp-route-campaignCodeId="@item.CampaignCodeId" class="btn btn-primary yellow shadow-0">Create campaign</a>
                                     <br/>
                                     <br />
-                                       @* <a asp-controller="CampaignCode" asp-action="RemoveCampaignConfirm" asp-route-productId="@item.CampaignCodeId" class="btn btn-primary yellow shadow-0">Remove Product</a>*@
+                                        <a asp-controller="CampaignCode" asp-action="RemoveCampaignConfirm" asp-route-campaignCodeId="@item.CampaignCodeId" class="btn btn-primary yellow shadow-0">Remove campaign</a>
                                 </div>
                             </div>
                         </div>

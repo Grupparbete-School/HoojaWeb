@@ -14,13 +14,25 @@
         ViewData["Title"] = "OrderHistory";
 }
 
-<div class="bg-light">
+<!-- Breadcrumbs -->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+        <li class="breadcrumb-item"><a asp-area="" asp-controller="Login" asp-action="AdminView">Admin</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Order history</li>
+    </ol>
+</nav>
+<!-- Breadcrumbs end -->
+
+
+    <div class="container container-fluid  mt-5">
+<div class="bg-light p-2 ">
     <div class="bg-light">
         <h1 class="text-center">Transaktionshistorik Admin view</h1>
         <hr />
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 text-center">
                 <h3>Search Orders</h3>
             </div>
         </div>
@@ -45,19 +57,21 @@
                     </div>
                 </form>
             </div>
-
             <div class="col-md-4">
+                
                 <form asp-action="Index" method="get">
                     <div class="input-group">
                         <select name="customerId" id="customerId" class="form-select">
                             <option value="" disabled selected>Kundlista</option>
+                          
                             @foreach (var customer in ViewData["Customers"] as List<CustomerGetViewModel>)
                             {
                                 <option value="@customer.Id">@customer.FullName</option>
                             }
                         </select>
+                          
                         <div class="input-group-append">
-                            <button type="submit" class="btn btn-dark">Search</button>
+                            <button type="submit" value="submit" class="btn btn-dark">Search</button>
                         </div>
                     </div>
                 </form>
@@ -102,7 +116,6 @@
     }
 
 
-</div>
 
 <!-- Pagination -->
 <nav aria-label="Page navigation example" class="d-flex justify-content-center mt-3">
@@ -134,4 +147,5 @@
     </ul>
 </nav>
 <!-- Pagination end -->
-
+</div>
+        </div>

@@ -85,6 +85,86 @@ namespace HoojaWeb.Controllers
                 }
             }
         }
+
+        public async Task<IActionResult> CreateCampaign()
+        {
+            var newCampaign = new AddCampaignViewModel();
+
+            return View(newCampaign);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateCampaign(AddCampaignViewModel newCampaign)
+        {
+            var apiNewCampaign = new
+            {
+                CampaignName = newCampaign.CampaignName,
+                CampaignStart = newCampaign.CampaignStart,
+                CampaignEnd = newCampaign.CampaignEnd,
+                DiscountPercentage = newCampaign.DiscountPercentage
+            };
+
+            var newCampaignJson = JsonConvert.SerializeObject(apiNewCampaign);
+
+            var newCampaignString = new StringContent(newCampaignJson, Encoding.UTF8, "application/json");
+
+            using (var httpClient = new HttpClient())
+            {
+                var resp = await httpClient.PostAsync($"{link}api/CampaignCode", newCampaignString);
+
+                if (resp.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("index");
+                }
+                else
+                {
+                    return RedirectToAction("CreateCampaign");
+                }
+            }
+        }
+
+        public async Task<IActionResult> RemoveCampaignConfirm(int campaignCodeId)
+        {
+            var campaignCode = await httpClient.GetAsync($"{link}api/CampaignCode/CampaignCode-By{campaignCodeId}");
+
+            if (!campaignCode.IsSuccessStatusCode)
+            {
+                //FIX: borde vara internal server error 500
+                return BadRequest();
+            }
+
+            var campaignById = await httpClient.GetAsync($"{link}api/CampaignCode/CampaignCode-By{campaignCodeId}");
+
+            var resp = await campaignById.Content.ReadAsStringAsync();
+
+            var campaign = JsonConvert.DeserializeObject<EditCampaignViewModel>(resp);
+
+            var thecampaign = new EditCampaignViewModel();
+            thecampaign.CampaignCodeId = campaignCodeId;
+            thecampaign.CampaignName = campaign.CampaignName;
+            thecampaign.CampaignStart = campaign.CampaignStart;
+            thecampaign.CampaignEnd = campaign.CampaignEnd;
+            thecampaign.DiscountPercentage = campaign.DiscountPercentage;
+            return View(thecampaign);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveCampaign(int campaignCodeId)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                var resp = await httpClient.DeleteAsync($"{link}api/CampaignCode/Delete-CampaignCode{campaignCodeId}");
+
+                if (resp.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("index");
+                }
+                else
+                {
+                    return RedirectToAction("index");
+                }
+            }
+        }
     }
 }
 
