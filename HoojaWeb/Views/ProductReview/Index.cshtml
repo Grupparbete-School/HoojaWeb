@@ -1,38 +1,34 @@
-﻿@model IEnumerable<HoojaWeb.ViewModels.ProductReview.ProductReviewGetViewModel>
-
-@{
-    ViewData["Title"] = "Product Reviews";
-}
-
-<style>
-    .carousel .card-body {
-        max-height: 250px;
-        overflow-y: auto;
-    }
-</style>
-
-@if (Model != null)
+﻿@if (Model != null)
 {
-    <div id="carouselReviews" class="carousel slide" data-bs-ride="carousel" >
+    <div id="carouselReviews" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
-            @foreach (var (item, index) in Model.Select((item, index) => (item, index)))
+            @foreach (var item in Model)
             {
+                var index = Model.IndexOf(item);
                 <div class="carousel-item @(index == 0 ? "active" : "")">
                     <div class="card shadow-sm">
                         <div class="card-body">
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex">
                                 <div class="flex-grow-1">
                                     <h4 class="card-title">@item.ProductName</h4>
                                     <p class="card-text">@item.Review</p>
                                     <p class="card-text">By: @item.CustomerName</p>
                                     <p class="card-text">@item.ReviewOfDate.ToString("yyyy-MM-dd")</p>
-                                    <p class="card-text">@item.Rating</p>
                                 </div>
                                 <div class="flex-shrink-0">
                                     <div class="avatar">
                                         <img src="https://www.kamerabild.se/sites/kamerabild.se/files/styles/article_image/public/field/image/46994.jpg?itok=genG2ZoV" style="width: 200px;" alt="Avatar" class="img-fluid">
                                     </div>
                                 </div>
+                            </div>
+                            <div class="star-rating mt-2">
+                                @{
+                                    int rating = item.Rating;
+                                    for (int i = 1; i <= 5; i++)
+                                    {
+                                        <span class="star @(i <= rating ? "filled" : "")">&#9733;</span>
+                                    }
+                                }
                             </div>
                         </div>
                     </div>
@@ -54,3 +50,18 @@ else
 {
     <p>No reviews available.</p>
 }
+
+<style>
+    .star-rating {
+        color: #ccc;
+        font-size: 24px;
+    }
+
+        .star-rating .star {
+            display: inline-block;
+        }
+
+            .star-rating .star.filled {
+                color: #ffcc00;
+            }
+</style>
