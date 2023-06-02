@@ -74,7 +74,7 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ShoppingCart" asp-action="Index">Cart</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="ShoppingCart" asp-action="Index"><span id="cartCounter" class="badge bg-primary rounded-pill"></span>Cart</a>
                         </li>
                     </ul>
                 </div>
@@ -320,3 +320,46 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+<script>
+    $(document).ready(function () {
+        var cartCounter = 0;
+
+
+
+        // Retrieve the initial value of cartCounter if it exists
+        if (localStorage.getItem("cartCounter") !== null) {
+            cartCounter = parseInt(localStorage.getItem("cartCounter"));
+        }
+
+
+
+        // Set the initial value in the span element
+        $("#cartCounter").text(cartCounter);
+
+
+
+        // Add event handler to the Add to Cart button
+        $("#addToCartButton").click(function (e) {
+            e.preventDefault();
+
+
+
+            // Increment the counter
+            cartCounter++;
+
+
+
+            // Update the value in the span element
+            $("#cartCounter").text(cartCounter);
+
+
+
+            // Store the updated counter in local storage
+            localStorage.setItem("cartCounter", cartCounter);
+
+
+
+            // Perform any other logic related to adding the product to the cart
+        });
+    });
+</script>

@@ -1,4 +1,5 @@
-﻿
+﻿@using HoojaWeb.ViewModels.Product
+@model List<ProductsViewModel>
 
 @{
     ViewData["Title"] = "Shopping cart";
@@ -23,107 +24,59 @@
                     <div class="card border shadow-0">
                         <div class="m-4">
                             <h4 class="card-title mb-4">Your shopping cart</h4>
-                            <div class="row gy-3 mb-4">
-                                <div class="col-lg-5">
-                                    <div class="me-lg-5">
-                                        <div class="d-flex">
-                                            <img src="./css/Images/P10.jpg" class="border rounded me-3" style="width: 96px; height: 96px;" />
-                                            <div class="">
-                                                <a href="#" class="nav-link">Set of shampoo and conditioner</a>
-                                                <p class="text-muted">Yellow, Jeans</p>
+                            
+                            @foreach(var item in Model)
+                            {
+                                <div class="row gy-3 mb-4">
+                                    <div class="col-lg-5">
+                                        <div class="me-lg-5">
+                                            <div class="d-flex">
+                                                <img src="@item.ProductPicture" class="border rounded me-3" style="width: 96px; height: 96px;" />
+                                                <div class="">
+                                                    <a href="#" class="nav-link">@item.ProductName</a>
+                                                    <p class="text-muted">@item.ProductTypeName</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-2 col-sm-6 col-6 d-flex flex-row flex-lg-column flex-xl-row text-nowrap">
-                                    <div class="">
-                                        <select style="width: 100px;" class="form-select me-4">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
-                                        </select>
+                                    <div class="col-lg-2 col-sm-6 col-6 d-flex flex-row flex-lg-column flex-xl-row text-nowrap">
+                                        <div class="">
+                                            <select style="width: 100px;" class="form-select me-4">
+                                                @for(int i = 1; i <= item.QuantityStock; i++)
+                                                {
+                                                    @if(item.TotalAmount == i)
+                                                    {
+                                                        <option selected>@i</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option>@i</option>
+                                                        //fix logic so it updates amount of total orders before sending a post request.
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="">
+                                            @{
+                                                var price = item.TotalAmount * item.Price;
+                                            }
+                                            <text class="h6">@price kr</text> <br />
+                                            <small class="text-muted text-nowrap"> @item.Price kr / per item </small>
+                                        </div>
                                     </div>
-                                    <div class="">
-                                        <text class="h6">$1156.00</text> <br />
-                                        <small class="text-muted text-nowrap"> $460.00 / per item </small>
-                                    </div>
-                                </div>
-                                <div class="col-lg col-sm-6 d-flex justify-content-sm-center justify-content-md-start justify-content-lg-center justify-content-xl-end mb-2">
-                                    <div class="float-md-end">
-                                        <a href="#" class="btn btn-light border text-danger icon-hover-danger"> Remove</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row gy-3 mb-4">
-                                <div class="col-lg-5">
-                                    <div class="me-lg-5">
-                                        <div class="d-flex">
-                                            <img src="./css/Images/P7.jpg" class="border rounded me-3" style="width: 96px; height: 96px;" />
-                                            <div class="">
-                                                <a href="#" class="nav-link">Shampoo bar</a>
-                                                <p class="text-muted">Blue, Medium</p>
-                                            </div>
+                                    <div class="col-lg col-sm-6 d-flex justify-content-sm-center justify-content-md-start justify-content-lg-center justify-content-xl-end mb-2">
+                                        <div class="float-md-end">
+                                            <a asp-action="Index" asp-controller="ShoppingCart" asp-route-removeItem="@item.ProductId" class="btn btn-light border text-danger icon-hover-danger">
+                                                Remove
+                                                </a>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-2 col-sm-6 col-6 d-flex flex-row flex-lg-column flex-xl-row text-nowrap">
-                                    <div class="">
-                                        <select style="width: 100px;" class="form-select me-4">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
-                                        </select>
-                                    </div>
-                                    <div class="">
-                                        <text class="h6">$44.80</text> <br />
-                                        <small class="text-muted text-nowrap"> $12.20 / per item </small>
-                                    </div>
-                                </div>
-                                <div class="col-lg col-sm-6 d-flex justify-content-sm-center justify-content-md-start justify-content-lg-center justify-content-xl-end mb-2">
-                                    <div class="float-md-end">                                       
-                                        <a href="#" class="btn btn-light border text-danger icon-hover-danger"> Remove</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row gy-3">
-                                <div class="col-lg-5">
-                                    <div class="me-lg-5">
-                                        <div class="d-flex">
-                                            <img src="./css/Images/P8.jpg" class="border rounded me-3" style="width: 96px; height: 96px;" />
-                                            <div class="">
-                                                <a href="#" class="nav-link">Moisturizer</a>
-                                                <p class="text-muted">XL size, Jeans, Blue</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 col-sm-6 col-6 d-flex flex-row flex-lg-column flex-xl-row text-nowrap">
-                                    <div class="">
-                                        <select style="width: 100px;" class="form-select me-4">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
-                                        </select>
-                                    </div>
-                                    <div class="">
-                                        <text class="h6">$1156.00</text> <br />
-                                        <small class="text-muted text-nowrap"> $460.00 / per item </small>
-                                    </div>
-                                </div>
-                                <div class="col-lg col-sm-6 d-flex justify-content-sm-center justify-content-md-start justify-content-lg-center justify-content-xl-end mb-2">
-                                    <div class="float-md-end">
-                                        <a href="#" class="btn btn-light border text-danger icon-hover-danger"> Remove</a>
-                                    </div>
-                                </div>
-                            </div>
+                                @if (item.TotalAmount > item.QuantityStock)
+                                {
+                                    <p>You fucked up brooo!</p>
+                                }
+                            }
                         </div>
 
                         <div class="border-top pt-4 mx-4 mb-4">
@@ -156,20 +109,33 @@
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
                                 <p class="mb-2">Total price:</p>
-                                <p class="mb-2">$329.00</p>
+                                @{int total = 0;}
+                                @foreach(var item in Model)
+                                {
+                                    total += item.Price * item.TotalAmount;
+                                }
+                                <p class="mb-2">@total kr</p>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <p class="mb-2">Discount:</p>
                                 <p class="mb-2 text-success">-$60.00</p>
                             </div>
+                            @*Foreach with the Model and then if-statement to check if coupon code exists and if so apply the math.*@
                             <div class="d-flex justify-content-between">
                                 <p class="mb-2">TAX:</p>
-                                <p class="mb-2">$14.00</p>
+                                @{
+                                    decimal afterTax = 0;
+                                }
+                                @foreach (var item in Model)
+                                {
+                                    afterTax += (int)(item.Price * item.TotalAmount * 0.25);
+                                }
+                                <p class="mb-2">@afterTax kr</p>
                             </div>
                             <hr />
                             <div class="d-flex justify-content-between">
                                 <p class="mb-2">Total price:</p>
-                                <p class="mb-2 fw-bold">$283.00</p>
+                                <p class="mb-2 fw-bold">@total kr</p> 
                             </div>
 
                             <div class="mt-3">

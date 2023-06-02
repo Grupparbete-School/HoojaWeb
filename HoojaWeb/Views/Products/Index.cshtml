@@ -5,6 +5,7 @@
 }
 @model List<ProductsViewModel>
 
+
 @{
     var products = ViewData["Products"] as List<ProductsViewModel>;
     var totalPages = (int)ViewData["TotalPages"];
@@ -13,6 +14,7 @@
 
 <!-- Breadcrumbs -->
 <nav aria-label="breadcrumb">
+    <a class="nav-link text-dark" asp-area="" asp-controller="ShoppingCart" asp-action="Index"><span id="cartCounter" class="badge bg-primary rounded-pill"></span>Cart</a>
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
         <li class="breadcrumb-item active" aria-current="page">Products</li>
@@ -420,7 +422,7 @@
         <!-- Sort by end-->
 
         </header>
-                @foreach(var item in products)
+                @foreach (var item in products)
                 {
                     <div class="row justify-content-center mb-3">
                         <div class="col-md-12">
@@ -476,14 +478,15 @@
                                         <div class="col-xl-3 col-md-3 col-sm-5">
                                             <div class="d-flex flex-row align-items-center mb-1">
                                                 <h4 class="mb-1 me-1">@item.Price kr</h4>
-        @*//FIX vi lägger tillbaka denna när vi fixar rabattkoder för logiken: <span class="text-danger"><s>@item.Price kr</s></span> *@
+                                                @*//FIX vi lägger tillbaka denna när vi fixar rabattkoder för logiken: <span class="text-danger"><s>@item.Price kr</s></span> *@
                                             </div>
                                             <h6 class="text-success">Free shipping</h6>
                                             <div class="mt-4">
-        @*//FIX if sats för customer vs admin*@
-        @*//FIX när vi implementerar identity lägger vi denna för customer: <a asp-controller="Customer" asp-action="AddToCart" asp-route-productId="@item.ProductId" class="btn btn-primary yellow shadow-0">Add to cart</a>
+                                                <a class="btn btn-primary yellow shadow-0 addToCartButton addToCart" data-product-id="@item.ProductId" data-quantity="1">
+                                                    Add to cart
+                                                </a>
                                                 <br />
-                                                <br />*@
+                                                <br />
                                                 <a asp-controller="Products" asp-action="EditProduct" asp-route-productId="@item.ProductId" class="btn btn-primary yellow shadow-0">Edit Product</a>
                                                 <br/>
                                                 <br />
@@ -536,3 +539,94 @@
     </div>
   </div>
 </section>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Handle the click event for buttons with the 'addToCartButton' class
+        $('.addToCartButton').click(function () {
+            // Extract the product ID and quantity from the button's data attributes
+            var productId = $(this).data('product-id');
+            var quantity = $(this).data('quantity');
+
+            // Retrieve the existing cartItems cookie value
+            var cartItems = getCookie('cartItems');
+            if (cartItems === '') {
+                cartItems = {};
+            } else {
+                cartItems = JSON.parse(cartItems);
+            }
+
+            // Check if the product already exists in the cart
+            if (cartItems.hasOwnProperty(productId)) {
+                // If the product exists, increment the quantity
+                cartItems[productId] += quantity;
+            } else {
+                // If the product does not exist, add it to the cart with the initial quantity
+                cartItems[productId] = quantity;
+            }
+
+            // Save the updated cartItems as a regular cookie
+            setCookie('cartItems', JSON.stringify(cartItems));
+
+            // Helper functions for working with cookies
+            function getCookie(name) {
+                var value = "; " + document.cookie;
+                var parts = value.split("; " + name + "=");
+                if (parts.length === 2) return parts.pop().split(";").shift();
+                return '';
+            }
+
+            function setCookie(name, value) {
+                var date = new Date();
+                date.setTime(date.getTime() + (7 * 24 * 60 * 60 * 1000)); // Set the cookie expiration time (7 days in this example)
+                var expires = "expires=" + date.toUTCString();
+                var cookie = name + "=" + value + "; " + expires + "; path=/"; // Regular cookie without HttpOnly flag
+                document.cookie = cookie;
+            }
+        });
+    });
+</script>
+
+    $(document).ready(function () {
+        var cartCounter = 0;
+
+
+
+        // Retrieve the initial value of cartCounter if it exists
+        if (localStorage.getItem("cartCounter") !== null) {
+            cartCounter = parseInt(localStorage.getItem("cartCounter"));
+        }
+
+
+
+        // Set the initial value in the span element
+        $("#cartCounter").text(cartCounter);
+
+
+
+        // Add event handler to the Add to Cart button
+        $(".addToCart").click(function (e) {
+            e.preventDefault();
+
+
+
+            // Increment the counter
+            cartCounter++;
+
+
+
+            // Update the value in the span element
+            $("#cartCounter").text(cartCounter);
+
+
+
+            // Store the updated counter in local storage
+            localStorage.setItem("cartCounter", cartCounter);
+
+
+
+            // Perform any other logic related to adding the product to the cart
+        });
+    });
+</script>
+
