@@ -11,6 +11,6 @@ namespace HoojaWeb.ViewModels.ProductReview
         [DisplayName("Customer")]
         public string? CustomerName { get; set; }
 
-        public List<ProductViewListModel> ProductsList { get; set; }
+        public List<ProductViewListModel>? ProductsList { get; set; }
     }
 }

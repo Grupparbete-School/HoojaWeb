@@ -64,11 +64,12 @@ namespace HoojaWeb.Controllers
             try
             {
                 // Perform a GET request to retrieve the list of products
-                HttpResponseMessage productsResponse = await httpClient.GetAsync($"{reviewLink}api/ProductReview/GetAllReviews");
+                HttpResponseMessage productsResponse = await httpClient.GetAsync($"{reviewLink}api/Product/GetAllProduct");
 
                 if (productsResponse.IsSuccessStatusCode)
                 {
                     var responsBodyProductList = await productsResponse.Content.ReadAsStringAsync();
+
                     var productsList = JsonConvert.DeserializeObject<List<ProductViewListModel>>(responsBodyProductList);
 
                     // Create a new instance of the ProductReviewCreateViewModel
@@ -102,10 +103,11 @@ namespace HoojaWeb.Controllers
             {
                 var apiNewReview = new
                 {
-                    ProductId = newReview.FK_ProductId,
+                    FK_ProductId = newReview.FK_ProductId,
                     Review = newReview.Review,
                     Rating = newReview.Rating,
                     CustomerName = newReview.CustomerName,
+
                 };
 
                 var newReviewsJson = JsonConvert.SerializeObject(apiNewReview);
