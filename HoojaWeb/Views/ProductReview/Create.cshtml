@@ -1,0 +1,37 @@
+﻿@model HoojaWeb.ViewModels.ProductReview.ProductReviewPostViewModel
+
+<h2>Create Review</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.FK_ProductId, "Product")
+        @Html.DropDownListFor(model => model.FK_ProductId, new SelectList(Model.ProductsList, "ProductId", "ProductName"), "-- Select a product --", new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Review)
+        @Html.TextAreaFor(model => model.Review, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Rating)
+        @Html.TextBoxFor(model => model.Rating, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CustomerName)
+        @Html.TextBoxFor(model => model.CustomerName, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+}
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.5.0/js/bootstrap.bundle.min.js"></script>
+}

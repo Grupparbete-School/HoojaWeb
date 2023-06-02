@@ -1,0 +1,56 @@
+﻿@model IEnumerable<HoojaWeb.ViewModels.ProductReview.ProductReviewGetViewModel>
+
+@{
+    ViewData["Title"] = "Product Reviews";
+}
+
+<style>
+    .carousel .card-body {
+        max-height: 200px;
+        overflow-y: auto;
+    }
+</style>
+
+@if (Model != null)
+{
+    <div id="carouselReviews" class="carousel slide" data-bs-ride="carousel" >
+        <div class="carousel-inner">
+            @foreach (var (item, index) in Model.Select((item, index) => (item, index)))
+            {
+                <div class="carousel-item @(index == 0 ? "active" : "")">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div class="flex-grow-1">
+                                    <h4 class="card-title">@item.ProductName</h4>
+                                    <p class="card-text">@item.Review</p>
+                                    <p class="card-text">By: @item.CustomerName</p>
+                                    <p class="card-text">@item.ReviewOfDate.ToString("yyyy-MM-dd")</p>
+                                    <p class="card-text">@item.Rating</p>
+                                </div>
+                                <div class="flex-shrink-0">
+                                    <div class="avatar">
+                                        <img src="https://www.kamerabild.se/sites/kamerabild.se/files/styles/article_image/public/field/image/46994.jpg?itok=genG2ZoV" style="width: 200px;" alt="Avatar" class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselReviews" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselReviews" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <a class="btn btn-dark" asp-area="" asp-controller="ProductReview" asp-action="Create">Create Review</a>
+}
+else
+{
+    <p>No reviews available.</p>
+}
