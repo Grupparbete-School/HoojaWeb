@@ -46,28 +46,33 @@
     </div>
 
     <div class="card mt-3">
-        <form asp-action="Delete" method="post" class="mt-3">
+        <form asp-action="Delete" method="get" class="mt-3" id="deleteForm">
             <div class="form-group">
-                <label for="reviewId">Select Review to Delete:</label>
+                <label for="reviewId">Select Review:</label>
                 <select class="form-select" id="reviewId" name="reviewId">
+                    <option value="" disabled selected>-- Reviews --</option>
                     @foreach (var item in Model)
                     {
                         <option value="@item.ReviewId">@item.Review</option>
                     }
                 </select>
             </div>
-            <button type="submit" class="btn btn-danger">Delete</button>
-           
+            <div class="btn-group" role="group" aria-label="Review Actions">
+                <button type="submit" class="btn btn-danger">Delete</button>
+                <a href="#" class="btn btn-primary" id="editButton">Edit</a>
+            </div>
         </form>
     </div>
+
     <div class="card mt-3">
         <form asp-action="Edit" method="post" class="mt-3">
             <div class="form-group">
                 <label for="reviewId">Select Review to Edit:</label>
                 <select class="form-select" id="reviewId" name="reviewId">
+                    <option value="" disabled selected>-- Reviews --</option>
                     @foreach (var item in Model)
                     {
-                        <option value="@item.ReviewId">@item.Review</option>
+                        <option value="@item.ReviewId">@item.ReviewId | @item.Review | @item.ProductName | @item.CustomerName</option>
                     }
                 </select>
             </div>
@@ -81,6 +86,37 @@ else
     <p>No reviews available.</p>
 }
 
+
+<script>
+    //popup innan delete för att vara säker att den ska delete
+    // Attach an event listener to the form submission
+    document.getElementById("deleteForm").addEventListener("submit", function (event) {
+        // Prevent the default form submission
+        event.preventDefault();
+
+        // Display the confirmation dialog
+        if (confirm("Are you sure you want to delete the selected review?")) {
+            // If confirmed, submit the form
+            this.submit();
+        }
+    });
+
+    // Handle the click event of the Edit button
+    document.getElementById("editButton").addEventListener("click", function (event) {
+        event.preventDefault();
+
+        // Get the selected review id from the dropdown
+        var selectedReviewId = document.getElementById("reviewId").value;
+
+        // Generate the edit URL based on the selected review id
+        var editUrl = "@Url.Action("Edit", "ProductReview")" + "?reviewId=" + selectedReviewId;
+
+        // Navigate to the Edit page
+        window.location.href = editUrl;
+    });
+</script>
+
+@*för rating stars färg/hover effekt*@
 <style>
     .star-rating {
         color: #ccc;
@@ -95,3 +131,4 @@ else
                 color: #ffcc00;
             }
 </style>
+

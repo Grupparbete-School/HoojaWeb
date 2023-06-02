@@ -1,8 +1,8 @@
-﻿@model IEnumerable<HoojaWeb.ViewModels.ProductReview.ProductReviewGetViewModel>
+﻿@model IEnumerable<HoojaWeb.ViewModels.ProductReview.ProductReviewEditViewModel>
 
 <h2>Review List</h2>
 
-<table class="table">
+<table class="table bg-light">
     <thead>
         <tr>
             <th>Review ID</th>
@@ -19,7 +19,7 @@
                 <td>@review.CustomerName</td>
                 <td>@review.Review</td>
                 <td>
-                    <form asp-action="Delete" method="post">
+                    <form asp-action="DeleteConfirmed" method="post">
                         <input type="hidden" name="reviewId" value="@review.ReviewId" />
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>

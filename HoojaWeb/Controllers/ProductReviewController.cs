@@ -136,15 +136,26 @@ namespace HoojaWeb.Controllers
             try
             {
                 // Perform a GET request to retrieve the review details for editing
+                //Hämtar mot endpoint för review id för att kunna editera specific review
                 HttpResponseMessage reviewResponse = await httpClient.GetAsync($"{reviewLink}api/ProductReview/GetAllReviews/ByReviewId/{reviewId}");
 
                 if (reviewResponse.IsSuccessStatusCode)
                 {
+                    // Läs in svaret från GET-begäran som text
                     var responseBody = await reviewResponse.Content.ReadAsStringAsync();
 
+                    // Deserialisera JSON-svaret till en lista av ProductReviewEditViewModel-objekt
                     var reviewList = JsonConvert.DeserializeObject<List<ProductReviewEditViewModel>>(responseBody);
 
+                    // Om JSON-svaret representerar en array av recensioner säkerställer detta steg att deserialiseringen lyckas
+                    // Om JSON-svaret representerar en enskild recension kommer den fortfarande att deserialiseras som en lista med ett element
+
+                    // Potentiell felorsak: Om JSON-svaret inte är en giltig JSON-array kommer deserialiseringen att misslyckas
+                    // Detta kan inträffa om API:et returnerar ett oväntat svarformat eller om det finns ett problem med API:et
+
+                    // Hitta den valda recensionen baserat på reviewId i listan av recensioner
                     var selectedReview = reviewList.FirstOrDefault(r => r.ReviewId == reviewId);
+
 
                     if (selectedReview != null)
                     {
@@ -203,6 +214,8 @@ namespace HoojaWeb.Controllers
                     Review = updatedReview.Review,
                     Rating = updatedReview.Rating,
                     CustomerName = updatedReview.CustomerName,
+                    ReviewOfDate = updatedReview.ReviewOfDate = DateTime.Now,
+
                 };
 
                 var updatedReviewJson = JsonConvert.SerializeObject(apiUpdatedReview);
@@ -227,8 +240,39 @@ namespace HoojaWeb.Controllers
         }
 
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Delete(int reviewId)
+        {
+            try
+            {
+                // Retrieve the review details
+                HttpResponseMessage reviewResponse = await httpClient.GetAsync($"{reviewLink}api/ProductReview/GetAllReviews/ByReviewId/{reviewId}");
+
+                if (reviewResponse.IsSuccessStatusCode)
+                {
+                    var responseBody = await reviewResponse.Content.ReadAsStringAsync();
+                    var review = JsonConvert.DeserializeObject<List<ProductReviewEditViewModel>>(responseBody);
+
+                    return View(review);
+                }
+                else if (reviewResponse.StatusCode == HttpStatusCode.NotFound)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    return StatusCode((int)reviewResponse.StatusCode);
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int reviewId)
         {
             try
             {
@@ -236,6 +280,9 @@ namespace HoojaWeb.Controllers
 
                 if (deleteResponse.IsSuccessStatusCode)
                 {
+                    // Set the confirm message in TempData
+                    TempData["Message"] = "Review deleted successfully.";
+
                     return RedirectToAction("Index");
                 }
                 else if (deleteResponse.StatusCode == HttpStatusCode.NotFound)
@@ -252,5 +299,7 @@ namespace HoojaWeb.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
+
     }
 }
