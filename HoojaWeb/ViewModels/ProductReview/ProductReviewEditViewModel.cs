@@ -9,5 +9,6 @@
         public string? ProductName { get; set; }
         public string? CustomerName { get; set; }
         public DateTime ReviewOfDate { get; set; }
+        public List<ProductViewListModel>? ProductsList { get; set; }
     }
 }

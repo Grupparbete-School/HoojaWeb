@@ -131,46 +131,125 @@ namespace HoojaWeb.Controllers
             }
         }
 
-
-        // GET: ProductReviewController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: ProductReviewController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(int reviewId)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                // Perform a GET request to retrieve the review details for editing
+                HttpResponseMessage reviewResponse = await httpClient.GetAsync($"{reviewLink}api/ProductReview/GetAllReviews/ByReviewId/{reviewId}");
+
+                if (reviewResponse.IsSuccessStatusCode)
+                {
+                    var responseBody = await reviewResponse.Content.ReadAsStringAsync();
+
+                    var reviewList = JsonConvert.DeserializeObject<List<ProductReviewEditViewModel>>(responseBody);
+
+                    var selectedReview = reviewList.FirstOrDefault(r => r.ReviewId == reviewId);
+
+                    if (selectedReview != null)
+                    {
+                        // Retrieve the list of products
+                        HttpResponseMessage productsResponse = await httpClient.GetAsync($"{reviewLink}api/Product/GetAllProduct");
+
+                        if (productsResponse.IsSuccessStatusCode)
+                        {
+                            var responseBodyProductList = await productsResponse.Content.ReadAsStringAsync();
+                            var productsList = JsonConvert.DeserializeObject<List<ProductViewListModel>>(responseBodyProductList);
+
+                            selectedReview.ProductsList = productsList;
+
+                            return View(selectedReview);
+                        }
+                        else if (productsResponse.StatusCode == HttpStatusCode.NotFound)
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            return StatusCode((int)productsResponse.StatusCode);
+                        }
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
+                }
+                else if (reviewResponse.StatusCode == HttpStatusCode.NotFound)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    return StatusCode((int)reviewResponse.StatusCode);
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
 
-        // GET: ProductReviewController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
 
-        // POST: ProductReviewController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> EditConfirm(int reviewId, ProductReviewEditViewModel updatedReview)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var apiUpdatedReview = new
+                {
+                    ReviewId = updatedReview.ReviewId,
+                    FK_ProductId = updatedReview.FK_ProductId,
+                    Review = updatedReview.Review,
+                    Rating = updatedReview.Rating,
+                    CustomerName = updatedReview.CustomerName,
+                };
+
+                var updatedReviewJson = JsonConvert.SerializeObject(apiUpdatedReview);
+
+                var updatedReviewString = new StringContent(updatedReviewJson, Encoding.UTF8, "application/json");
+
+                var response = await httpClient.PutAsync($"{reviewLink}api/ProductReview/UpdateProductReview/{reviewId}", updatedReviewString);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int reviewId)
+        {
+            try
+            {
+                HttpResponseMessage deleteResponse = await httpClient.DeleteAsync($"{reviewLink}api/ProductReview/DeleteProductReview/{reviewId}");
+
+                if (deleteResponse.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index");
+                }
+                else if (deleteResponse.StatusCode == HttpStatusCode.NotFound)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    return StatusCode((int)deleteResponse.StatusCode);
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
     }

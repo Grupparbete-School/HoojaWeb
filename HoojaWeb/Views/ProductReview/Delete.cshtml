@@ -1,0 +1,30 @@
+﻿@model IEnumerable<HoojaWeb.ViewModels.ProductReview.ProductReviewGetViewModel>
+
+<h2>Review List</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Review ID</th>
+            <th>Customer Name</th>
+            <th>Review</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var review in Model)
+        {
+            <tr>
+                <td>@review.ReviewId</td>
+                <td>@review.CustomerName</td>
+                <td>@review.Review</td>
+                <td>
+                    <form asp-action="Delete" method="post">
+                        <input type="hidden" name="reviewId" value="@review.ReviewId" />
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -44,6 +44,36 @@
             <span class="visually-hidden">Next</span>
         </button>
     </div>
+
+    <div class="card mt-3">
+        <form asp-action="Delete" method="post" class="mt-3">
+            <div class="form-group">
+                <label for="reviewId">Select Review to Delete:</label>
+                <select class="form-select" id="reviewId" name="reviewId">
+                    @foreach (var item in Model)
+                    {
+                        <option value="@item.ReviewId">@item.Review</option>
+                    }
+                </select>
+            </div>
+            <button type="submit" class="btn btn-danger">Delete</button>
+           
+        </form>
+    </div>
+    <div class="card mt-3">
+        <form asp-action="Edit" method="post" class="mt-3">
+            <div class="form-group">
+                <label for="reviewId">Select Review to Edit:</label>
+                <select class="form-select" id="reviewId" name="reviewId">
+                    @foreach (var item in Model)
+                    {
+                        <option value="@item.ReviewId">@item.Review</option>
+                    }
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Edit</button>
+        </form>
+    </div>
     <a class="btn btn-dark mt-3" asp-area="" asp-controller="ProductReview" asp-action="Create">Create Review</a>
 }
 else
