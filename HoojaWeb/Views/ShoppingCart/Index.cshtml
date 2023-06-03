@@ -3,6 +3,7 @@
 
 @{
     ViewData["Title"] = "Shopping cart";
+    int idOfItem = 0;
 }
 
 
@@ -41,19 +42,56 @@
                                     </div>
                                     <div class="col-lg-2 col-sm-6 col-6 d-flex flex-row flex-lg-column flex-xl-row text-nowrap">
                                         <div class="">
-                                            <select style="width: 100px;" class="form-select me-4">
+                                            <select id="quantityDropdown" style="width: 100px;" class="form-select me-4">
                                                 @for(int i = 1; i <= item.QuantityStock; i++)
                                                 {
                                                     @if(item.TotalAmount == i)
                                                     {
-                                                        <option selected>@i</option>
+
+                                                        <script>
+                                                            $(document).ready(function () {
+                                                                $('#quantityDropdown').change(function () {
+                                                                    var selectedQuantity = $(this).val();  // Get the selected value
+                                                                    var itemId = '@item.ProductId';  // Get the item ID
+
+                                                                    var cartItems = getCookie('cartItems');  // Get the current value of the 'cartitems' cookie
+                                                                    var updatedCartItems = updateCartItem(cartItems, itemId, selectedQuantity);  // Update the cart item
+
+                                                                    // Update the 'cartitems' cookie with the updated value
+                                                                    document.cookie = 'cartItems=' + updatedCartItems + '; path=/';
+
+                                                                });
+                                                                // Function to retrieve the value of a cookie by name
+                                                                function getCookie(name) {
+                                                                    var cookieArr = document.cookie.split(';');
+                                                                    for (var i = 0; i < cookieArr.length; i++) {
+                                                                        var cookiePair = cookieArr[i].split('=');
+                                                                        if (name === cookiePair[0].trim()) {
+                                                                            return decodeURIComponent(cookiePair[1]);
+                                                                        }
+                                                                    }
+                                                                    return null;
+                                                                }
+
+                                                                // Function to update the cart item in the 'cartitems' cookie
+                                                                function updateCartItem(cartItems, itemId, selectedQuantity) {
+                                                                    var cartItemsObj = JSON.parse(cartItems || '{}');
+                                                                    cartItemsObj[itemId] = parseInt(selectedQuantity);
+                                                                    return JSON.stringify(cartItemsObj);
+                                                                }
+                                                            });
+                                                        </script>
+
+                                                        <option value="@i" selected>@i</option>
                                                     }
                                                     else
                                                     {
-                                                        <option>@i</option>
+                                                        <option value ="@i">@i</option>
                                                         //fix logic so it updates amount of total orders before sending a post request.
                                                     }
+                                                    
                                                 }
+                                                
                                             </select>
                                         </div>
                                         <div class="">
@@ -242,9 +280,6 @@
     </section>
     <!-- Recommended -->
 </div>
-
-
-
 
 @*
 <div class="container">

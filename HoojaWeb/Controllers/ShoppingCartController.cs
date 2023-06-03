@@ -25,8 +25,9 @@ namespace HoojaWeb.Controllers
         }
         public async Task<IActionResult> Index(int page = 1, int removeItem = 0)
         {
-            //hämta alla produkter
+            List<ProductsViewModel> orders = new List<ProductsViewModel>();
 
+            //hämta alla produkter
 
             int productsPerPage = 5;
             //hämtar "cookie" som sparas med vår token vid inloggningen.
@@ -100,40 +101,45 @@ namespace HoojaWeb.Controllers
             //we map the value into a dictionary and add it to cartItems.
             var cartItems = JsonConvert.DeserializeObject<Dictionary<int, int>>(cartItemsJson);
 
-            foreach(var item in cartItems)
+            if(cartItems != null)
             {
-                if (removeItem == item.Key)
+                foreach (var item in cartItems)
                 {
-
-                    cartItems.Remove(removeItem);
-                    break;
-                }
-            }
-            // Serialize the modified cartItems dictionary back to JSON
-            cartItemsJson = JsonConvert.SerializeObject(cartItems);
-
-            // Create a new cookie with the updated cartItems value
-            var updatedCookie = "cartItems=" + cartItemsJson;
-
-            // Update the cookie in the response headers
-            Response.Headers.Append("Set-Cookie", updatedCookie);
-
-            //filtrera produkterna utifrån "key" inuti cartItems
-            List<ProductsViewModel> orders = new List<ProductsViewModel>();
-
-            foreach(var product in productData)
-            {
-                foreach(var productId in cartItems)
-                {
-                    if (product.ProductId == productId.Key)
+                    if (removeItem == item.Key)
                     {
-                        product.TotalAmount = productId.Value;
-                        orders.Add(product);
+
+                        cartItems.Remove(removeItem);
+                        break;
                     }
                 }
-            }
+                // Serialize the modified cartItems dictionary back to JSON
+                cartItemsJson = JsonConvert.SerializeObject(cartItems);
 
-            return View(orders);
+                // Create a new cookie with the updated cartItems value
+                var updatedCookie = "cartItems=" + cartItemsJson;
+
+                // Update the cookie in the response headers
+                Response.Headers.Append("Set-Cookie", updatedCookie);
+
+                //filtrera produkterna utifrån "key" inuti cartItems
+                foreach (var product in productData)
+                {
+                    foreach (var productId in cartItems)
+                    {
+                        if (product.ProductId == productId.Key)
+                        {
+                            product.TotalAmount = productId.Value;
+                            orders.Add(product);
+                        }
+                    }
+                }
+                return View(orders);
+            }
+            
+            else
+            {
+                return View(orders);
+            }
         }
     }
 }
