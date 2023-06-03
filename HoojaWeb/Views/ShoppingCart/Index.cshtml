@@ -247,44 +247,58 @@
 </div>
 <script>
     $(document).ready(function () {
-        $('select[id^="quantityDropdown"]').change(function () {
-            var selectedQuantity = $(this).val();  // Get the selected value
-            var itemId = $(this).attr('id').split('-')[1];  // Get the item ID from the element's ID attribute
-
-
-
-            var cartItems = getCookie('cartItems');  // Get the current value of the 'cartItems' cookie
-            var updatedCartItems = updateCartItem(cartItems, itemId, selectedQuantity);  // Update the cart item
-
-
-
-            // Update the 'cartItems' cookie with the updated value
-            document.cookie = 'cartItems=' + updatedCartItems + '; path=/';
-        });
-    });
-
-
-
-    // Function to retrieve the value of a cookie by name
-    function getCookie(name) {
-        var cookieArr = document.cookie.split(';');
-        for (var i = 0; i < cookieArr.length; i++) {
-            var cookiePair = cookieArr[i].split('=');
-            if (name === cookiePair[0].trim()) {
-                return decodeURIComponent(cookiePair[1]);
+        // Function to retrieve the value of a cookie by name
+        function getCookie(name) {
+            var cookieArr = document.cookie.split(';');
+            for (var i = 0; i < cookieArr.length; i++) {
+                var cookiePair = cookieArr[i].split('=');
+                if (name === cookiePair[0].trim()) {
+                    return decodeURIComponent(cookiePair[1]);
+                }
             }
+            return null;
         }
-        return null;
-    }
 
+        // Function to update the cart item in the 'cartItems' cookie
+        function updateCartItem(cartItems, itemId, selectedQuantity) {
+            var cartItemsObj = JSON.parse(cartItems || '{}');
+            cartItemsObj[itemId] = parseInt(selectedQuantity);
+            return JSON.stringify(cartItemsObj);
+        }
 
+        // Function to update the cart counter in localStorage and on the page
+        function updateCartCounter(cartCounter) {
+            localStorage.setItem('cartCounter', cartCounter);
+            $("#cartCounter").text(cartCounter);
+        }
 
-    // Function to update the cart item in the 'cartItems' cookie
-    function updateCartItem(cartItems, itemId, selectedQuantity) {
-        var cartItemsObj = JSON.parse(cartItems || '{}');
-        cartItemsObj[itemId] = parseInt(selectedQuantity);
-        return JSON.stringify(cartItemsObj);
-    }
+        $('select[id^="quantityDropdown"]').change(function () {
+            var selectedQuantity = $(this).val();
+            var itemId = $(this).attr('id').split('-')[1];
+
+            var cartItems = getCookie('cartItems');
+            var updatedCartItems = updateCartItem(cartItems, itemId, selectedQuantity);
+            document.cookie = 'cartItems=' + updatedCartItems + '; path=/';
+
+            var cartCounter = 0;
+            if (updatedCartItems !== null) {
+                var cartItemsObj = JSON.parse(updatedCartItems);
+                for (var key in cartItemsObj) {
+                    cartCounter += cartItemsObj[key];
+                }
+            }
+
+            updateCartCounter(cartCounter);
+        });
+
+        // Update the cart counter when the page loads
+        var storedCartCounter = localStorage.getItem('cartCounter');
+        if (storedCartCounter !== null) {
+            $("#cartCounter").text(storedCartCounter);
+        } else {
+            updateCartCounter(0);
+        }
+    });
 </script>
 
 @*
