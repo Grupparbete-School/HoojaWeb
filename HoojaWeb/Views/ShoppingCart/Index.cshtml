@@ -45,18 +45,18 @@
                                             <select id="quantityDropdown-@item.ProductId" style="width: 120px;" class="form-select me-4">
                                                 @for(int i = 1; i <= item.QuantityStock; i++)
                                                 {
+                                                    
                                                     @if(item.TotalAmount == i)
                                                     {
                                                         <option value="@i" selected>@i</option>
+
                                                     }
                                                     else
                                                     {
                                                         <option value ="@i">@i</option>
                                                         //fix logic so it updates amount of total orders before sending a post request.
                                                     }
-                                                    
                                                 }
-                                                
                                             </select>
                                         </div>
                                         <div class="">
@@ -69,7 +69,7 @@
                                     </div>
                                     <div class="col-lg col-sm-6 d-flex justify-content-sm-center justify-content-md-start justify-content-lg-center justify-content-xl-end mb-2">
                                         <div class="float-md-end">
-                                            <a asp-action="Index" asp-controller="ShoppingCart" asp-route-removeItem="@item.ProductId" class="btn btn-light border text-danger icon-hover-danger">
+                                            <a id="removeItem-@item.ProductId" data-value="@item.TotalAmount" asp-action="Index" asp-controller="ShoppingCart" asp-route-removeItem="@item.ProductId" class="btn btn-light border text-danger icon-hover-danger">
                                                 Remove
                                                 </a>
                                         </div>
@@ -277,6 +277,7 @@
             var itemId = $(this).attr('id').split('-')[1];
 
             var cartItems = getCookie('cartItems');
+            console.log(cartItems);
             var updatedCartItems = updateCartItem(cartItems, itemId, selectedQuantity);
             document.cookie = 'cartItems=' + updatedCartItems + '; path=/';
 
@@ -298,9 +299,22 @@
         } else {
             updateCartCounter(0);
         }
+        function getCartCounter() {
+            var total = localStorage.getItem('cartCounter');
+            return parseInt(total)
+        }
+        $('a[id^="removeItem"]').click(function () {
+            var selectedQuantity = getCookie('cartItems');
+            
+            var itemId = $(this).attr('id').split('-')[1];
+            var parsedQuantity = JSON.parse(selectedQuantity);
+            var total = getCartCounter();
+            total = total - parsedQuantity[itemId];
+
+            updateCartCounter(total);
+        });
     });
 </script>
-
 
 @*
 <div class="container">
