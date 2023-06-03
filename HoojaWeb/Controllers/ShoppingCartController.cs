@@ -121,14 +121,27 @@ namespace HoojaWeb.Controllers
                 // Update the cookie in the response headers
                 Response.Headers.Append("Set-Cookie", updatedCookie);
 
+                //int maxQuantityAllowed = productData.Max(i => i.QuantityStock);
+
                 //filtrera produkterna utifrån "key" inuti cartItems
                 foreach (var product in productData)
                 {
+                    int maxQuantityAllowed = 0;
                     foreach (var productId in cartItems)
                     {
                         if (product.ProductId == productId.Key)
                         {
-                            product.TotalAmount = productId.Value;
+                            maxQuantityAllowed = product.QuantityStock;
+
+                            if (productId.Value >= maxQuantityAllowed)
+                            {
+                                product.TotalAmount = maxQuantityAllowed;
+                            }
+                            else
+                            {
+                                product.TotalAmount = productId.Value;
+                            }
+                            
                             orders.Add(product);
                         }
                     }

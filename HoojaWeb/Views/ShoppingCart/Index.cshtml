@@ -42,46 +42,11 @@
                                     </div>
                                     <div class="col-lg-2 col-sm-6 col-6 d-flex flex-row flex-lg-column flex-xl-row text-nowrap">
                                         <div class="">
-                                            <select id="quantityDropdown" style="width: 100px;" class="form-select me-4">
+                                            <select id="quantityDropdown-@item.ProductId" style="width: 120px;" class="form-select me-4">
                                                 @for(int i = 1; i <= item.QuantityStock; i++)
                                                 {
                                                     @if(item.TotalAmount == i)
                                                     {
-
-                                                        <script>
-                                                            $(document).ready(function () {
-                                                                $('#quantityDropdown').change(function () {
-                                                                    var selectedQuantity = $(this).val();  // Get the selected value
-                                                                    var itemId = '@item.ProductId';  // Get the item ID
-
-                                                                    var cartItems = getCookie('cartItems');  // Get the current value of the 'cartitems' cookie
-                                                                    var updatedCartItems = updateCartItem(cartItems, itemId, selectedQuantity);  // Update the cart item
-
-                                                                    // Update the 'cartitems' cookie with the updated value
-                                                                    document.cookie = 'cartItems=' + updatedCartItems + '; path=/';
-
-                                                                });
-                                                                // Function to retrieve the value of a cookie by name
-                                                                function getCookie(name) {
-                                                                    var cookieArr = document.cookie.split(';');
-                                                                    for (var i = 0; i < cookieArr.length; i++) {
-                                                                        var cookiePair = cookieArr[i].split('=');
-                                                                        if (name === cookiePair[0].trim()) {
-                                                                            return decodeURIComponent(cookiePair[1]);
-                                                                        }
-                                                                    }
-                                                                    return null;
-                                                                }
-
-                                                                // Function to update the cart item in the 'cartitems' cookie
-                                                                function updateCartItem(cartItems, itemId, selectedQuantity) {
-                                                                    var cartItemsObj = JSON.parse(cartItems || '{}');
-                                                                    cartItemsObj[itemId] = parseInt(selectedQuantity);
-                                                                    return JSON.stringify(cartItemsObj);
-                                                                }
-                                                            });
-                                                        </script>
-
                                                         <option value="@i" selected>@i</option>
                                                     }
                                                     else
@@ -280,6 +245,47 @@
     </section>
     <!-- Recommended -->
 </div>
+<script>
+    $(document).ready(function () {
+        $('select[id^="quantityDropdown"]').change(function () {
+            var selectedQuantity = $(this).val();  // Get the selected value
+            var itemId = $(this).attr('id').split('-')[1];  // Get the item ID from the element's ID attribute
+
+
+
+            var cartItems = getCookie('cartItems');  // Get the current value of the 'cartItems' cookie
+            var updatedCartItems = updateCartItem(cartItems, itemId, selectedQuantity);  // Update the cart item
+
+
+
+            // Update the 'cartItems' cookie with the updated value
+            document.cookie = 'cartItems=' + updatedCartItems + '; path=/';
+        });
+    });
+
+
+
+    // Function to retrieve the value of a cookie by name
+    function getCookie(name) {
+        var cookieArr = document.cookie.split(';');
+        for (var i = 0; i < cookieArr.length; i++) {
+            var cookiePair = cookieArr[i].split('=');
+            if (name === cookiePair[0].trim()) {
+                return decodeURIComponent(cookiePair[1]);
+            }
+        }
+        return null;
+    }
+
+
+
+    // Function to update the cart item in the 'cartItems' cookie
+    function updateCartItem(cartItems, itemId, selectedQuantity) {
+        var cartItemsObj = JSON.parse(cartItems || '{}');
+        cartItemsObj[itemId] = parseInt(selectedQuantity);
+        return JSON.stringify(cartItemsObj);
+    }
+</script>
 
 @*
 <div class="container">
