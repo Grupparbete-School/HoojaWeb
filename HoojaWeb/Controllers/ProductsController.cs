@@ -1,4 +1,5 @@
-﻿using HoojaWeb.ViewModels.Product;
+﻿using HoojaWeb.ViewModels.CampaignCode;
+using HoojaWeb.ViewModels.Product;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -81,19 +82,23 @@ namespace HoojaWeb.Controllers
             return View();
         }
 
+        // Working on drop down list for campaign codes
         public async Task<IActionResult> EditProduct(int productId)
         {
             var prodTypeResp = await httpClient.GetAsync($"{link}api/Product/GetProductType");
+            var campaignCodeResp = await httpClient.GetAsync($"{link}api/CampaignCode/GetAllCampaignCode"); //Added
 
-            if (!prodTypeResp.IsSuccessStatusCode)
+            if (!prodTypeResp.IsSuccessStatusCode && !campaignCodeResp.IsSuccessStatusCode) //Added "&& !campaignCodeResp.IsSuccessStatusCode"
             {
                 //FIX: borde vara internal server error 500
                 return BadRequest();
             }
 
             var respBodyProdList = await prodTypeResp.Content.ReadAsStringAsync();
+            var respBodyCampaignList = await campaignCodeResp.Content.ReadAsStringAsync(); //Added
 
             List<ProductTypeViewModel> prodTypeList = JsonConvert.DeserializeObject<List<ProductTypeViewModel>>(respBodyProdList);
+            List<CampaignCodesViewModel> campaignCodeList = JsonConvert.DeserializeObject<List<CampaignCodesViewModel>>(respBodyCampaignList); //Added
 
             var productById = await httpClient.GetAsync($"{link}api/Product/Product-By{productId}");
 
@@ -110,9 +115,12 @@ namespace HoojaWeb.Controllers
             theproduct.Price = product.Price;
             theproduct.ProductTypeList = prodTypeList;
             theproduct.SelectedProductTypeId = product.fK_ProductTypeId;
+            /*theproduct.CampaignCodeList = campaignCodeList; */                        //Added
+           /* theproduct.SelectedCampaignCodeId = (int)product.FK_CampaignCodeId;*/     //Added. Fungerar inte
             theproduct.FK_CampaignCodeId = product.FK_CampaignCodeId;
             theproduct.CampaignName = product.CampaignName;
             theproduct.IsActive = product.IsActive;
+            
             return View(theproduct);
         }
 
@@ -233,9 +241,10 @@ namespace HoojaWeb.Controllers
                 QuantityStock = editProduct.QuantityStock,
                 Price = editProduct.Price,
                 ProductTypeId = editProduct.SelectedProductTypeId,
-                FK_CampaignCodeId = editProduct.FK_CampaignCodeId,
+                //FK_CampaignCodeId = editProduct.FK_CampaignCodeId,
                 CampaignName = editProduct.CampaignName,
-                IsActive = editProduct.FK_CampaignCodeId,
+                IsActive = isActive,
+                CampaignCodeId = editProduct.SelectedCampaignCodeId,
             };
 
             var jsonProduct = JsonConvert.SerializeObject(apiProductToEdit);
