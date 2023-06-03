@@ -79,16 +79,16 @@
                     <input type="number" class="form-control" id="price" name="Price" value="@Model.Price" required>
                     </div>
 
-                    @*chatPias förslag för att kunna välja kampanj*@
-                   @* <div class="form-group col-md-12">
-                        <label for="SelectedCampaignCodeId" class="form-label form-label-custom fw-bold">Campaign Code:</label>
-                        <select id="SelectedCampaignCodeId" name="SelectedCampaignCodeId" class="form-control">
-                            @foreach (var campaignCode in Model.CampaignCodeList)
-                            {
-                            <option value="@campaignCode.CampaignCodeId" selected="@(campaignCode.CampaignCodeId == Model.SelectedCampaignCodeId)">@campaignCode.CampaignName</option>
-                            }
-                        </select>
-                    </div>*@
+
+                <div class="form-group col-md-12">
+                    <label for="campaignCode" class="form-label form-label-custom fw-bold">Campaign Code:</label>
+                    <select class="form-select custom-productTypeDropdown" id="campaignCode" name="SelectedCampaignCodeId">
+                        @foreach (var item in Model.CampaignCodeList)
+                        {
+                            <option value="@item.CampaignCodeId" selected="@(item.CampaignCodeId == Model.SelectedProductTypeId)">@item.CampaignName</option>
+                        }
+                    </select>
+                </div>
 
 
                 <hr />
@@ -97,7 +97,7 @@
                 </div>
             </form>
             
-        
+
         </div>
     </div>
 </div>
