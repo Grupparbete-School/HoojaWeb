@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HoojaWeb.ViewModels.OrderHistory
 {
@@ -44,12 +43,15 @@ namespace HoojaWeb.ViewModels.OrderHistory
         {
             get { return (Price ?? 0) * (Amount ?? 0); }
         }
+        //public decimal? TotalPrice { get; set; }
 
-        //Produkt grupp
+        public string Currency { get; set; }
+
+        // Product group
         public int? ProductTypeId { get; set; }
         public string? ProductTypeName { get; set; }
 
-        //Kampanj
+        // Campaign
         public int? CampaignCodeId { get; set; }
         public string? CampaignName { get; set; }
 
@@ -74,9 +76,10 @@ namespace HoojaWeb.ViewModels.OrderHistory
 
         [DisplayName("Security no")]
         public string? SecurityNumber { get; set; }
+
         public string? Email { get; set; }
 
-        //Adress
+        // Address
         public int? AddressId { get; set; }
 
         [DisplayName("Street")]

@@ -10,6 +10,9 @@ using System.Linq;
 using HoojaWeb.ViewModels;
 using HoojaWeb.ViewModels.Customer;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using HoojaWeb.Models;
+using HoojaWeb.ViewModels.Currency;
+using Newtonsoft.Json.Linq;
 
 namespace HoojaWeb.Controllers
 {
@@ -166,99 +169,127 @@ namespace HoojaWeb.Controllers
             }
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // GET: OrderHistoryController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: OrderHistoryController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public IActionResult ConvertCurrency(string from, string to, decimal amount)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+                string apiKey = "8fcea166cd8c4dea8e3ca1c7c442a712"; // Replace with your actual API key
+                string endpoint = "convert";
 
-        // GET: OrderHistoryController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
+                // Set the URL for the API request
+                string apiUrl = $"https://api.exchangeratesapi.io/v1/{endpoint}?access_key={apiKey}&from={from}&to={to}&amount={amount}";
 
-        // POST: OrderHistoryController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+                // Create a new instance of HttpClient
+                HttpClient httpClient = new HttpClient();
 
-        // GET: OrderHistoryController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+                // Send the API request and get the response
+                HttpResponseMessage response = httpClient.GetAsync(apiUrl).Result;
 
-        // POST: OrderHistoryController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
+                // Check if the response is successful
+                if (response.IsSuccessStatusCode)
+                {
+                    // Read the response content as JSON
+                    string jsonResult = response.Content.ReadAsStringAsync().Result;
+
+                    // Parse the JSON response
+                    var result = JsonConvert.DeserializeObject<dynamic>(jsonResult);
+
+                    // Access the conversion result in result.result
+                    decimal conversionResult = result.result;
+
+                    // Return the conversion result as a response
+                    return Ok(conversionResult);
+                }
+                else
+                {
+                    // Handle non-successful status codes with specific error messages
+                    if (response.StatusCode == HttpStatusCode.NotFound)
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        return View("ServerError");
+                    }
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                // Log the exception or perform any necessary actions
+                Log.Logger = new LoggerConfiguration()
+                    .WriteTo.File("Logs/applog.txt", rollingInterval: RollingInterval.Day)
+                    .CreateLogger();
+
+                // You can also return a custom error view with a more detailed error message
+                return View("Error");
             }
         }
+       
     }
 }
+
+
+    //    // GET: OrderHistoryController/Create
+    //    public ActionResult Create()
+    //        {
+    //            return View();
+    //        }
+
+    //        // POST: OrderHistoryController/Create
+    //        [HttpPost]
+    //        [ValidateAntiForgeryToken]
+    //        public ActionResult Create(IFormCollection collection)
+    //        {
+    //            try
+    //            {
+    //                return RedirectToAction(nameof(Index));
+    //            }
+    //            catch
+    //            {
+    //                return View();
+    //            }
+    //        }
+
+    //        // GET: OrderHistoryController/Edit/5
+    //        public ActionResult Edit(int id)
+    //        {
+    //            return View();
+    //        }
+
+    //        // POST: OrderHistoryController/Edit/5
+    //        [HttpPost]
+    //        [ValidateAntiForgeryToken]
+    //        public ActionResult Edit(int id, IFormCollection collection)
+    //        {
+    //            try
+    //            {
+    //                return RedirectToAction(nameof(Index));
+    //            }
+    //            catch
+    //            {
+    //                return View();
+    //            }
+    //        }
+
+    //        // GET: OrderHistoryController/Delete/5
+    //        public ActionResult Delete(int id)
+    //        {
+    //            return View();
+    //        }
+
+    //        // POST: OrderHistoryController/Delete/5
+    //        [HttpPost]
+    //        [ValidateAntiForgeryToken]
+    //        public ActionResult Delete(int id, IFormCollection collection)
+    //        {
+    //            try
+    //            {
+    //                return RedirectToAction(nameof(Index));
+    //            }
+    //            catch
+    //            {
+    //                return View();
+    //            }
+    //        }
+    //    }
+
