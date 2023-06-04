@@ -33,7 +33,7 @@ namespace HoojaWeb.Controllers
             var allProducts = await httpClient.GetAsync($"{link}api/Product/GetAllProduct");
             var productTypes = await httpClient.GetAsync($"{link}api/Product/GetProductType");
 
-//FIX? try catch med felhantering typ om inga produkter hittas säger den det eller gör den det nu??
+            //FIX? try catch med felhantering typ om inga produkter hittas säger den det eller gör den det nu??
 
             if (allProducts.IsSuccessStatusCode && productTypes.IsSuccessStatusCode)
             {
@@ -77,28 +77,39 @@ namespace HoojaWeb.Controllers
             return View();
         }
 
-        public IActionResult ProductDetails()
+        public async Task<IActionResult> ProductDetails(int productId)
         {
-            return View();
+
+            var allProducts = await httpClient.GetAsync($"{link}api/Product/Product-By{productId}");
+
+            if (allProducts.IsSuccessStatusCode)
+            {
+                var productsRespBody = await allProducts.Content.ReadAsStringAsync();
+
+                var productData = JsonConvert.DeserializeObject<ProductsViewModel>(productsRespBody);
+
+                return View(productData);
+            }
+            return View("error");
         }
 
         // Working on drop down list for campaign codes
         public async Task<IActionResult> EditProduct(int productId)
         {
             var prodTypeResp = await httpClient.GetAsync($"{link}api/Product/GetProductType");
-            var campaignCodeResp = await httpClient.GetAsync($"{link}api/CampaignCode/GetAllCampaignCode"); 
+            var campaignCodeResp = await httpClient.GetAsync($"{link}api/CampaignCode/GetAllCampaignCode");
 
-            if (!prodTypeResp.IsSuccessStatusCode && !campaignCodeResp.IsSuccessStatusCode) 
+            if (!prodTypeResp.IsSuccessStatusCode && !campaignCodeResp.IsSuccessStatusCode)
             {
                 //FIX: borde vara internal server error 500
                 return BadRequest();
             }
 
             var respBodyProdList = await prodTypeResp.Content.ReadAsStringAsync();
-            var respBodyCampaignList = await campaignCodeResp.Content.ReadAsStringAsync(); 
+            var respBodyCampaignList = await campaignCodeResp.Content.ReadAsStringAsync();
 
             List<ProductTypeViewModel> prodTypeList = JsonConvert.DeserializeObject<List<ProductTypeViewModel>>(respBodyProdList);
-            List<CampaignCodesViewModel> campaignCodeList = JsonConvert.DeserializeObject<List<CampaignCodesViewModel>>(respBodyCampaignList); 
+            List<CampaignCodesViewModel> campaignCodeList = JsonConvert.DeserializeObject<List<CampaignCodesViewModel>>(respBodyCampaignList);
 
             var productById = await httpClient.GetAsync($"{link}api/Product/Product-By{productId}");
 
@@ -118,8 +129,8 @@ namespace HoojaWeb.Controllers
                 theproduct.Price = product.Price;
                 theproduct.ProductTypeList = prodTypeList;
                 theproduct.SelectedProductTypeId = product.fK_ProductTypeId;
-                theproduct.CampaignCodeList = campaignCodeList;                         
-                theproduct.SelectedCampaignCodeId = (int)product.FK_CampaignCodeId;     
+                theproduct.CampaignCodeList = campaignCodeList;
+                theproduct.SelectedCampaignCodeId = (int)product.FK_CampaignCodeId;
                 theproduct.IsActive = product.IsActive;
             }
             else
@@ -132,10 +143,10 @@ namespace HoojaWeb.Controllers
                 theproduct.Price = product.Price;
                 theproduct.ProductTypeList = prodTypeList;
                 theproduct.SelectedProductTypeId = product.fK_ProductTypeId;
-                theproduct.CampaignCodeList = campaignCodeList;                        
+                theproduct.CampaignCodeList = campaignCodeList;
                 theproduct.IsActive = product.IsActive;
             }
-            
+
             return View(theproduct);
         }
 
@@ -280,7 +291,7 @@ namespace HoojaWeb.Controllers
             return View("Index", null);
         }
 
-        
+
 
         public async Task<IActionResult> CreateProduct()
         {
@@ -334,7 +345,7 @@ namespace HoojaWeb.Controllers
             }
         }
 
-        public async Task<IActionResult> RemoveProductConfirm(int productId) 
+        public async Task<IActionResult> RemoveProductConfirm(int productId)
         {
             var prodTypeResp = await httpClient.GetAsync($"{link}api/Product/GetProductType");
 
