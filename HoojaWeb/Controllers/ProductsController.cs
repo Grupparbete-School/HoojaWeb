@@ -86,9 +86,9 @@ namespace HoojaWeb.Controllers
         public async Task<IActionResult> EditProduct(int productId)
         {
             var prodTypeResp = await httpClient.GetAsync($"{link}api/Product/GetProductType");
-            var campaignCodeResp = await httpClient.GetAsync($"{link}api/CampaignCode/GetAllCampaignCode"); //Added
+            var campaignCodeResp = await httpClient.GetAsync($"{link}api/CampaignCode/GetAllCampaignCode"); 
 
-            if (!prodTypeResp.IsSuccessStatusCode && !campaignCodeResp.IsSuccessStatusCode) //Added "&& !campaignCodeResp.IsSuccessStatusCode"
+            if (!prodTypeResp.IsSuccessStatusCode && !campaignCodeResp.IsSuccessStatusCode) 
             {
                 //FIX: borde vara internal server error 500
                 return BadRequest();
