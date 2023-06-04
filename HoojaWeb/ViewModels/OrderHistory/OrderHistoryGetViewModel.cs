@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HoojaWeb.ViewModels.OrderHistory
 {
@@ -9,16 +8,17 @@ namespace HoojaWeb.ViewModels.OrderHistory
         [DisplayName("ORDER ID")]
         public int OrderId { get; set; }
 
-        //Order
+        // Order
         [DisplayName("Kommentar")]
         public string? OrderComment { get; set; }
 
         [DisplayName("Order Datum")]
         public DateTime OrderDate { get; set; }
+
         [DisplayName("Beräknat leveransdatum")]
         public DateTime DeliveryDate { get; set; }
 
-        //Produkt
+        // Product
         [DisplayName("Produkt Id")]
         public int ProductId { get; set; }
 
@@ -37,23 +37,24 @@ namespace HoojaWeb.ViewModels.OrderHistory
         [DisplayName("Antal")]
         public int? Amount { get; set; }
 
-        [NotMapped]
-
-        [DisplayName("Summa")]
+        [DisplayName("Total price")]
         public decimal TotalPrice
         {
             get { return (Price ?? 0) * (Amount ?? 0); }
         }
+        //public decimal? TotalPrice { get; set; }
 
-        //Produkt grupp
+        public string Currency { get; set; }
+
+        // Product group
         public int? ProductTypeId { get; set; }
         public string? ProductTypeName { get; set; }
 
-        //Kampanj
+        // Campaign
         public int? CampaignCodeId { get; set; }
         public string? CampaignName { get; set; }
 
-        //Kund
+        // Customer
         [DisplayName("Kund Id")]
         public int customerId { get; set; }
 
@@ -71,9 +72,10 @@ namespace HoojaWeb.ViewModels.OrderHistory
 
         [DisplayName("Personnummer")]
         public string? SecurityNumber { get; set; }
+
         public string? Email { get; set; }
 
-        //Adress
+        // Address
         public int? AddressId { get; set; }
 
         [DisplayName("Gata")]

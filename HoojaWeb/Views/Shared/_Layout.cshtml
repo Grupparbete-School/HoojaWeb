@@ -32,13 +32,13 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Brands">Brands</a>
                         </li>
-                        <li class="nav-item">
+                      @*  <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="CampaignCode" asp-action="Index">Campaigns</a>
                         </li>
 
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="PostNord" asp-action="Index">PostNord</a>
-                        </li>
+                        </li>*@
                       <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="OrderHistory" asp-action="Index">History</a>
                       </li>
@@ -52,8 +52,8 @@
                                 All categories
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" asp-area="" asp-controller="#" asp-action="#">Category 1</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="#" asp-action="#">Category 2</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="ChangeCurrency" asp-action="AllCurrencyList">All Currencys</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="ChangeCurrency" asp-action="CurrencyList">Currency small</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" asp-area="" asp-controller="#" asp-action="#">Category 3</a>
                             </div>
