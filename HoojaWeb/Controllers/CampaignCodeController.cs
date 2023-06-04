@@ -55,13 +55,18 @@ namespace HoojaWeb.Controllers
         [HttpPost]
         public async Task<ActionResult> EditCampaign(EditCampaignViewModel editCampaign)
         {
+            if (editCampaign.DiscountInt == null)
+            {
+                editCampaign.DiscountInt = (int)editCampaign.DiscountPercentage;
+            }
+
             var apiCampaignToEdit = new
             {
                 CampaignCodeId = editCampaign.CampaignCodeId,
                 CampaignName = editCampaign.CampaignName,
                 CampaignStart = editCampaign.CampaignStart,
                 CampaignEnd = editCampaign.CampaignEnd,
-                DiscountPercentage = editCampaign.DiscountPercentage,
+                DiscountPercentage = editCampaign.DiscountInt,
             };
 
             var jsonCampaign = JsonConvert.SerializeObject(apiCampaignToEdit);
@@ -73,7 +78,7 @@ namespace HoojaWeb.Controllers
 
                 if (resp.IsSuccessStatusCode)
                 {
-                    return RedirectToAction("Edit");
+                    return RedirectToAction("Index");
                 }
                 else if (resp.StatusCode == HttpStatusCode.BadRequest)
                 {
@@ -81,7 +86,7 @@ namespace HoojaWeb.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("index");
+                    return RedirectToAction("EditCampaign");
                 }
             }
         }
@@ -110,7 +115,7 @@ namespace HoojaWeb.Controllers
 
             using (var httpClient = new HttpClient())
             {
-                var resp = await httpClient.PostAsync($"{link}api/CampaignCode", newCampaignString);
+                var resp = await httpClient.PostAsync($"{link}api/CampaignCode/AddCampaign", newCampaignString);
 
                 if (resp.IsSuccessStatusCode)
                 {

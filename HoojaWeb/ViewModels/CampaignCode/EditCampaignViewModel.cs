@@ -12,6 +12,12 @@
 
         public decimal? DiscountPercentage { get; set; }
 
+        public int DiscountInt
+        {
+            get { return (int)DiscountPercentage; }
+            set { DiscountPercentage = value; }
+        }
+
         public bool? IsActive { get; set; } = false;
     }
 }
