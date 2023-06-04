@@ -33,30 +33,35 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Brands">Brands</a>
                         </li>
-                      @*  <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="CampaignCode" asp-action="Index">Campaigns</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="PostNord" asp-action="Index">PostNord</a>
-                        </li>*@
-                      <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="OrderHistory" asp-action="Index">History</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="ProductReview" asp-action="Index">Reviews</a>
-                      </li>
-
+                        @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="CampaignCode" asp-action="Index">Campaigns</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="PostNord" asp-action="Index">PostNord</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="OrderHistory" asp-action="Index">History</a>
+                            </li>
+                        }
                         <!-- dropdown menu - fix active button turning black-->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                All categories
+                                All links
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" asp-area="" asp-controller="ChangeCurrency" asp-action="AllCurrencyList">All Currencys</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="ChangeCurrency" asp-action="CurrencyList">Currency small</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="CampaignCode" asp-action="Index">Campaigns</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="PostNord" asp-action="Index">PostNord</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="OrderHistory" asp-action="Index">History</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" asp-area="" asp-controller="#" asp-action="#">Category 3</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="ProductReview" asp-action="Index">Reviews</a>
                             </div>
                         </li>
                     </ul>
@@ -65,19 +70,34 @@
                             <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Login
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Products" asp-action="CreateProduct">Add new product</a>
-                                <hr />
-                                <a class="dropdown-item" asp-area="" asp-controller="Chat" asp-action="Index">Support</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="SendEmail" asp-action="SendEmail">Email</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" asp-area="" asp-controller="#" asp-action="#">Log out</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Login" asp-action="OrderDetailsCustomer">Order Details Customer</a>
-                            </div>
+                            @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
+                            {
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Products" asp-action="CreateProduct">Add new product</a>
+                                    <hr />
+                                    <a class="dropdown-item" asp-area="" asp-controller="Chat" asp-action="Index">Support</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="SendEmail" asp-action="SendEmail">Email</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" asp-area="" asp-controller="#" asp-action="#">Log out</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Login" asp-action="OrderDetailsCustomer">Order Details Customer</a>
+                                </div>
+                            }else
+                            {
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
+                                    <hr />
+                                    <a class="dropdown-item" asp-area="" asp-controller="Chat" asp-action="Index">Support</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="SendEmail" asp-action="SendEmail">Email</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" asp-area="" asp-controller="#" asp-action="#">Log out</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Login" asp-action="OrderDetailsCustomer">Order Details Customer</a>
+                                </div>
+                            }
+                            
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ShoppingCart" asp-action="Index">Cart</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="ShoppingCart" asp-action="Index"><span id="cartCounter" class="badge bg-primary rounded-pill"></span>Cart</a>
                         </li>
                     </ul>
                 </div>
@@ -86,7 +106,7 @@
     </header>
 
 
-    <!-- side navigation -->
+@*    <!-- side navigation -->
     <div class="wrapper">
 
         
@@ -145,7 +165,7 @@
                     </div>
                 </li>*@
 
-                <li class="nav-item p-2 ms-2 dropdown">
+    @*               <li class="nav-item p-2 ms-2 dropdown">
                     <a class="dropdown-toggle text-dark nav-link"
                        href="#" 
                         id="navbarDropdown" 
@@ -178,7 +198,8 @@
             </ul>
 
         </section>
-
+    </div>
+    <!-- side navigation -->*@
 
     <section>
         <main role="main" class="pb-3 main">
@@ -186,8 +207,7 @@
         </main>
     </section>
 
-    </div>
-    <!-- side navigation -->
+
 
 
     <!-- Footer -->
@@ -311,15 +331,53 @@
     <!-- Footer -->
 
 
-    <!-- credits: https://www.codeply.com/p/EJd6H4Ejyi -->
-@*    <footer class="footer text-muted">
-        <div class="container-footer">
-            &copy; @DateTime.Now.Year - Hare|Care -
-        </div>
-    </footer>*@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+<script>
+    $(document).ready(function () {
+        var cartCounter = 0;
+
+
+
+        // Retrieve the initial value of cartCounter if it exists
+        if (localStorage.getItem("cartCounter") !== null) {
+            cartCounter = parseInt(localStorage.getItem("cartCounter"));
+        }
+
+
+
+        // Set the initial value in the span element
+        $("#cartCounter").text(cartCounter);
+
+
+
+        // Add event handler to the Add to Cart button
+        $("#addToCartButton").click(function (e) {
+            e.preventDefault();
+
+
+
+            // Increment the counter
+            cartCounter++;
+
+
+
+            // Update the value in the span element
+            $("#cartCounter").text(cartCounter);
+
+
+
+            // Store the updated counter in local storage
+            localStorage.setItem("cartCounter", cartCounter);
+
+
+
+            // Perform any other logic related to adding the product to the cart
+        });
+    });
+</script>

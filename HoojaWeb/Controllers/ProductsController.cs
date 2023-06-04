@@ -1,4 +1,5 @@
-﻿using HoojaWeb.ViewModels.Product;
+﻿using HoojaWeb.ViewModels.CampaignCode;
+using HoojaWeb.ViewModels.Product;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -32,7 +33,7 @@ namespace HoojaWeb.Controllers
             var allProducts = await httpClient.GetAsync($"{link}api/Product/GetAllProduct");
             var productTypes = await httpClient.GetAsync($"{link}api/Product/GetProductType");
 
-//FIX? try catch med felhantering typ om inga produkter hittas säger den det eller gör den det nu??
+            //FIX? try catch med felhantering typ om inga produkter hittas säger den det eller gör den det nu??
 
             if (allProducts.IsSuccessStatusCode && productTypes.IsSuccessStatusCode)
             {
@@ -76,24 +77,39 @@ namespace HoojaWeb.Controllers
             return View();
         }
 
-        public IActionResult ProductDetails()
+        public async Task<IActionResult> ProductDetails(int productId)
         {
-            return View();
+
+            var allProducts = await httpClient.GetAsync($"{link}api/Product/Product-By{productId}");
+
+            if (allProducts.IsSuccessStatusCode)
+            {
+                var productsRespBody = await allProducts.Content.ReadAsStringAsync();
+
+                var productData = JsonConvert.DeserializeObject<ProductsViewModel>(productsRespBody);
+
+                return View(productData);
+            }
+            return View("error");
         }
 
+        // Working on drop down list for campaign codes
         public async Task<IActionResult> EditProduct(int productId)
         {
             var prodTypeResp = await httpClient.GetAsync($"{link}api/Product/GetProductType");
+            var campaignCodeResp = await httpClient.GetAsync($"{link}api/CampaignCode/GetAllCampaignCode");
 
-            if (!prodTypeResp.IsSuccessStatusCode)
+            if (!prodTypeResp.IsSuccessStatusCode && !campaignCodeResp.IsSuccessStatusCode)
             {
                 //FIX: borde vara internal server error 500
                 return BadRequest();
             }
 
             var respBodyProdList = await prodTypeResp.Content.ReadAsStringAsync();
+            var respBodyCampaignList = await campaignCodeResp.Content.ReadAsStringAsync();
 
             List<ProductTypeViewModel> prodTypeList = JsonConvert.DeserializeObject<List<ProductTypeViewModel>>(respBodyProdList);
+            List<CampaignCodesViewModel> campaignCodeList = JsonConvert.DeserializeObject<List<CampaignCodesViewModel>>(respBodyCampaignList);
 
             var productById = await httpClient.GetAsync($"{link}api/Product/Product-By{productId}");
 
@@ -102,19 +118,73 @@ namespace HoojaWeb.Controllers
             var product = JsonConvert.DeserializeObject<EditProductsViewModel>(resp);
 
             var theproduct = new EditProductsViewModel();
-            theproduct.ProductId = productId;
-            theproduct.ProductName = product.ProductName;
-            theproduct.ProductPicture = product.ProductPicture;
-            theproduct.ProductDescription = product.ProductDescription;
-            theproduct.QuantityStock = product.QuantityStock;
-            theproduct.Price = product.Price;
-            theproduct.ProductTypeList = prodTypeList;
-            theproduct.SelectedProductTypeId = product.fK_ProductTypeId;
-            theproduct.FK_CampaignCodeId = product.FK_CampaignCodeId;
-            theproduct.CampaignName = product.CampaignName;
-            theproduct.IsActive = product.IsActive;
+
+            if (product.FK_CampaignCodeId != null)
+            {
+                theproduct.ProductId = productId;
+                theproduct.ProductName = product.ProductName;
+                theproduct.ProductPicture = product.ProductPicture;
+                theproduct.ProductDescription = product.ProductDescription;
+                theproduct.QuantityStock = product.QuantityStock;
+                theproduct.Price = product.Price;
+                theproduct.ProductTypeList = prodTypeList;
+                theproduct.SelectedProductTypeId = product.fK_ProductTypeId;
+                theproduct.CampaignCodeList = campaignCodeList;
+                theproduct.SelectedCampaignCodeId = (int)product.FK_CampaignCodeId;
+                theproduct.IsActive = product.IsActive;
+            }
+            else
+            {
+                theproduct.ProductId = productId;
+                theproduct.ProductName = product.ProductName;
+                theproduct.ProductPicture = product.ProductPicture;
+                theproduct.ProductDescription = product.ProductDescription;
+                theproduct.QuantityStock = product.QuantityStock;
+                theproduct.Price = product.Price;
+                theproduct.ProductTypeList = prodTypeList;
+                theproduct.SelectedProductTypeId = product.fK_ProductTypeId;
+                theproduct.CampaignCodeList = campaignCodeList;
+                theproduct.IsActive = product.IsActive;
+            }
+
             return View(theproduct);
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> EditProduct(EditProductsViewModel editProduct, bool isActive)
+        {
+            var apiProductToEdit = new
+            {
+                ProductId = editProduct.ProductId,
+                ProductName = editProduct.ProductName,
+                ProductPicture = editProduct.ProductPicture,
+                ProductDescription = editProduct.ProductDescription,
+                QuantityStock = editProduct.QuantityStock,
+                Price = editProduct.Price,
+                ProductTypeId = editProduct.SelectedProductTypeId,
+                CampaignCodeId = editProduct.SelectedCampaignCodeId,
+                IsActive = isActive,
+            };
+
+            var jsonProduct = JsonConvert.SerializeObject(apiProductToEdit);
+            var content = new StringContent(jsonProduct, Encoding.UTF8, "application/json");
+
+            using (var httpClient = new HttpClient())
+            {
+                var resp = await httpClient.PutAsync($"{link}api/Product/{editProduct.ProductId}", content);
+
+                if (resp.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("index");
+                }
+                else
+                {
+                    return RedirectToAction("index");
+                }
+            }
+        }
+
 
         [HttpGet]
         public async Task<IActionResult> FilterProductsOnSearch(string searchTerm)
@@ -221,40 +291,7 @@ namespace HoojaWeb.Controllers
             return View("Index", null);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> EditProduct(EditProductsViewModel editProduct, bool isActive)
-        {
-            var apiProductToEdit = new
-            {
-                ProductId = editProduct.ProductId,
-                ProductName = editProduct.ProductName,
-                ProductPicture = editProduct.ProductPicture,
-                ProductDescription = editProduct.ProductDescription,
-                QuantityStock = editProduct.QuantityStock,
-                Price = editProduct.Price,
-                ProductTypeId = editProduct.SelectedProductTypeId,
-                FK_CampaignCodeId = editProduct.FK_CampaignCodeId,
-                CampaignName = editProduct.CampaignName,
-                IsActive = editProduct.FK_CampaignCodeId,
-            };
 
-            var jsonProduct = JsonConvert.SerializeObject(apiProductToEdit);
-            var content = new StringContent(jsonProduct, Encoding.UTF8, "application/json");
-
-            using (var httpClient = new HttpClient())
-            {
-                var resp = await httpClient.PutAsync($"{link}api/Product/{editProduct.ProductId}", content);
-
-                if (resp.IsSuccessStatusCode)
-                {
-                    return RedirectToAction("index");
-                }
-                else
-                {
-                    return RedirectToAction("index");
-                }
-            }
-        }
 
         public async Task<IActionResult> CreateProduct()
         {
@@ -308,7 +345,7 @@ namespace HoojaWeb.Controllers
             }
         }
 
-        public async Task<IActionResult> RemoveProductConfirm(int productId) 
+        public async Task<IActionResult> RemoveProductConfirm(int productId)
         {
             var prodTypeResp = await httpClient.GetAsync($"{link}api/Product/GetProductType");
 
