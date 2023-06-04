@@ -1,0 +1,70 @@
+﻿@model HoojaWeb.ViewModels.ProductReview.ProductReviewPostViewModel
+
+<form asp-action="Create" method="post">
+    <div class="container">
+        <div class="card mt-5">
+            <div class="card-body">
+                <h2 class="card-title">Create Review</h2>
+                <div class="form-group">
+                    <label asp-for="FK_ProductId">Product</label>
+                    <select asp-for="FK_ProductId" class="form-select">
+                        <option value="">-- Select a product --</option>
+                        @foreach (var product in Model.ProductsList)
+                        {
+                            <option value="@product.ProductId">@product.ProductName</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Review"></label>
+                    <textarea asp-for="Review" class="form-control"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Rating</label>
+                    <div class="star-rating">
+                        <input type="radio" id="star5" name="rating" value="5"/>
+                        <label for="star5">&#9733;</label>
+                        <input type="radio" id="star4" name="rating" value="4" />
+                        <label for="star4">&#9733;</label>
+                        <input type="radio" id="star3" name="rating" value="3" />
+                        <label for="star3">&#9733;</label>
+                        <input type="radio" id="star2" name="rating" value="2" />
+                        <label for="star2">&#9733;</label>
+                        <input type="radio" id="star1" name="rating" value="1" />
+                        <label for="star1">&#9733;</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="CustomerName"></label>
+                    <input asp-for="CustomerName" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary mt-3">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<style>
+    .star-rating input[type="radio"] {
+        display: none;
+    }
+
+    .star-rating label {
+        display: inline-block;
+        cursor: pointer;
+        color: #ccc;
+        font-size: 24px;
+    }
+
+    .star-rating label:hover,
+    .star-rating label:hover ~ label,
+    .star-rating input[type="radio"]:checked ~ label {
+        color: #ffcc00;
+    }
+</style>

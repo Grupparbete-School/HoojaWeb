@@ -288,7 +288,7 @@ namespace HoojaWeb.Controllers
 
             if (!prodTypeResp.IsSuccessStatusCode)
             {
-//FIX: borde vara internal server error 500
+                //FIX: borde vara internal server error 500
                 return BadRequest();
             }
 
@@ -334,13 +334,13 @@ namespace HoojaWeb.Controllers
             }
         }
 
-        public async Task<IActionResult> RemoveProductConfirm(int productId)
+        public async Task<IActionResult> RemoveProductConfirm(int productId) 
         {
             var prodTypeResp = await httpClient.GetAsync($"{link}api/Product/GetProductType");
 
             if (!prodTypeResp.IsSuccessStatusCode)
             {
-//FIX: borde vara internal server error 500
+                //FIX: borde vara internal server error 500
                 return BadRequest();
             }
 
