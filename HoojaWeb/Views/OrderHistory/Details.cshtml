@@ -2,143 +2,88 @@
 @using HoojaWeb.ViewModels.OrderHistory
 @model IEnumerable<HoojaWeb.ViewModels.OrderHistory.OrderHistoryGetViewModel>
 
-<div class="table-responsive">
-    <h1>Detaljerad information order</h1>
+    <!-- Breadcrumbs -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item"><a asp-area="" asp-controller="Login" asp-action="Index">Login</a></li>
+            <li class="breadcrumb-item"><a asp-area="" asp-controller="OrderHistory" asp-action="Index">Order history</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Order details</li>
+        </ol>
+    </nav>
+    <!-- Breadcrumbs end -->
 
-    <a asp-action="Index" class="btn btn-primary">Tillbaka till lista</a>
-    <hr />
 
-    <div class="table table-striped table-hover table-light">
-        <table>
-            <thead>
-                <tr>
-                    <th>@Html.DisplayNameFor(model => model.FullName)</th>
-                    <th>@Html.DisplayNameFor(model => model.Street)</th>
-                    <th>@Html.DisplayNameFor(model => model.PostalCode)</th>
-                    <th>@Html.DisplayNameFor(model => model.City)</th>
-                    <th>@Html.DisplayNameFor(model => model.Email)</th>
-                    <th>@Html.DisplayNameFor(model => model.PhoneNumber)</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model.Any())
-                {
-                    var firstCustomer = Model.First(); // Assuming at least one customer exists in the list
+<section class="container container-fluid container-blue">
+    <div class="d-flex flex-column flex-shrink-0 p-3">
+        <h1>Detaljerad information order </h1>
 
+        @*<a asp-action="Index" class="btn btn-primary">Tillbaka till lista</a>*@
+        <hr />
+        <div class="table table-striped table-hover table-light">
+            <table>
+                <thead>
                     <tr>
-                        <td>@firstCustomer.FullName</td>
-                        <td>@firstCustomer.Street</td>
-                        <td>@firstCustomer.PostalCode</td>
-                        <td>@firstCustomer.City</td>
-                        <td>@firstCustomer.Email</td>
-                        <td>@firstCustomer.PhoneNumber</td>
+                        <th>@Html.DisplayNameFor(model => model.FullName)</th>
+                        <th>@Html.DisplayNameFor(model => model.Street)</th>
+                        <th>@Html.DisplayNameFor(model => model.PostalCode)</th>
+                        <th>@Html.DisplayNameFor(model => model.City)</th>
+                        <th>@Html.DisplayNameFor(model => model.Email)</th>
+                        <th>@Html.DisplayNameFor(model => model.PhoneNumber)</th>
                     </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                    @if (Model.Any())
+                    {
+                        var firstCustomer = Model.First(); // Assuming at least one customer exists in the list
 
-    <div class="table table-striped table-hover table-light">
-        <table>
-            <thead>
-                <tr>
-                    <th>@Html.DisplayNameFor(model => model.OrderId)</th>
-                    <th>@Html.DisplayNameFor(model => model.OrderDate)</th>
-                    <th>@Html.DisplayNameFor(model => model.DeliveryDate)</th>
-                    <th>@Html.DisplayNameFor(model => model.ProductId)</th>
-                    <th>@Html.DisplayNameFor(model => model.ProductName)</th>
-                    <th>@Html.DisplayNameFor(model => model.ProductDescription)</th>
-                    <th>@Html.DisplayNameFor(model => model.Price)</th>
-                    <th>@Html.DisplayNameFor(model => model.Amount)</th>
-                    <th>@Html.DisplayNameFor(model => model.TotalPrice)</th>
-                    <th>Currency</th> <!-- Add the currency column header -->
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
+                        <tr>
+                            <td>@firstCustomer.FullName</td>
+                            <td>@firstCustomer.Street</td>
+                            <td>@firstCustomer.PostalCode</td>
+                            <td>@firstCustomer.City</td>
+                            <td>@firstCustomer.Email</td>
+                            <td>@firstCustomer.PhoneNumber</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+        <div class="table table-striped table-hover table-light">
+            <table>
+                <thead>
                     <tr>
-                        <td>@item.OrderId</td>
-                        <td>@item.OrderDate</td>
-                        <td>@item.DeliveryDate</td>
-                        <td>@item.ProductId</td>
-                        <td>@item.ProductName</td>
-                        <td>@item.ProductDescription</td>
-                        <td>@string.Format("{0:N2} kr", item.Price)</td>
-                        <td>@item.Amount</td>
-                        <td class="total-price" data-usd="@item.TotalPrice">@string.Format("{0:N2} kr", item.TotalPrice)</td>
-                        <td>
-                            <form onsubmit="return GetExchangeRate(this)">
-                                <input type="hidden" name="orderId" value="@item.OrderId" />
-                                <select class="form-select" name="currency" onchange="updateTotalPrice(this)">
-                                    <option value="USD">USD</option>
-                                    <option value="EUR">EUR</option>
-                                    <option value="SEK">SEK</option>
-                                    <!-- Add more currency options as needed -->
-                                </select>
-                                <button type="submit" class="btn btn-primary">Change</button>
-                            </form>
-                        </td>
+                        <th>@Html.DisplayNameFor(model => model.OrderId)</th>
+                        <th>@Html.DisplayNameFor(model => model.OrderDate)</th>
+                        <th>@Html.DisplayNameFor(model => model.DeliveryDate)</th>
+                        <th>@Html.DisplayNameFor(model => model.ProductId)</th>
+                        <th>@Html.DisplayNameFor(model => model.ProductName)</th>
+                        <th>@Html.DisplayNameFor(model => model.ProductDescription)</th>
+                        <th>@Html.DisplayNameFor(model => model.Price)</th>
+                        <th>@Html.DisplayNameFor(model => model.Amount)</th>
+                        <th>@Html.DisplayNameFor(model => model.TotalPrice)</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                   @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.OrderId</td>
+                            <td>@item.OrderDate</td>
+                            <td>@item.DeliveryDate</td>
+                            <td>@item.ProductId</td>
+                            <td>@item.ProductName</td>
+                            <td>@item.ProductDescription</td>
+                            <td>@string.Format("{0:N2} kr", item.Price)</td>
+
+                            <td>@item.Amount</td>
+                            <td>@string.Format("{0:N2} kr", item.TotalPrice)</td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
-
-@*<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    function GetExchangeRate(form) {
-        var orderId = $(form).find('input[name="orderId"]').val();
-        var currency = $(form).find('select[name="currency"]').val();
-
-        // Make an AJAX request to fetch the latest exchange rates
-        $.ajax({
-            url: "https://openexchangerates.org/api/latest.json?app_id=8fcea166cd8c4dea8e3ca1c7c442a712",
-            dataType: "jsonp",
-            success: function (data) {
-                var exchangeRates = data.rates;
-                var baseCurrency = data.base;
-                var totalPriceCell = $(form).closest('tr').find('.total-price');
-                var currentUSD = totalPriceCell.data('usd');
-
-                // Calculate the new totalPrice based on the selected currency
-                var newTotalPrice = currentUSD * (1 / exchangeRates[baseCurrency]) * exchangeRates[currency];
-
-                // Update the TotalPrice cell with the new value
-                totalPriceCell.text(formatCurrency(newTotalPrice));
-            },
-            error: function () {
-                alert('An error occurred while fetching the exchange rate.');
-            }
-        });
-
-        return false; // Prevent form submission
-    }
-
-    function formatCurrency(amount) {
-        return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(amount);
-    }
-
-    function updateTotalPrice(select) {
-        var totalPriceCell = $(select).closest('tr').find('.total-price');
-        var currentUSD = totalPriceCell.data('usd');
-        var currency = $(select).val();
-
-        // Update the total price with the new currency
-        var newTotalPrice = currentUSD * getExchangeRate(currency);
-        totalPriceCell.text(formatCurrency(newTotalPrice));
-    }
-
-    function getExchangeRate(currency) {
-        // Replace this function with your own logic to get the exchange rate
-        // You can use the exchange rate data fetched from the API or provide your own rates
-        if (currency === 'USD') {
-            return 1.0;
-        } else if (currency === 'EUR') {
-            return 0.85; // Example conversion rate from USD to EUR
-        } else if (currency === 'SEK') {
-            return 8.96; // Example conversion rate from USD to SEK
-        }
-    }
-</script>*@
+</section>

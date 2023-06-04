@@ -8,34 +8,35 @@ namespace HoojaWeb.ViewModels.OrderHistory
         [DisplayName("ORDER ID")]
         public int OrderId { get; set; }
 
-        // Order
-        [DisplayName("Kommentar")]
+        //Order
+        [DisplayName("Comment")]
         public string? OrderComment { get; set; }
 
-        [DisplayName("Order Datum")]
+        [DisplayName("Order date")]
         public DateTime OrderDate { get; set; }
-
-        [DisplayName("Beräknat leveransdatum")]
+        [DisplayName("Expected delivery")]
         public DateTime DeliveryDate { get; set; }
 
-        // Product
-        [DisplayName("Produkt Id")]
+        //Produkt
+        [DisplayName("Product Id")]
         public int ProductId { get; set; }
 
-        [DisplayName("Produkt")]
+        [DisplayName("Product")]
         public string? ProductName { get; set; }
 
-        [DisplayName("Beskrivning")]
+        [DisplayName("Description")]
         public string? ProductDescription { get; set; }
 
-        [DisplayName("Pris")]
+        [DisplayName("Price")]
         public int? Price { get; set; }
 
-        [DisplayName("Lagersaldo")]
+        [DisplayName("Qty in stock")]
         public int? QuantityStock { get; set; }
 
-        [DisplayName("Antal")]
+        [DisplayName("Qty")]
         public int? Amount { get; set; }
+
+        [NotMapped]
 
         [DisplayName("Total price")]
         public decimal TotalPrice
@@ -54,23 +55,26 @@ namespace HoojaWeb.ViewModels.OrderHistory
         public int? CampaignCodeId { get; set; }
         public string? CampaignName { get; set; }
 
-        // Customer
+        //Kund
+        [DisplayName("Customer Id")]
+        public int? CustomerId { get; set; }
+      
         [DisplayName("Kund Id")]
         public int customerId { get; set; }
 
-        [DisplayName("Förnamn")]
+        [DisplayName("First name")]
         public string? FirstName { get; set; }
 
-        [DisplayName("Efternamn")]
+        [DisplayName("Last name")]
         public string? LastName { get; set; }
 
-        [DisplayName("Kund")]
+        [DisplayName("Customer")]
         public string? FullName { get; set; }
 
-        [DisplayName("Telefonnummer")]
+        [DisplayName("Phone no")]
         public string? PhoneNumber { get; set; }
 
-        [DisplayName("Personnummer")]
+        [DisplayName("Security no")]
         public string? SecurityNumber { get; set; }
 
         public string? Email { get; set; }
@@ -78,13 +82,13 @@ namespace HoojaWeb.ViewModels.OrderHistory
         // Address
         public int? AddressId { get; set; }
 
-        [DisplayName("Gata")]
+        [DisplayName("Street")]
         public string? Street { get; set; }
 
-        [DisplayName("Postnummer")]
+        [DisplayName("Postal Code")]
         public string? PostalCode { get; set; }
 
-        [DisplayName("Stad")]
+        [DisplayName("City")]
         public string? City { get; set; }
     }
 }
