@@ -472,10 +472,17 @@
                                                 </a>
                                                 <br />
                                                 <br />
-                                                <a asp-controller="Products" asp-action="EditProduct" asp-route-productId="@item.ProductId" class="btn btn-primary yellow shadow-0">Edit Product</a>
+                                                @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
+                                                {
+                                                    <a asp-controller="Products" asp-action="EditProduct" asp-route-productId="@item.ProductId" class="btn btn-primary yellow shadow-0">Edit Product</a>
+                                                }
                                                 <br />
                                                 <br />
-                                                <a asp-controller="Products" asp-action="RemoveProductConfirm" asp-route-productId="@item.ProductId" class="btn btn-primary yellow shadow-0">Remove Product</a>
+                                                @if (User.IsInRole("Admin"))
+                                                {
+                                                    <a asp-controller="Products" asp-action="RemoveProductConfirm" asp-route-productId="@item.ProductId" class="btn btn-primary yellow shadow-0">Remove Product</a>
+                                                }
+
                                             </div>
                                         </div>
                                     </div>

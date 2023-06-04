@@ -8,9 +8,13 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using ChatRequest = HoojaWeb.Models.ChatRequest;
 using Choice = HoojaWeb.Models.Choice;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace HoojaWeb.Controllers
 {
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "Admin, Employee")]
     [ApiController]
     public class ChatGPTController : ControllerBase
     {

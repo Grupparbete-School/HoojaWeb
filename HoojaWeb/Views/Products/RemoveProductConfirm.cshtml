@@ -40,11 +40,15 @@
             <p><strong>Price:</strong> @Model.Price kr</p>
             <hr/>
 
-            <div class="col-md-6 text-start">
-            <form method="post" asp-action="RemoveProduct" asp-route-productId="@Model.ProductId">
-                <button type="submit" class="btn btn-danger">Confirm</button>
-            </form>
-            </div>
+            @if (User.IsInRole("Admin"))
+            {
+                <div class="col-md-6 text-start">
+                    <form method="post" asp-action="RemoveProduct" asp-route-productId="@Model.ProductId">
+                        <button type="submit" class="btn btn-danger">Confirm</button>
+                    </form>
+                </div>
+            }
+            
         </div>
     </div>
 
