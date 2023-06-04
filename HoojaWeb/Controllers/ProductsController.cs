@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
 
@@ -71,12 +72,38 @@ namespace HoojaWeb.Controllers
             return View("error");
         }
 
-        public IActionResult Brands()
+        public async Task<IActionResult> Brands()
         {
-            return View();
+            try
+            {
+                HttpResponseMessage brandResponse = await httpClient.GetAsync($"{link}api/Product/GetAllProduct");
+                if (brandResponse.IsSuccessStatusCode)
+                {
+                    var brandJson = await brandResponse.Content.ReadAsStringAsync();
+                    var products = JsonConvert.DeserializeObject<List<BrandsGetViewModel>>(brandJson);
+
+                    var brands = products.Select(p => new BrandsGetViewModel { Brand = p.Brand }).Distinct().ToList();
+
+                    return View(brands);
+                }
+                else if (brandResponse.StatusCode == HttpStatusCode.NotFound)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    return StatusCode((int)brandResponse.StatusCode);
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
 
-        public IActionResult ProductDetails()
+
+
+        public async Task<IActionResult> ProductDetails(int productId)
         {
             return View();
         }
