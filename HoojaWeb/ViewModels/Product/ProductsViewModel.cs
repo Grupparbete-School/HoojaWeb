@@ -25,5 +25,7 @@
 
         public int? CampaignCodeId { get; set; }
         public bool? IsActive { get; set; }
+
+        public int TotalAmount { get; set; }
     }
 }

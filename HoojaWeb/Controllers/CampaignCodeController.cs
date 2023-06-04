@@ -22,7 +22,7 @@ namespace HoojaWeb.Controllers
 
                 var campaignData = JsonConvert.DeserializeObject<List<CampaignCodeViewModel>>(campaignRespBody);
 
-               return View(campaignData);
+                return View(campaignData);
             }
             return View("error");
         }
@@ -47,7 +47,7 @@ namespace HoojaWeb.Controllers
             theCampaign.CampaignStart = campaign.CampaignStart;
             theCampaign.CampaignEnd = campaign.CampaignEnd;
             theCampaign.DiscountPercentage = campaign.DiscountPercentage;
-           
+
             return View(theCampaign);
         }
 

@@ -42,7 +42,6 @@
                 <form asp-action="Index" method="get">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            @*<span class="input-group-text">Sök på efternamn:</span>*@
                         </div>
                         <input type="text" name="searchOrder" id="searchOrder" class="form-control" placeholder="Enter lastname..." />
                     </div>
@@ -53,7 +52,6 @@
                 <form asp-action="Index" method="get">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            @*<span class="input-group-text">Sök på order Id:</span>*@
                         </div>
                         <input type="number" name="searchOrderId" id="searchOrderId" class="form-control" placeholder="Enter order Id..." />
                     </div>
@@ -64,7 +62,8 @@
                 <form asp-action="Index" method="get">
                     <div class="input-group">
                         <select name="customerId" id="customerId" class="form-select">
-                            <option value="" disable selected>Customers</option>
+                            <option value="" disabled selected>Kundlista</option>
+                          
                             @foreach (var customer in ViewData["Customers"] as List<CustomerGetViewModel>)
                             {
                                 <option value="@customer.Id">@customer.FullName</option>
