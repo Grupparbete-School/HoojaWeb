@@ -88,10 +88,10 @@ body {
     margin-top: 2%;
 }
 
-.carouselImg{
-    height: 50vw;
-    width: 100&;
+.carousel-products {
+    max-width: 950px!important;
 }
+
 /**********************************/
 /******** TEXT ********/
 /**********************************/

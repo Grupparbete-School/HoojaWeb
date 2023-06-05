@@ -3,6 +3,7 @@ using HoojaWeb.ViewModels.Product;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
 using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http.Headers;
@@ -35,6 +36,7 @@ namespace HoojaWeb.Controllers
 
             var allProducts = await httpClient.GetAsync($"{link}api/Product/GetAllProduct");
             var productTypes = await httpClient.GetAsync($"{link}api/Product/GetProductType");
+            var productReviews = await httpClient.GetAsync($"{link}api/ProductReview/GetAllReviews");
 
             //FIX? try catch med felhantering typ om inga produkter hittas säger den det eller gör den det nu??
 
@@ -42,17 +44,27 @@ namespace HoojaWeb.Controllers
             {
                 var productsRespBody = await allProducts.Content.ReadAsStringAsync();
                 var productTypesRespBody = await productTypes.Content.ReadAsStringAsync();
+                var productsReviewsRespBody = await productReviews.Content.ReadAsStringAsync();
 
                 var productData = JsonConvert.DeserializeObject<List<ProductsViewModel>>(productsRespBody);
                 var productTypesData = JsonConvert.DeserializeObject<List<ProductsViewModel>>(productTypesRespBody);
+                var productRatingsData = JsonConvert.DeserializeObject<List<ProductReviewViewModel>>(productsReviewsRespBody);
 
                 foreach (var product in productData)
                 {
                     var matchingProductType = productTypesData?.FirstOrDefault(pt => pt.ProductTypeId == product.fK_ProductTypeId);
+
                     if (matchingProductType != null)
                     {
                         product.ProductTypeName = matchingProductType.ProductTypeName;
                         product.ProductTypeId = matchingProductType.ProductTypeId;
+                    }
+
+                    var matchingProductReviews = productRatingsData?.Where(pr => pr.FK_ProductId == product.ProductId).ToList();
+
+                    if (matchingProductReviews != null)
+                    {
+                        product.ProductReviews = matchingProductReviews;
                     }
                 }
 
