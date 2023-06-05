@@ -41,22 +41,20 @@
                                     </div>
                                     <div class="col-lg-2 col-sm-6 col-6 d-flex flex-row flex-lg-column flex-xl-row text-nowrap">
                                         <div class="">
-                                            <select id="quantityDropdown-@item.ProductId" style="width: 120px;" class="form-select me-4" onchange="reloadPage(this)">
-                                                @for(int i = 1; i <= item.QuantityStock; i++)
+                                            <select id="quantityDropdown-@item.ProductId" style="width: 120px;" class="form-select me-4">
+                                                @for (int i = 1; i <= item.QuantityStock; i++)
                                                 {
-                                                    
-                                                    @if(item.TotalAmount == i)
+                                                    @if (item.TotalAmount == i)
                                                     {
                                                         <option value="@i" selected>@i</option>
-
                                                     }
                                                     else
                                                     {
-                                                        <option value ="@i">@i</option>
-                                                        //fix logic so it updates amount of total orders before sending a post request.
+                                                        <option value="@i">@i</option>
                                                     }
                                                 }
                                             </select>
+
                                         </div>
                           
                                         <div class="">
@@ -295,13 +293,14 @@
         } else {
             updateCartCounter(0);
         }
+
         function getCartCounter() {
             var total = localStorage.getItem('cartCounter');
-            return parseInt(total)
+            return parseInt(total);
         }
+
         $('a[id^="removeItem"]').click(function () {
             var selectedQuantity = getCookie('cartItems');
-            
             var itemId = $(this).attr('id').split('-')[1];
             var parsedQuantity = JSON.parse(selectedQuantity);
             var total = getCartCounter();
@@ -309,20 +308,5 @@
 
             updateCartCounter(total);
         });
-    });
-    function reloadPage(selectElement) {
-        var selectedValue = selectElement.value;
-        // Add any additional logic or data processing you need before reloading the page
-
-        // Reload the page
-        window.location.reload();
-
-        // Update the cart counter when the page loads
-        var storedCartCounter = localStorage.getItem('cartCounter');
-        if (storedCartCounter !== null) {
-            $("#cartCounter").text(storedCartCounter);
-        } else {
-            updateCartCounter(0);
-        }
     });
 </script>
