@@ -13,7 +13,7 @@ namespace HoojaWeb.Controllers
         private readonly IHttpContextAccessor httpContext;
         HttpClient httpClient = new HttpClient();
         string link = "https://localhost:7097/";
-
+        
         public ShoppingCartController(IHttpContextAccessor _httpContext)
         {
             httpContext = _httpContext;
@@ -45,20 +45,19 @@ namespace HoojaWeb.Controllers
             var productData = JsonConvert.DeserializeObject<List<ProductsViewModel>>(productsRespBody);
             var productTypesData = JsonConvert.DeserializeObject<List<ProductsViewModel>>(productTypesRespBody);
 
-            foreach (var product in productData)
+            foreach(var product in productData)
             {
-                if (product.ProductId == removeItem)
+                if(product.ProductId == removeItem)
                 {
                     productData.Remove(product);
-
                     break;
                 }
             }
-
+            
             foreach (var product in productData)
             {
                 var matchingProductType = productTypesData?.FirstOrDefault(pt => pt.ProductTypeId == product.fK_ProductTypeId);
-
+                
                 if (matchingProductType != null)
                 {
                     product.ProductTypeName = matchingProductType.ProductTypeName;
@@ -82,7 +81,6 @@ namespace HoojaWeb.Controllers
             //From the cookies we got, it looks through the values after the "="-sign
             //that does not include a ";"-sign.
             var cartItemsMatch = Regex.Match(cookieValue, @"cartItems=([^;]+)");
-
 
             if (cartItemsMatch == null)
             {
@@ -110,6 +108,7 @@ namespace HoojaWeb.Controllers
                         break;
                     }
                 }
+                
                 // Serialize the modified cartItems dictionary back to JSON
                 cartItemsJson = JsonConvert.SerializeObject(cartItems);
 
