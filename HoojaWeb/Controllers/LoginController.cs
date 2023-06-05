@@ -4,6 +4,8 @@ using HoojaWeb.ViewModels.OrderHistory;
 using HoojaWeb.ViewModels.PostNord;
 using HoojaWeb.ViewModels.Product;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
@@ -105,6 +107,7 @@ namespace HoojaWeb.Controllers
             return View();
         }
 
+        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
         public async Task<IActionResult> OrderDetailsCustomer(int postNumber = 85352)
         {
             string ApiKey = Environment.GetEnvironmentVariable("API_KEY_POSTNORD");
@@ -228,7 +231,7 @@ namespace HoojaWeb.Controllers
                 addOrder.Street = "unknown";
                 addOrder.PostalCode = postNumber.ToString();
                 addOrder.City = "unknown";
-                addOrder.userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+                addOrder.userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value); //we techniqually only need this (instead of name and email.
 
                 var newOrderJson = JsonConvert.SerializeObject(addOrder);
 

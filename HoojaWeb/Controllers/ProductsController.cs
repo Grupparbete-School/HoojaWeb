@@ -438,18 +438,19 @@ namespace HoojaWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> RemoveProduct(int productId)
         {
-            using (var httpClient = new HttpClient())
-            {
-                var resp = await httpClient.DeleteAsync($"{link}api/Product/Delete-Product{productId}");
+            var sessiontoken = Request.Cookies["Token"];
+            //Lägger in denna token som vi får tillbaka via cookien i vår httpClient så att den skickas till apiet.
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
 
-                if (resp.IsSuccessStatusCode)
-                {
-                    return RedirectToAction("index");
-                }
-                else
-                {
-                    return RedirectToAction("index");
-                }
+            var resp = await httpClient.DeleteAsync($"{link}api/Product/Delete-Product{productId}");
+
+            if (resp.IsSuccessStatusCode)
+            {
+                return RedirectToAction("index");
+            }
+            else
+            {
+                return RedirectToAction("index");
             }
         }
     }
