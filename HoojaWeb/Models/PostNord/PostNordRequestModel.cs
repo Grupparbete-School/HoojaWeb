@@ -41,7 +41,9 @@ namespace HoojaWeb.Models.PostNord
             ServiceCode = "18";
             ServiceGroupCode = "SE";
             FromAddressCountryCode = "SE";
+            FromAddressPostalCode = "85352";
             ToAddressCountryCode = "SE";
+            DateOfDeparture = DateTime.Now.Date.ToString();
         }
     }
 }

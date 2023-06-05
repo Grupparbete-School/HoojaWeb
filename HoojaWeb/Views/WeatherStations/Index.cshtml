@@ -1,0 +1,58 @@
+﻿@*<select id="stationDropdown"></select>
+<div id="weatherContainer"></div>
+
+<script>
+    $(document).ready(function () {
+        var url = "https://opendata-download-metobs.smhi.se/api/version/latest/parameter/4.json";
+
+        $.getJSON(url, function (json) {
+            var stations = json.station;
+
+            // Populate the dropdown list with weather station names
+            var dropdown = $('#stationDropdown');
+            $.each(stations, function (key, station) {
+                dropdown.append($('<option></option>').val(station.key).text(station.name));
+            });
+
+            // Handle the change event of the dropdown list
+            dropdown.on('change', function () {
+                var selectedStationKey = $(this).val();
+                var selectedStation = stations.find(function (station) {
+                    return station.key === selectedStationKey;
+                });
+
+                // Update the weather data for the selected station
+                updateWeatherData(selectedStation);
+            });
+        });
+    });
+
+    function updateWeatherData(station) {
+        var weatherData = station.values;
+
+        // Clear the weather container
+        $('#weatherContainer').empty();
+
+        // Display the weather data for the selected station
+        weatherData.forEach(function (data) {
+            var date = new Date(data.date);
+            var temperature = data.value;
+
+            var weatherItem = $('<p>').text(date.toDateString() + ': ' + temperature + '°C');
+
+            // Append the weather item to the weather container
+            $('#weatherContainer').append(weatherItem);
+        });
+    }
+</script>
+*@
+
+
+
+        <script>
+    let api_Key = "8fcea166cd8c4dea8e3ca1c7c442a712";
+
+    $.get('https://openexchangerates.org/api/latest.json', { app_id: api_Key }, function (data) {
+        console.log(data);
+    });
+</script>

@@ -1,16 +1,17 @@
-﻿@{
-    ViewData["Title"] = "Brands";
-}
+﻿@model IEnumerable<HoojaWeb.ViewModels.Product.BrandsGetViewModel>
 
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Brands</li>
-    </ol>
-</nav>
-<div class="container container-fluid mt-5 container-lightblue">
-    <div class="text-center mt-2">
-        <h1 class="text-white">Brands</h1>
+<h1>Brands</h1>
 
-    </div>
+<div class="row">
+    @foreach (var brand in Model)
+    {
+        <div class="col-md-4">
+            <div class="card mb-4">
+                @*<img src="@brand.BrandLogo" class="card-img-top" alt="@brand.BrandName">*@
+                <div class="card-body">
+                    <h5 class="card-title">@brand.Brand</h5>
+                </div>
+            </div>
+        </div>
+    }
 </div>

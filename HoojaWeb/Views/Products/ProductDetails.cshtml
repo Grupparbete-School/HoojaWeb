@@ -1,4 +1,6 @@
-﻿@{
+﻿@model HoojaWeb.ViewModels.Product.ProductsViewModel
+
+@{
     ViewData["Title"] = "Product Details";
 }
 
@@ -20,13 +22,17 @@
             <div class="carousel slide" data-bs-ride="carousel" id="carousel-1">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img class="img-thumbnail w-100 d-block" src="https://images.unsplash.com/photo-1543363363-6dbd3125fb6d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=764&q=80" alt="Slide Image" loading="lazy" />
+                        <img class="img-thumbnail w-100 d-block" src="@Model.ProductPicture" alt="Slide Image of prodcut" loading="lazy" />
                     </div>
                     <div class="carousel-item">
-                        <img class="img-thumbnail w-100 d-block" src="https://images.unsplash.com/photo-1560264641-1b5191cc63e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Slide Image" />
+                        <img class="img-thumbnail w-100 d-block"
+                             src="https://images.unsplash.com/photo-1560264641-1b5191cc63e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
+                             alt="Slide Image of product" />
                     </div>
                     <div class="carousel-item">
-                        <img class="img-thumbnail w-100 d-block" src="https://images.unsplash.com/photo-1573651235591-221193be5229?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=705&q=80" alt="Slide Image" />
+                        <img class="img-thumbnail w-100 d-block"
+                             src="https://images.unsplash.com/photo-1573651235591-221193be5229?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=705&q=80"
+                             alt="Slide Image of product" />
                     </div>
                 </div>
                 <div>
@@ -42,7 +48,7 @@
                             Next
                         </span>
                     </a>
-                    </div>
+                </div>
                 <ol class="carousel-indicators">
                     <li data-bs-target="#carousel-1" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></li>
                     <li data-bs-target="#carousel-1" data-bs-slide-to="1"></li>
@@ -54,180 +60,276 @@
 
         <div class="col-md-7">
             <h2>
-                Conditioner
+                @Model.ProductName
             </h2>
             <div class="price">
                 <span class="mr-2">
                     <i class="text-success"></i>
-                    111,75 SEK 
+                    @Model.Price kr @*New price*@
                 </span>
                 <span class="mr-2 cut">
-                     149 SEK 
+                    @*@Model.Price*@ @*Previous price*@
                 </span>
                 <span class="text-success">
-                         25% OFF
+                    @Model.CampaignCodeId
                 </span>
             </div>
             <div class="col-xl-7">
-                <br/>
+                <br />
                 <p class="product-text">
-                    Introducing the PerfectBalance™ Conditioner: The ultimate solution for both curly and straight hair. Experience the magic of flawless, shiny locks that radiate health and vitality. Our conditioner nourishes and hydrates, providing deep care for your hair. With its versatile formula, it effortlessly enhances curls or smooths straight styles, adapting to your unique needs. Say goodbye to frizz and hello to a head-turning shine. Elevate your hair care routine with the PerfectBalance™ Conditioner and embrace hair that's worthy of envy. Order now and unlock the secret to extraordinary hair transformation.
+                    @Model.ProductDescription
+                    @*Introducing the PerfectBalance™ Conditioner: The ultimate solution for both curly and straight hair.
+                    Experience the magic of flawless, shiny locks that radiate health and vitality. Our conditioner nourishes
+                    and hydrates, providing deep care for your hair. With its versatile formula, it effortlessly enhances curls
+                    or smooths straight styles, adapting to your unique needs. Say goodbye to frizz and hello to a head-turning
+                    shine. Elevate your hair care routine with the PerfectBalance™ Conditioner and embrace hair that's worthy of
+                    envy. Order now and unlock the secret to extraordinary hair transformation.*@
                 </p>
-                <hr/>
-                </div>
+                <hr />
+            </div>
             <div class="d-flex flex-row">
                 <div class="mr-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                    </svg>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                    </svg>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                    </svg>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-half" viewBox="0 0 16 16">
-                        <path d="M5.354 5.119 7.538.792A.516.516 0 0 1 8 .5c.183 0 .366.097.465.292l2.184 4.327 4.898.696A.537.537 0 0 1 16 6.32a.548.548 0 0 1-.17.445l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256a.52.52 0 0 1-.146.05c-.342.06-.668-.254-.6-.642l.83-4.73L.173 6.765a.55.55 0 0 1-.172-.403.58.58 0 0 1 .085-.302.513.513 0 0 1 .37-.245l4.898-.696zM8 12.027a.5.5 0 0 1 .232.056l3.686 1.894-.694-3.957a.565.565 0 0 1 .162-.505l2.907-2.77-4.052-.576a.525.525 0 0 1-.393-.288L8.001 2.223 8 2.226v9.8z" />
-                    </svg>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
-                        <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
-                    </svg>
-                    <span>
-                        <br />
-                        1200 ratings &amp; 564 reviews
-                    </span>
+
+                    @if (Model.ProductReviews != null)
+                    {
+                        <p>Reviews:</p>
+                        <div class="star-rating mt-2">
+                            @{
+                                int rating = 0;
+
+                                foreach (var item in Model.ProductReviews)
+                                {
+                                    rating += item.Rating;
+                                }
+                                double avergeRating = rating / Model.ProductReviews.Count;
+
+                                for (int i = 1; i <= 5; i++)
+                                {
+                                    <span class="star @(i <= avergeRating ? "filled" : "")">&#9733;</span>
+                                }
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p>No reviews</p>
+                    }
+
                 </div>
             </div>
             <div class="d-flex align-items-center mt-4 offers mb-1">
-                <i class="fa fa-check-square-o mt-1"></i>
-            <div class="d-flex align-items-center offers">
-                <div class="d-flex align-items-center mt-2"> 
-                    <label class="radio"> 
-                    <input type="radio" name="ram" value="128GB" checked /> 
-                    <span>
-                        90ml
-                    </span> 
-                    </label> 
-                    <label class="radio"> 
-                    <input type="radio" name="ram" value="256GB" /> 
-                    <span>
-                        120ml
-                    </span> 
-                    </label> 
-                    <label class="radio"> 
-                    <input type="radio" name="ram" value="256GB" />
-                    <span>
-                        425ml
-                    </span>
-                    </label>
-                        
-                </div>
             </div>
-            </div>
-             <div class="col-md-7">
-                 <span>
-                     In stock:
-                 </span>
-                <span class="badge bg-primary rounded-pill">3</span>
+            <div class="col-md-7">
+                <span>
+                    In stock:
+                </span>
+                <span class="badge bg-primary rounded-pill">@Model.QuantityStock</span>
                 <br />
                 <br />
-                <button class="btn btn-primary yellow" type="button">
+                <a 
+                    class="btn btn-primary yellow shadow-0 addToCartButton addToCart mt-3" 
+                    data-product-id="@Model.ProductId" 
+                    data-quantity="1">
                     Add to cart
-                </button>                                     
+                </a>
+                <br/>
+                <a class="btn btn-primary shadow-0 addToCartButton addToCart mt-2"
+                   asp-controller="ProductReview"
+                   asp-action="Create">
+                    Add review
+                </a>
             </div>
         </div>
-    </div>
 
-        <!--Recommended items-->
-    <section>
-        <div class="container my-5">
-            <header class="mb-4 container-white">
-                <h3>Recommended items</h3>
-            </header>
 
-            <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="card px-4 border shadow-0 mb-4 mb-lg-0 h-100">
-                        <div class="mask px-2" style="height: 50px;">
-                            <div class="d-flex justify-content-between">
-                                <h6><span class="badge bg-danger pt-1 mt-3 ms-2">New</span></h6>
+        <!-- Reviews -->
+        <div class="container container-fluid mt-4"></div>
+        <header class="mb-4 container-white">
+            <h3>Reviews</h3>
+        </header>
+        <div class="container container-fluid mt-1 d-flex justify-content-center">
+        <div id="carouselReviews" class="carousel slide w-75" data-bs-ride="carousel">
+
+            @if (Model.ProductReviews != null)
+            {
+            <div class="carousel-inner">
+
+                    @foreach (var item in Model.ProductReviews)
+                {
+                    var index = Model.ProductReviews.IndexOf(item);
+                    <div class="carousel-item @(index == 0 ? "active" : "")">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <div class="flex-grow-1">
+                                        <h4 class="card-title">@item.ProductName</h4>
+                                        <p class="card-text">@item.Review</p>
+                                        <p class="card-text">By: @item.CustomerName</p>
+                                        <p class="card-text">@item.ReviewOfDate.ToString("yyyy-MM-dd")</p>
+                                    </div>
+                                    <div class="flex-shrink-0">
+                                        <div class="avatar">
+                                            <img 
+                                                src="https://images.unsplash.com/photo-1580618864180-f6d7d39b8ff6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80" 
+                                                style="width: 200px;" 
+                                                alt="Pic of hair products" 
+                                                class="img-fluid">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="star-rating mt-2">
+                                    @{
+                                        int rating2 = item.Rating;
+                                        for (int i = 1; i <= 5; i++)
+                                        {
+                                            <span class="star @(i <= rating2 ? "filled" : "")">&#9733;</span>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselReviews" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselReviews" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+
+        }
+        else
+        {
+            <div class="text-center">
+                <p>No reviews available.</p>
+                <p>Be the first one to add one</p>
+                
+                <a class="btn btn-primary shadow-0 addToCartButton addToCart mt-2"
+                    asp-controller="ProductReview"
+                    asp-action="Create">
+                    Add review
+                </a>
+            </div>
+        }
+        </div>
+        </div>
+        <!-- Reviews -->
+
+
+
+
+
+        <!--Coming soon-->
+        <section>
+            <div class="container">
+                <header class="mb-4 container-white">
+                    <h3>Coming soon</h3>
+                </header>
+
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="card px-4 border shadow-0 mb-4 mb-lg-0 h-100">
+                            <div class="mask px-2" style="height: 50px;">
+                                <div class="d-flex justify-content-between">
+                                    <h6><span class="badge bg-danger pt-1 mt-3 ms-2">New</span></h6>
+                                    <a href="#"><i class="fas fa-heart text-primary fa-lg float-end pt-3 m-2"></i></a>
+                                </div>
+                            </div>
+                            
+                            <img src="https://images.unsplash.com/photo-1605683131665-1394d008c5bb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80"
+                                    class="card-img-top rounded-2"
+                                    alt="Product picture" />
+                            
+                            <div class="card-body d-flex flex-column pt-3 border-top">
+                                <p class="">Hare|Care set</p>
+                                <div class="price-wrap mb-2">
+                                    <strong class="">299 kr</strong>
+                                    <del class="">699 kr</del>
+                                </div>
+                  
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="card px-4 border shadow-0 mb-4 mb-lg-0 h-100">
+                            <div class="mask px-2" style="height: 50px;">
                                 <a href="#"><i class="fas fa-heart text-primary fa-lg float-end pt-3 m-2"></i></a>
                             </div>
-                        </div>
-                        <a href="#" class="">
-                            <img src="https://images.unsplash.com/photo-1605683131665-1394d008c5bb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" class="card-img-top rounded-2" />
-                        </a>
-                        <div class="card-body d-flex flex-column pt-3 border-top">
-                            <a href="#" class="nav-link">Hare|Care set</a>
-                            <div class="price-wrap mb-2">
-                                <strong class="">299 kr</strong>
-                                <del class="">699 kr</del>
-                            </div>
-                            <div class="card-footer d-flex align-items-end pt-3 px-0 pb-0 mt-auto">
-                                <a href="#" class="btn btn-primary yellow w-100">Add to cart</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="card px-4 border shadow-0 mb-4 mb-lg-0 h-100">
-                        <div class="mask px-2" style="height: 50px;">
-                            <a href="#"><i class="fas fa-heart text-primary fa-lg float-end pt-3 m-2"></i></a>
-                        </div>
-                        <a href="#" class="">
-                            <img src="https://images.unsplash.com/photo-1611224596242-2326c5484b57?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" class="card-img-top rounded-2" />
-                        </a>
-                        <div class="card-body d-flex flex-column pt-3 border-top">
-                            <a href="#" class="nav-link">Set with shampoo, conditioner and hair mask </a>
-                            <div class="price-wrap mb-2">
-                                <strong class="">499 kr</strong>
-                            </div>
-                            <div class="card-footer d-flex align-items-end pt-3 px-0 pb-0 mt-auto">
-                                <a href="#" class="btn btn-primary yellow w-100">Add to cart</a>
+                            
+                            <img src="https://images.unsplash.com/photo-1611224596242-2326c5484b57?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
+                                    class="card-img-top rounded-2"
+                                    alt="Product picture" />
+                            
+                            <div class="card-body d-flex flex-column pt-3 border-top">
+                                <p class="">Set with shampoo, conditioner and hair mask </p>
+                                <div class="price-wrap mb-2">
+                                    <strong class="">499 kr</strong>
+                                </div>
+          
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="card px-4 border shadow-0 h-100">
-                        <div class="mask px-2" style="height: 50px;">
-                            <a href="#"><i class="fas fa-heart text-primary fa-lg float-end pt-3 m-2"></i></a>
-                        </div>
-                        <a href="#" class="">
-                            <img src="https://images.unsplash.com/photo-1588514899099-e2df6951dde6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=869&q=80" class="card-img-top rounded-2" />
-                        </a>
-                        <div class="card-body d-flex flex-column pt-3 border-top">
-                            <a href="#" class="nav-link">Hair mask</a>
-                            <div class="price-wrap mb-2">
-                                <strong class="">149 kr</strong>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="card px-4 border shadow-0 h-100">
+                            <div class="mask px-2" style="height: 50px;">
+                                <a href="#"><i class="fas fa-heart text-primary fa-lg float-end pt-3 m-2"></i></a>
                             </div>
-                            <div class="card-footer d-flex align-items-end pt-3 px-0 pb-0 mt-auto">
-                                <a href="#" class="btn btn-primary yellow w-100">Add to cart</a>
+                            
+                            <img src="https://images.unsplash.com/photo-1588514899099-e2df6951dde6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=869&q=80"
+                                    class="card-img-top rounded-2"
+                                    alt="Product picture" />
+                            
+                            <div class="card-body d-flex flex-column pt-3 border-top">
+                                <p class="">Hair mask</p>
+                                <div class="price-wrap mb-2">
+                                    <strong class="">149 kr</strong>
+                                </div>
+                         
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="card px-4 border shadow-0 h-100">
-                        <div class="mask px-2" style="height: 50px;">
-                            <a href="#"><i class="fas fa-heart text-primary fa-lg float-end pt-3 m-2"></i></a>
-                        </div>
-                        <a href="#" class="">
-                            <img src="https://images.unsplash.com/photo-1610705267928-1b9f2fa7f1c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" class="card-img-top rounded-2" />
-                        </a>
-                        <div class="card-body d-flex flex-column pt-3 border-top">
-                            <a href="#" class="nav-link">Hair kit </a>
-                            <div class="price-wrap mb-2">
-                                <strong class="">299 kr</strong>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="card px-4 border shadow-0 h-100">
+                            <div class="mask px-2" style="height: 50px;">
+                                <a href="#"><i class="fas fa-heart text-primary fa-lg float-end pt-3 m-2"></i></a>
                             </div>
-                            <div class="card-footer d-flex align-items-end pt-3 px-0 pb-0 mt-auto">
-                                <a href="#" class="btn btn-primary yellow w-100">Add to cart</a>
+                            
+                                <img src="https://images.unsplash.com/photo-1610705267928-1b9f2fa7f1c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
+                                     class="card-img-top rounded-2"
+                                     alt="Product picture" />
+                            
+                            <div class="card-body d-flex flex-column pt-3 border-top">
+                                <p class="">Hair kit </p>
+                                <div class="price-wrap mb-2">
+                                    <strong class="">299 kr</strong>
+                                </div>
+                           
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <!--Recommended items-->
+        </section>
+        <!--Recommended items-->
+    </div>
 </div>
+
+@*för rating stars färg/hover effekt*@
+<style>
+    .star-rating {
+        color: #ccc;
+        font-size: 24px;
+    }
+
+        .star-rating .star {
+            display: inline-block;
+        }
+
+            .star-rating .star.filled {
+                color: #ffcc00;
+            }
+</style>

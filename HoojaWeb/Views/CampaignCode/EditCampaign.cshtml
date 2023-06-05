@@ -23,6 +23,11 @@
     </div>
 
     <div class="row my-3 mx-3">
+        <div class="col-md-5 mt-4">
+            <img src="https://images.pexels.com/photos/7015034/pexels-photo-7015034.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="frame-img" />
+
+        </div>
+
         <div class="col-md-7">
             <form method="post" asp-action="EditCampaign" class="row g-3">
                 @Html.HiddenFor(model => model.CampaignCodeId)
@@ -44,8 +49,8 @@
                 </div>
 
                 <div class="form-group col-md-12">
-                    <label for="DiscountPrecentage" class="form-label form-label-custom fw-bold">Discount precentage:</label>
-                    <input type="number" class="form-control" id="DiscountPrecentage" name="DiscountPrecentage" value="@Model.DiscountPercentage">
+                    <label for="DiscountInt" class="form-label form-label-custom fw-bold">Discount precentage:</label>
+                    <input type="number" class="form-control" id="DiscountInt" name="DiscountInt" placeholder="@Model.DiscountPercentage" required>
                 </div>
 
                 <hr />

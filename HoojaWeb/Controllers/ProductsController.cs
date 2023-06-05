@@ -1,8 +1,10 @@
-﻿using HoojaWeb.ViewModels.Product;
+﻿using HoojaWeb.ViewModels.CampaignCode;
+using HoojaWeb.ViewModels.Product;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
 
@@ -20,7 +22,7 @@ namespace HoojaWeb.Controllers
             httpContextAccessor = _httpContextAccessor;
             session = _httpContextAccessor.HttpContext.Session;
         }
-        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+        //[Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Index(int page = 1)
         {
             int productsPerPage = 5;
@@ -32,7 +34,7 @@ namespace HoojaWeb.Controllers
             var allProducts = await httpClient.GetAsync($"{link}api/Product/GetAllProduct");
             var productTypes = await httpClient.GetAsync($"{link}api/Product/GetProductType");
 
-//FIX? try catch med felhantering typ om inga produkter hittas säger den det eller gör den det nu??
+            //FIX? try catch med felhantering typ om inga produkter hittas säger den det eller gör den det nu??
 
             if (allProducts.IsSuccessStatusCode && productTypes.IsSuccessStatusCode)
             {
@@ -71,29 +73,96 @@ namespace HoojaWeb.Controllers
             return View("error");
         }
 
-        public IActionResult Brands()
+        public async Task<IActionResult> Brands()
         {
-            return View();
+            try
+            {
+                HttpResponseMessage brandResponse = await httpClient.GetAsync($"{link}api/Product/GetAllProduct");
+                if (brandResponse.IsSuccessStatusCode)
+                {
+                    var brandJson = await brandResponse.Content.ReadAsStringAsync();
+                    var products = JsonConvert.DeserializeObject<List<BrandsGetViewModel>>(brandJson);
+
+                    var brands = products.Select(p => new BrandsGetViewModel { Brand = p.Brand }).Distinct().ToList();
+
+                    return View(brands);
+                }
+                else if (brandResponse.StatusCode == HttpStatusCode.NotFound)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    return StatusCode((int)brandResponse.StatusCode);
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
 
-        public IActionResult ProductDetails()
+        public async Task<IActionResult> ProductDetails(int productId)
         {
-            return View();
+            try
+            {
+                // Utför en GET-begäran till den specificerade URL:en med hjälp av HttpClient
+                var allProducts = await httpClient.GetAsync($"{link}api/Product/Product-By{productId}");
+                var productRating = await httpClient.GetAsync($"{link}api/ProductReview/GetAllReviews/ByProductId/{productId}");
+
+                if (allProducts.IsSuccessStatusCode)
+                {
+                    // Om begäran lyckades och returnerade en lyckad statuskod, bearbeta svaret
+                    var productsRespBody = await allProducts.Content.ReadAsStringAsync();
+                    var productsReviewsRespBody = await productRating.Content.ReadAsStringAsync();
+
+                    var productData = JsonConvert.DeserializeObject<ProductsViewModel>(productsRespBody);
+
+                    if (productsReviewsRespBody != $"No product with id: {productId} found. You need to create a review.")
+                    {
+                        var productRatingsData = JsonConvert.DeserializeObject<List<ProductReviewViewModel>>(productsReviewsRespBody);
+                        // Fyller listan ProductReviews med productRatingsData
+                        productData.ProductReviews = productRatingsData;
+                    }
+
+                    return View(productData);
+                }
+                else if (allProducts.StatusCode == HttpStatusCode.NotFound)
+                {
+                    // Om resursen inte hittas, returnera NotFound-vyn
+                    return NotFound();
+                }
+                else
+                {
+                    // För alla andra fel, returnera ServerError-vyn
+                    return StatusCode((int)allProducts.StatusCode);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Hantera undantaget och returnera ServerError-vyn med felmeddelandet
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+  
         }
 
+        // Working on drop down list for campaign codes
         public async Task<IActionResult> EditProduct(int productId)
         {
             var prodTypeResp = await httpClient.GetAsync($"{link}api/Product/GetProductType");
+            var campaignCodeResp = await httpClient.GetAsync($"{link}api/CampaignCode/GetAllCampaignCode");
 
-            if (!prodTypeResp.IsSuccessStatusCode)
+            if (!prodTypeResp.IsSuccessStatusCode && !campaignCodeResp.IsSuccessStatusCode)
             {
                 //FIX: borde vara internal server error 500
                 return BadRequest();
             }
 
             var respBodyProdList = await prodTypeResp.Content.ReadAsStringAsync();
+            var respBodyCampaignList = await campaignCodeResp.Content.ReadAsStringAsync();
 
             List<ProductTypeViewModel> prodTypeList = JsonConvert.DeserializeObject<List<ProductTypeViewModel>>(respBodyProdList);
+            List<CampaignCodesViewModel> campaignCodeList = JsonConvert.DeserializeObject<List<CampaignCodesViewModel>>(respBodyCampaignList);
 
             var productById = await httpClient.GetAsync($"{link}api/Product/Product-By{productId}");
 
@@ -102,19 +171,73 @@ namespace HoojaWeb.Controllers
             var product = JsonConvert.DeserializeObject<EditProductsViewModel>(resp);
 
             var theproduct = new EditProductsViewModel();
-            theproduct.ProductId = productId;
-            theproduct.ProductName = product.ProductName;
-            theproduct.ProductPicture = product.ProductPicture;
-            theproduct.ProductDescription = product.ProductDescription;
-            theproduct.QuantityStock = product.QuantityStock;
-            theproduct.Price = product.Price;
-            theproduct.ProductTypeList = prodTypeList;
-            theproduct.SelectedProductTypeId = product.fK_ProductTypeId;
-            theproduct.FK_CampaignCodeId = product.FK_CampaignCodeId;
-            theproduct.CampaignName = product.CampaignName;
-            theproduct.IsActive = product.IsActive;
+
+            if (product.FK_CampaignCodeId != null)
+            {
+                theproduct.ProductId = productId;
+                theproduct.ProductName = product.ProductName;
+                theproduct.ProductPicture = product.ProductPicture;
+                theproduct.ProductDescription = product.ProductDescription;
+                theproduct.QuantityStock = product.QuantityStock;
+                theproduct.Price = product.Price;
+                theproduct.ProductTypeList = prodTypeList;
+                theproduct.SelectedProductTypeId = product.fK_ProductTypeId;
+                theproduct.CampaignCodeList = campaignCodeList;
+                theproduct.SelectedCampaignCodeId = (int)product.FK_CampaignCodeId;
+                theproduct.IsActive = product.IsActive;
+            }
+            else
+            {
+                theproduct.ProductId = productId;
+                theproduct.ProductName = product.ProductName;
+                theproduct.ProductPicture = product.ProductPicture;
+                theproduct.ProductDescription = product.ProductDescription;
+                theproduct.QuantityStock = product.QuantityStock;
+                theproduct.Price = product.Price;
+                theproduct.ProductTypeList = prodTypeList;
+                theproduct.SelectedProductTypeId = product.fK_ProductTypeId;
+                theproduct.CampaignCodeList = campaignCodeList;
+                theproduct.IsActive = product.IsActive;
+            }
+
             return View(theproduct);
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> EditProduct(EditProductsViewModel editProduct, bool isActive)
+        {
+            var apiProductToEdit = new
+            {
+                ProductId = editProduct.ProductId,
+                ProductName = editProduct.ProductName,
+                ProductPicture = editProduct.ProductPicture,
+                ProductDescription = editProduct.ProductDescription,
+                QuantityStock = editProduct.QuantityStock,
+                Price = editProduct.Price,
+                ProductTypeId = editProduct.SelectedProductTypeId,
+                CampaignCodeId = editProduct.SelectedCampaignCodeId,
+                IsActive = isActive,
+            };
+
+            var jsonProduct = JsonConvert.SerializeObject(apiProductToEdit);
+            var content = new StringContent(jsonProduct, Encoding.UTF8, "application/json");
+
+            using (var httpClient = new HttpClient())
+            {
+                var resp = await httpClient.PutAsync($"{link}api/Product/{editProduct.ProductId}", content);
+
+                if (resp.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("index");
+                }
+                else
+                {
+                    return RedirectToAction("index");
+                }
+            }
+        }
+
 
         [HttpGet]
         public async Task<IActionResult> FilterProductsOnSearch(string searchTerm)
@@ -221,40 +344,7 @@ namespace HoojaWeb.Controllers
             return View("Index", null);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> EditProduct(EditProductsViewModel editProduct, bool isActive)
-        {
-            var apiProductToEdit = new
-            {
-                ProductId = editProduct.ProductId,
-                ProductName = editProduct.ProductName,
-                ProductPicture = editProduct.ProductPicture,
-                ProductDescription = editProduct.ProductDescription,
-                QuantityStock = editProduct.QuantityStock,
-                Price = editProduct.Price,
-                ProductTypeId = editProduct.SelectedProductTypeId,
-                FK_CampaignCodeId = editProduct.FK_CampaignCodeId,
-                CampaignName = editProduct.CampaignName,
-                IsActive = editProduct.FK_CampaignCodeId,
-            };
 
-            var jsonProduct = JsonConvert.SerializeObject(apiProductToEdit);
-            var content = new StringContent(jsonProduct, Encoding.UTF8, "application/json");
-
-            using (var httpClient = new HttpClient())
-            {
-                var resp = await httpClient.PutAsync($"{link}api/Product/{editProduct.ProductId}", content);
-
-                if (resp.IsSuccessStatusCode)
-                {
-                    return RedirectToAction("index");
-                }
-                else
-                {
-                    return RedirectToAction("index");
-                }
-            }
-        }
 
         public async Task<IActionResult> CreateProduct()
         {
@@ -262,7 +352,7 @@ namespace HoojaWeb.Controllers
 
             if (!prodTypeResp.IsSuccessStatusCode)
             {
-//FIX: borde vara internal server error 500
+                //FIX: borde vara internal server error 500
                 return BadRequest();
             }
 
@@ -314,7 +404,7 @@ namespace HoojaWeb.Controllers
 
             if (!prodTypeResp.IsSuccessStatusCode)
             {
-//FIX: borde vara internal server error 500
+                //FIX: borde vara internal server error 500
                 return BadRequest();
             }
 

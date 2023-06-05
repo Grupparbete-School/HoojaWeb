@@ -19,9 +19,11 @@
 
         public int SelectedProductTypeId { get; set; }
 
-        public string? CampaignName { get; set; }
-        public int? FK_CampaignCodeId { get; set; }
 
-        public bool? IsActive { get; set; }
+        public List<CampaignCodesViewModel>? CampaignCodeList { get; set; }
+        public int? FK_CampaignCodeId { get; set; }
+        public int SelectedCampaignCodeId { get; set; }
+
+        public bool IsActive { get; set; }
     }
 }

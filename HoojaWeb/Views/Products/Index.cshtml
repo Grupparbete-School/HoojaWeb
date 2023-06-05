@@ -21,10 +21,9 @@
     </ol>
 </nav>
 <!-- Breadcrumbs -->
-
 <!-- sidebar + content -->
 <section class="">
-  <div class="container">
+    <div class="container">
 
         <!-- Search bar -->
         @using (Html.BeginForm("FilterProductsOnSearch", "Products", FormMethod.Get))
@@ -46,382 +45,373 @@
         }
         <!-- Search bar -->
 
-       
-    <div class="row">
-       
-      <!-- sidebar -->
-      <div class="col-lg-3">
 
-        <!-- Toggle button -->
-        <br/>
-        <button
-                class="btn btn-outline-primary mb-3 w-100 d-lg-none"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-                >
-          <span>Show filter</span>
-        </button>
+        <div class="row">
 
-        <!-- Collapsible wrapper -->
-        <div class="collapse card d-lg-block mb-5" id="navbarSupportedContent">
-          <div class="accordion" id="accordionPanelsStayOpenExample">
+            <!-- sidebar -->
+            <div class="col-lg-3">
+
+                <!-- Toggle button -->
+                <br />
+                <button class="btn btn-outline-primary mb-3 w-100 d-lg-none"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span>Show filter</span>
+                </button>
+
+                <!-- Collapsible wrapper -->
+                <div class="collapse card d-lg-block mb-5" id="navbarSupportedContent">
+                    <div class="accordion" id="accordionPanelsStayOpenExample">
+
+                        <!-- Categories -->
                         @using (Html.BeginForm("FilterOnSideOptions", "Products", FormMethod.Get))
                         {
-            <!-- Categories -->
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="headingOne">
-                <button
-                        class="accordion-button text-dark bg-light"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#panelsStayOpen-collapseOne"
-                        aria-expanded="true"
-                        aria-controls="panelsStayOpen-collapseOne"
-                        >
-                  Categories
-                </button>
-              </h2>
-                <div id="panelsStayOpen-collapseCategory" class="accordion-collapse collapse show" aria-labelledby="headingTwo">
-                    <div class="accordion-body">
-                        <div>
-                            <!-- Category checkbox -->
-                            <div class="form-check">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button text-dark bg-light"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#panelsStayOpen-collapseOne"
+                                            aria-expanded="true"
+                                            aria-controls="panelsStayOpen-collapseOne">
+                                        Categories
+                                    </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingTwo">
+                                    <div class="accordion-body">
+                                        <div>
+                                            <!-- Category checkbox -->
+                                            <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" value="1" id="CatCheckChecked1" name="categories" @(ViewBag.SelectedCategories != null && ViewBag.SelectedCategories.Contains(1) ? "checked" : "") />
-                                <label class="form-check-label" for="CatCheckChecked1">Hair Care</label>
-                                <span class="badge badge-secondary float-end">120</span>
-                            </div>
-                            <!-- Category checkbox -->
-                            <div class="form-check">
+                                                <label class="form-check-label" for="CatCheckChecked1">Hair Care</label>
+                                                <span class="badge badge-secondary float-end">120</span>
+                                            </div>
+                                            <!-- Category checkbox -->
+                                            <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" value="2" id="CatCheckChecked2" name="categories" @(ViewBag.SelectedCategories != null && ViewBag.SelectedCategories.Contains(2) ? "checked" : "") />
-                                <label class="form-check-label" for="CatCheckChecked2">Beauty Products</label>
-                                <span class="badge badge-secondary float-end">15</span>
-                            </div>
-                            <!-- Category checkbox -->
-                            <div class="form-check">
+                                                <label class="form-check-label" for="CatCheckChecked2">Beauty Products</label>
+                                                <span class="badge badge-secondary float-end">15</span>
+                                            </div>
+                                            <!-- Category checkbox -->
+                                            <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" value="3" id="CatCheckChecked3" name="categories" @(ViewBag.SelectedCategories != null && ViewBag.SelectedCategories.Contains(3) ? "checked" : "") />
-                                <label class="form-check-label" for="CatCheckChecked3">Perfume</label>
-                                <span class="badge badge-secondary float-end">35</span>
-                            </div>
-                            <!-- Category checkbox -->
-                            <div class="form-check">
+                                                <label class="form-check-label" for="CatCheckChecked3">Perfume</label>
+                                                <span class="badge badge-secondary float-end">35</span>
+                                            </div>
+                                            <!-- Category checkbox -->
+                                            <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" value="4" id="CatCheckChecked4" name="categories" @(ViewBag.SelectedCategories != null && ViewBag.SelectedCategories.Contains(4) ? "checked" : "") />
-                                <label class="form-check-label" for="CatCheckChecked4">Makeup</label>
-                                <span class="badge badge-secondary float-end">89</span>
-                            </div>
-                            <!-- Category checkbox -->
-                            <div class="form-check">
+                                                <label class="form-check-label" for="CatCheckChecked4">Makeup</label>
+                                                <span class="badge badge-secondary float-end">89</span>
+                                            </div>
+                                            <!-- Category checkbox -->
+                                            <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" value="5" id="CatCheckChecked5" name="categories" @(ViewBag.SelectedCategories != null && ViewBag.SelectedCategories.Contains(5) ? "checked" : "") />
-                                <label class="form-check-label" for="CatCheckChecked5">Skin Care</label>
-                                <span class="badge badge-secondary float-end">30</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Categories end -->
-           
-            <!-- Brands -->
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="headingTwo">
-                <button
-                        class="accordion-button text-dark bg-light"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#panelsStayOpen-collapseTwo"
-                        aria-expanded="false"
-                        aria-controls="panelsStayOpen-collapseTwo"
-                        >
-                  Brands
-                </button>
-              </h2>
-                <div id="panelsStayOpen-collapseBrand" class="accordion-collapse collapse show" aria-labelledby="headingTwo">
-                @*Added support for brandfiltering if the data is included in the future*@
-                <div class="accordion-body">
-                  <div>
-                    <!-- Brand checkbox -->
-                    <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="Hair|Care" id="flexCheckChecked1" name="brands" checked />
-                      <label class="form-check-label" for="flexCheckChecked1">Hair|Care</label>
-                      <span class="badge badge-secondary float-end">120</span>
-                    </div>
-                    <!-- Brand checkbox -->
-                    <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="Coco" id="flexCheckChecked2" name="brands" checked />
-                      <label class="form-check-label" for="flexCheckChecked2">Coco</label>
-                      <span class="badge badge-secondary float-end">15</span>
-                    </div>
-                    <!-- Brand checkbox -->
-                    <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="Hooya" id="flexCheckChecked3" name="brands" checked />
-                      <label class="form-check-label" for="flexCheckChecked3">Hooya</label>
-                      <span class="badge badge-secondary float-end">35</span>
-                    </div>
-                    <!-- Brand checkbox -->
-                    <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="Mårdhund" id="flexCheckChecked4" name="brands" checked />
-                      <label class="form-check-label" for="flexCheckChecked4">Mårdhund</label>
-                      <span class="badge badge-secondary float-end">89</span>
-                    </div>
-                    <!-- Brand checkbox -->
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="Crystal" id="flexCheckDefault" name="brands" checked />
-                      <label class="form-check-label" for="flexCheckDefault">Crystal</label>
-                      <span class="badge badge-secondary float-end">30</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Brands end -->
-
-            <!-- Price -->
-                     
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="headingThree">
-                <button
-                        class="accordion-button text-dark bg-light"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#panelsStayOpen-collapseThree"
-                        aria-expanded="false"
-                        aria-controls="panelsStayOpen-collapseThree"
-                        >
-                  Price
-                </button>
-              </h2>
-
-              <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree">
-                <div class="accordion-body">
-                  <div class="range">
-                    <input type="range" class="form-range" id="customRange1" />
-                  </div>
-                  <div class="row mb-3">
-                    <div class="col-6">
-                      <p class="mb-0">
-                        Min
-                      </p>
-                      <div class="form-outline">
-                        <input type="number" id="typeNumber" class="form-control" name="minPrice" value="@(ViewBag.MinPrice ?? 0)" />
-                        <label class="form-label" for="typeNumber">0</label>
-                      </div>
-                    </div>
-                    <div class="col-6">
-                      <p class="mb-0">
-                        Max
-                      </p>
-                      <div class="form-outline">
-                        <input type="number" id="typeNumber" class="form-control" name="maxPrice" value="@(ViewBag.MaxPrice ?? 10000)" />
-                        <label class="form-label" for="typeNumber">10000</label>
-                      </div>
-                    </div>
-                  </div>
-                      <button type="submit" class="btn btn-primary w-100 border border-secondary">apply</button>
-                </div>
-              </div>
-            </div>
-            }
-            <!-- Price end -->
-
-            <!-- Size -->
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="headingThree">
-                <button
-                        class="accordion-button text-dark bg-light"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#panelsStayOpen-collapseFour"
-                        aria-expanded="false"
-                        aria-controls="panelsStayOpen-collapseFour"
-                        >
-                  Size
-                </button>
-              </h2>
-                    <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse show" aria-labelledby="headingThree">
-                    <div class="accordion-body">
-                        <div class="range">
-                            <input type="range" class="form-range" id="customRange1" />
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-6">
-                                <p class="mb-0">
-                                    Min
-                                </p>
-                                <div class="form-outline">
-                                    <input type="number" id="typeNumber" class="form-control" />
-                                    <label class="form-label" for="typeNumber">0 ml</label>
+                                                <label class="form-check-label" for="CatCheckChecked5">Skin Care</label>
+                                                <span class="badge badge-secondary float-end">30</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-75 ms-3 border border-secondary">apply</button>
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <p class="mb-0">
-                                    Max
-                                </p>
-                                <div class="form-outline">
-                                    <input type="number" id="typeNumber" class="form-control" />
-                                    <label class="form-label" for="typeNumber">2000 ml</label>
+                        }
+                        <!-- Categories end -->
+                        <!-- Brands -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button text-dark bg-light"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#panelsStayOpen-collapseTwo"
+                                        aria-expanded="false"
+                                        aria-controls="panelsStayOpen-collapseTwo">
+                                    Brands
+                                </button>
+                            </h2>
+                            <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">
+                                @*Added support for brandfiltering if the data is included in the future*@
+                                <div class="accordion-body">
+                                    <div>
+                                        <!-- Brand checkbox -->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="Hair|Care" id="flexCheckChecked1" name="brands" checked />
+                                            <label class="form-check-label" for="flexCheckChecked1">Hair|Care</label>
+                                            <span class="badge badge-secondary float-end">120</span>
+                                        </div>
+                                        <!-- Brand checkbox -->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="Coco" id="flexCheckChecked2" name="brands" checked />
+                                            <label class="form-check-label" for="flexCheckChecked2">Coco</label>
+                                            <span class="badge badge-secondary float-end">15</span>
+                                        </div>
+                                        <!-- Brand checkbox -->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="Hooya" id="flexCheckChecked3" name="brands" checked />
+                                            <label class="form-check-label" for="flexCheckChecked3">Hooya</label>
+                                            <span class="badge badge-secondary float-end">35</span>
+                                        </div>
+                                        <!-- Brand checkbox -->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="Mårdhund" id="flexCheckChecked4" name="brands" checked />
+                                            <label class="form-check-label" for="flexCheckChecked4">Mårdhund</label>
+                                            <span class="badge badge-secondary float-end">89</span>
+                                        </div>
+                                        <!-- Brand checkbox -->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="Crystal" id="flexCheckDefault" name="brands" checked />
+                                            <label class="form-check-label" for="flexCheckDefault">Crystal</label>
+                                            <span class="badge badge-secondary float-end">30</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-primary w-100 border border-secondary">apply</button>
+                        <!-- Brands end -->
+                        <!-- Price -->
+                        @using (Html.BeginForm("FilterOnSideOptions", "Products", FormMethod.Get))
+                        {
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThree">
+                                    <button class="accordion-button text-dark bg-light"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#panelsStayOpen-collapseThree"
+                                            aria-expanded="false"
+                                            aria-controls="panelsStayOpen-collapseThree">
+                                        Price
+                                    </button>
+                                </h2>
+
+                                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree">
+                                    <div class="accordion-body">
+                                        @*<div class="range">
+                                    <input type="range" class="form-range" min="0" max="10000" id="customRange1" />
+                                    </div>*@
+                                        <div class="row mb-3">
+                                            <div class="col-6">
+                                                <p class="mb-0">
+                                                    Min
+                                                </p>
+                                                <div class="form-outline">
+                                                    <input type="number" id="typeNumber" class="form-control" style="width: 120px" name="minPrice" value="@(ViewBag.MinPrice ?? 0)" />
+                                                    <label class="form-label ms-4" for="typeNumber"></label>
+                                                </div>
+                                            </div>
+       
+                                        </div>
+                                        <div class="col-6">
+
+                                            <p class="mb-0">
+                                                Max
+                                            </p>
+                                            <div class="form-outline">
+                                                <input type="number" id="typeNumber" class="form-control ms-0" style="width: 120px" value="@(ViewBag.MaxPrice ?? 10000)" />
+                                                <label class="form-label" for="typeNumber"></label>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary w-100 border border-secondary">apply</button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <!-- Price end -->
+                        <!-- Size -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingThree">
+                                <button class="accordion-button text-dark bg-light"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#panelsStayOpen-collapseFour"
+                                        aria-expanded="false"
+                                        aria-controls="panelsStayOpen-collapseFour">
+                                    Size
+                                </button>
+                            </h2>
+                            <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse" aria-labelledby="headingThree">
+                                <div class="accordion-body">
+                                    <div class="range">
+                                        <input type="range" class="form-range" id="customRange1" />
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-6">
+                                            <p class="mb-0">
+                                                Min
+                                            </p>
+                                            <div class="form-outline">
+                                                <input type="number" id="typeNumber" class="form-control" />
+                                                <label class="form-label" for="typeNumber">0 ml</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <p class="mb-0">
+                                                Max
+                                            </p>
+                                            <div class="form-outline">
+                                                <input type="number" id="typeNumber" class="form-control" />
+                                                <label class="form-label" for="typeNumber">2000 ml</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-primary w-100 border border-secondary">apply</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Size end-->
+                        <!-- Ratings -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingThree">
+                                <button class="accordion-button text-dark bg-light"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#panelsStayOpen-collapseFive"
+                                        aria-expanded="true"
+                                        aria-controls="panelsStayOpen-collapseFive">
+                                    Ratings
+                                </button>
+                            </h2>
+                            <div id="panelsStayOpen-collapseFive" class="accordion-collapse collapse show" aria-labelledby="headingThree">
+                                <div class="accordion-body">
+
+                                    <!-- Ratings checkbox -->
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked />
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                            </svg>
+                                        </label>
+                                    </div>
+                                    <!-- Ratings checkbox -->
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked />
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                                                <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
+                                            </svg>
+                                        </label>
+                                    </div>
+                                    <!-- Ratings checkbox -->
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked />
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                                                <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                                                <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
+                                            </svg>
+                                        </label>
+                                    </div>
+                                    <!-- Ratings checkbox -->
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked />
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                                                <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                                                <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                                                <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
+                                            </svg>
+                                        </label>
+                                    </div>
+                                    <!-- Ratings checkbox -->
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked />
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                                                <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                                                <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                                                <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                                                <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
+                                            </svg>
+                                        </label>
+                                    </div>
+                                    <!-- Ratings checkboxes end -->
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Ratings end -->
+
                     </div>
                 </div>
             </div>
-            <!-- Size end-->
+            <!-- sidebar + content end -->
+          
+            <!-- Show Products -->
+            <div class="col-lg-9">
+                <header class="d-sm-flex align-items-center border-bottom mb-4 pb-3">
+                    <strong class="d-block py-2 text-white">@Model.Count Items found </strong>
 
-            <!-- Ratings -->
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="headingThree">
-                <button
-                        class="accordion-button text-dark bg-light"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#panelsStayOpen-collapseFive"
-                        aria-expanded="false"
-                        aria-controls="panelsStayOpen-collapseFive"
-                        >
-                  Ratings
-                </button>
-              </h2>
-                <div id="panelsStayOpen-collapseFive" class="accordion-collapse collapse show" aria-labelledby="headingThree">
-                <div class="accordion-body">
+                    <!-- Sort by -->
+                    <div class="ms-auto">
+                        <select class="form-select d-inline-block w-auto border pt-1">
+                            <option value="0">Best match</option>
+                            <option value="1">Recommended</option>
+                            <option value="2">High rated</option>
+                            <option value="3">Randomly</option>
+                        </select>
+                    </div>
+                    <!-- Sort by end-->
 
-                  <!-- Ratings checkbox -->
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked />
-                    <label class="form-check-label" for="flexCheckDefault">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                        </svg>
-                    </label>
-                  </div>
-                <!-- Ratings checkbox -->
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked />
-                    <label class="form-check-label" for="flexCheckDefault">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
-                        <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
-                        </svg>
-                    </label>
-                  </div>
-                  <!-- Ratings checkbox -->
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked />
-                    <label class="form-check-label" for="flexCheckDefault">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
-                        <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
-                            <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
-                        </svg>
-                    </label>
-                  </div>
-                  <!-- Ratings checkbox -->
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked />
-                    <label class="form-check-label" for="flexCheckDefault">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
-                            <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
-                        <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
-                        <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
-                        </svg>
-                    </label>
-                  </div>
-                <!-- Ratings checkbox -->
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked />
-                    <label class="form-check-label" for="flexCheckDefault">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
-                            <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
-                            <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
-                        <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
-                            <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
-                        </svg>
-                    </label>
-                  </div>
-                <!-- Ratings checkboxes end -->
-
-                </div>
-              </div>
-            </div>
-            <!-- Ratings end -->
-
-          </div>
-        </div>
-      </div>
-    <!-- sidebar + content end -->
-
-    <!-- Show Products -->
-      <div class="col-lg-9">
-        <header class="d-sm-flex align-items-center border-bottom mb-4 pb-3">
-          <strong class="d-block py-2 text-white">@Model.Count Items found </strong>
-
-        <!-- Sort by -->
-          <div class="ms-auto">
-            <select class="form-select d-inline-block w-auto border pt-1">
-              <option value="0">Best match</option>
-              <option value="1">Recommended</option>
-              <option value="2">High rated</option>
-              <option value="3">Randomly</option>
-            </select>
-          </div>
-        <!-- Sort by end-->
-
-        </header>
+                </header>
+              
                 @foreach (var item in products)
                 {
                     <div class="row justify-content-center mb-3">
@@ -431,7 +421,7 @@
                                     <div class="row g-0">
                                         <div class="col-xl-3 col-md-4 d-flex justify-content-center">
                                             <div class="bg-image hover-zoom ripple rounded ripple-surface me-md-3 mb-3 mb-md-0">
-                                                <a asp-area="" asp-controller="Products" asp-action="ProductDetails">
+                                                <a asp-route-productId="@item.ProductId" asp-controller="Products" asp-action="ProductDetails">
                                                     <img src="@item.ProductPicture" class="w-100 h-auto" />
                                                 </a>
                                                 <div class="hover-overlay">
@@ -440,7 +430,7 @@
                                             </div>
                                         </div>
                                         <div class="col-xl-6 col-md-5 col-sm-7">
-                                            <a asp-area="" asp-controller="Products" asp-action="ProductDetails">
+                                            <a asp-route-productId="@item.ProductId" asp-controller="Products" asp-action="ProductDetails">
                                                 <h5>@item.ProductName</h5>
                                             </a>
                                             <div class="d-flex flex-row">
@@ -468,7 +458,7 @@
                                                 </div>
                                                 <!-- Product ratings -->
 
-                                                <span class="text-muted">154 orders</span>
+                                                <span class="text-muted">54 orders</span>
                                             </div>
 
                                             <p class="text mb-4 mb-md-0">
@@ -487,10 +477,17 @@
                                                 </a>
                                                 <br />
                                                 <br />
-                                                <a asp-controller="Products" asp-action="EditProduct" asp-route-productId="@item.ProductId" class="btn btn-primary yellow shadow-0">Edit Product</a>
-                                                <br/>
+
+                                                @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
+                                                {
+                                                    <a asp-controller="Products" asp-action="EditProduct" asp-route-productId="@item.ProductId" class="btn btn-primary yellow shadow-0">Edit Product</a>
+                                                }
                                                 <br />
-                                                <a asp-controller="Products" asp-action="RemoveProductConfirm" asp-route-productId="@item.ProductId" class="btn btn-primary yellow shadow-0">Remove Product</a>
+                                                <br />
+                                                @if (User.IsInRole("Admin"))
+                                                {
+                                                    <a asp-controller="Products" asp-action="RemoveProductConfirm" asp-route-productId="@item.ProductId" class="btn btn-danger shadow-0">Remove Product</a>
+                                                }
                                             </div>
                                         </div>
                                     </div>
@@ -499,10 +496,10 @@
                         </div>
                     </div>
                 }
-        <hr />
+                <hr />
 
 
-        <!-- Pagination -->
+                <!-- Pagination -->
                 <nav aria-label="Page navigation example" class="d-flex justify-content-center mt-3">
                     <ul class="pagination">
                         @if (currentPage > 1)
@@ -531,13 +528,14 @@
                         }
                     </ul>
                 </nav>
-        <!-- Pagination end -->
+                <!-- Pagination end -->
 
-      </div>
-    <!-- Show Products end -->
+            </div>
+            <!-- Show Products end -->
 
+        </div>
     </div>
-  </div>
+  
 </section>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -628,4 +626,3 @@
         });
     });
 </script>
-

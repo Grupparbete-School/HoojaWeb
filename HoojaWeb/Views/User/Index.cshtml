@@ -1,0 +1,45 @@
+﻿@model List<HoojaWeb.ViewModels.User.UserGetViewModel>
+
+<h1>User List in Hooja Webshop or what?</h1>
+
+<a class="btn btn-dark mt-3" asp-area="" asp-controller="User" asp-action="Create">Create User</a>
+
+@if (Model != null && Model.Count > 0)
+{
+    <table class="table table-striped table-hover table-light">
+        <tr>
+            <th>@Html.DisplayNameFor(model => model[0].FirstName)</th>
+            <th>@Html.DisplayNameFor(model => model[0].LastName)</th>
+            <th>@Html.DisplayNameFor(model => model[0].UserName)</th>
+            <th>@Html.DisplayNameFor(model => model[0].Email)</th>
+            <th>@Html.DisplayNameFor(model => model[0].SecurityNumber)</th>
+            <th>@Html.DisplayNameFor(model => model[0].EmailConfirmed)</th>
+        </tr>
+        @foreach (var user in Model)
+        {
+            <tr class="@(user == Model.Last() ? "highlight" : "")">
+                <td>@user.FirstName</td>
+                <td>@user.LastName</td>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>@user.SecurityNumber</td>
+                <td>@user.EmailConfirmed</td>
+                <td>
+                    <a class="btn btn-dark mt-3" asp-area="" asp-route-id="@user.Id" asp-controller="User" asp-action="Edit">Edit</a>
+                    <a class="btn btn-danger mt-3" asp-area="" asp-route-id="@user.Id" asp-controller="User" asp-action="Delete">Delete</a>
+                </td>
+            </tr>
+        }
+
+    </table>
+    }
+else
+{
+    <p>No users found.</p>
+}
+
+<style>
+    .highlight {
+        background-color: #ffeeba;
+    }
+</style>

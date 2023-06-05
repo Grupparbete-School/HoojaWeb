@@ -29,6 +29,18 @@ body {
 }
 
 
+.inputboxText {
+    max-width: 350px!important;
+    width: 50vw!important;
+    height: 130px !important;
+    min-width: 300px;
+}
+
+.inputbox {
+    max-width: 350px!important;
+    width: 50vw!important;
+    min-width: 300px!important;
+}
 
 /*another light blue #63cfcb light yellow: #e6c78e*/
 /**********************************/
@@ -150,7 +162,7 @@ form .error {
 /**********************************/
 /******** Sidebar ********/
 /**********************************/
-.bd-placeholder-img {
+/*.bd-placeholder-img {
     font-size: 1.125rem;
     text-anchor: middle;
     -webkit-user-select: none;
@@ -243,12 +255,12 @@ form .error {
     border: solid rgba(0, 0, 0, .15);
     border-width: 1px 0;
     box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-}
+}*/
 
 /**********************************/
 /******** Sidebar SIDENAV ********/
 /**********************************/
-.wrapper .sidenav {
+/*.wrapper .sidenav {
     position: absolute;
     left: auto;
     top: auto;
@@ -263,7 +275,7 @@ form .error {
     width: 80vw;
     min-width: 600px;
     margin-left: 20vw;
-}
+}*/
 
 /**********************************/
 /******** SHOPPING CART ********/
@@ -438,7 +450,7 @@ svg {
 }
 
 .icon-social svg:hover {
-    color: #CA5466;
+    color: #CA5466!important;
 }
 
 
