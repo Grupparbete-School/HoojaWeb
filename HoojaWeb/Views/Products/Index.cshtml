@@ -67,7 +67,7 @@
                     <div class="accordion" id="accordionPanelsStayOpenExample">
 
                         <!-- Categories -->
-                        @using (Html.BeginForm("FilterOnCategories", "Products", FormMethod.Get))
+                        @using (Html.BeginForm("FilterOnSideOptions", "Products", FormMethod.Get))
                         {
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="headingOne">
@@ -172,7 +172,7 @@
                         </div>
                         <!-- Brands end -->
                         <!-- Price -->
-                        @using (Html.BeginForm("FilterOnSidePrice", "Products", FormMethod.Get))
+                        @using (Html.BeginForm("FilterOnSideOptions", "Products", FormMethod.Get))
                         {
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="headingThree">
@@ -197,18 +197,20 @@
                                                     Min
                                                 </p>
                                                 <div class="form-outline">
-                                                    <input type="number" id="typeNumber" class="form-control" style="width: 110px" name="minPrice" value="@(ViewBag.MinPrice ?? 0)" />
+                                                    <input type="number" id="typeNumber" class="form-control" style="width: 120px" name="minPrice" value="@(ViewBag.MinPrice ?? 0)" />
                                                     <label class="form-label ms-4" for="typeNumber"></label>
                                                 </div>
                                             </div>
-                                            <div class="col-6">
-                                                <p class="mb-0">
-                                                    Max
-                                                </p>
-                                                <div class="form-outline">
-                                                    <input type="number" id="typeNumber" class="form-control" style="width: 110px" value="@(ViewBag.MaxPrice ?? 10000)" />
-                                                    <label class="form-label" for="typeNumber"></label>
-                                                </div>
+       
+                                        </div>
+                                        <div class="col-6">
+
+                                            <p class="mb-0">
+                                                Max
+                                            </p>
+                                            <div class="form-outline">
+                                                <input type="number" id="typeNumber" class="form-control ms-0" style="width: 120px" value="@(ViewBag.MaxPrice ?? 10000)" />
+                                                <label class="form-label" for="typeNumber"></label>
                                             </div>
                                         </div>
                                         <button type="submit" class="btn btn-primary w-100 border border-secondary">apply</button>
@@ -453,7 +455,7 @@
                                                 </div>
                                                 <!-- Product ratings -->
 
-                                                <span class="text-muted">154 orders</span>
+                                                <span class="text-muted">54 orders</span>
                                             </div>
 
                                             <p class="text mb-4 mb-md-0">
@@ -472,10 +474,16 @@
                                                 </a>
                                                 <br />
                                                 <br />
-                                                <a asp-controller="Products" asp-action="EditProduct" asp-route-productId="@item.ProductId" class="btn btn-primary yellow shadow-0">Edit Product</a>
+                                                @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
+                                                {
+                                                    <a asp-controller="Products" asp-action="EditProduct" asp-route-productId="@item.ProductId" class="btn btn-primary yellow shadow-0">Edit Product</a>
+                                                }
                                                 <br />
                                                 <br />
-                                                <a asp-controller="Products" asp-action="RemoveProductConfirm" asp-route-productId="@item.ProductId" class="btn btn-primary yellow shadow-0">Remove Product</a>
+                                                @if (User.IsInRole("Admin"))
+                                                {
+                                                    <a asp-controller="Products" asp-action="RemoveProductConfirm" asp-route-productId="@item.ProductId" class="btn btn-danger shadow-0">Remove Product</a>
+                                                }
                                             </div>
                                         </div>
                                     </div>

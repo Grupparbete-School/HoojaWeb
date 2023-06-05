@@ -27,5 +27,8 @@
         public bool? IsActive { get; set; }
 
         public int TotalAmount { get; set; }
+
+        public List<ProductReviewViewModel> ProductReviews {get; set;}
+        
     }
 }
