@@ -65,7 +65,7 @@ namespace HoojaWeb.Controllers
 
                 ClaimsPrincipal principal = ValidateToken(token);
 
-                await HttpContext.SignInAsync(principal);
+                await HttpContext.SignInAsync(principal);               
                 return RedirectToAction("Index", "Home");
             }
 

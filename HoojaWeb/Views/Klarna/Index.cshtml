@@ -1,0 +1,97 @@
+﻿
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://x.klarnacdn.net/kp/lib/v1/api.js" async></script>
+</head>
+<body>
+
+    <script type="text/javascript">
+        //The following method initializes the Klarna Payments JS library
+        window.klarnaAsyncCallback = function () {
+            Klarna.Payments.init({
+                client_token: 'eyJhbGciOiJSUzI1NiIsImtpZCI6IjgyMzA1ZWJjLWI4MTEtMzYzNy1hYTRjLTY2ZWNhMTg3NGYzZCJ9.eyJzZXNzaW9uX2lkIjoiODNiN2JmNjMtZWRjMi01YWY2LWFhYjktMGM2OGE3YjY1YTllIiwiYmFzZV91cmwiOiJodHRwczovL2pzLnBsYXlncm91bmQua2xhcm5hLmNvbS9ldS9rcCIsImRlc2lnbiI6ImtsYXJuYSIsImxhbmd1YWdlIjoic3YiLCJwdXJjaGFzZV9jb3VudHJ5IjoiU0UiLCJlbnZpcm9ubWVudCI6InBsYXlncm91bmQiLCJtZXJjaGFudF9uYW1lIjoiWW91ciBidXNpbmVzcyBuYW1lIiwic2Vzc2lvbl90eXBlIjoiUEFZTUVOVFMiLCJjbGllbnRfZXZlbnRfYmFzZV91cmwiOiJodHRwczovL2V1LnBsYXlncm91bmQua2xhcm5hZXZ0LmNvbSIsInNjaGVtZSI6dHJ1ZSwiZXhwZXJpbWVudHMiOlt7Im5hbWUiOiJrcGMtMWstc2VydmljZSIsInZhcmlhdGUiOiJ2YXJpYXRlLTEifSx7Im5hbWUiOiJrcC1jbGllbnQtdXRvcGlhLWZsb3ciLCJ2YXJpYXRlIjoidmFyaWF0ZS0xIn0seyJuYW1lIjoia3BjLVBTRUwtMzA5OSIsInZhcmlhdGUiOiJ2YXJpYXRlLTEifSx7Im5hbWUiOiJrcC1jbGllbnQtdXRvcGlhLXBvcHVwLXJldHJpYWJsZSIsInZhcmlhdGUiOiJ2YXJpYXRlLTEifSx7Im5hbWUiOiJrcC1jbGllbnQtdXRvcGlhLXN0YXRpYy13aWRnZXQiLCJ2YXJpYXRlIjoiaW5kZXgiLCJwYXJhbWV0ZXJzIjp7ImR5bmFtaWMiOiJ0cnVlIn19LHsibmFtZSI6ImtwLWNsaWVudC1vbmUtcHVyY2hhc2UtZmxvdyIsInZhcmlhdGUiOiJ2YXJpYXRlLTEifSx7Im5hbWUiOiJpbi1hcHAtc2RrLW5ldy1pbnRlcm5hbC1icm93c2VyIiwicGFyYW1ldGVycyI6eyJ2YXJpYXRlX2lkIjoibmV3LWludGVybmFsLWJyb3dzZXItZW5hYmxlIn19LHsibmFtZSI6ImtwLWNsaWVudC11dG9waWEtc2RrLWZsb3ciLCJ2YXJpYXRlIjoidmFyaWF0ZS0xIn0seyJuYW1lIjoia3AtY2xpZW50LXV0b3BpYS13ZWJ2aWV3LWZsb3ciLCJ2YXJpYXRlIjoidmFyaWF0ZS0xIn0seyJuYW1lIjoiaW4tYXBwLXNkay1jYXJkLXNjYW5uaW5nIiwicGFyYW1ldGVycyI6eyJ2YXJpYXRlX2lkIjoiY2FyZC1zY2FubmluZy1lbmFibGUifX1dLCJyZWdpb24iOiJldSIsIm9yZGVyX2Ftb3VudCI6MjAwMDAsIm9mZmVyaW5nX29wdHMiOjIsIm9vIjoiNXUiLCJ2ZXJzaW9uIjoidjEuMTAuMC0xNTM3LWc2MmU1MTdjMyJ9.jDta12A1KSjHClPPZBcOe5mdNyM_BoD2v8KaCKt75fSn0iUN1cnjJmwaljz1f5uYkWi0GktfEvNYMnvuqXqTUw-FLmHpbswzTOjPtiRtcbMTqXBGwHSUzh9tKp2lir1mICBFa6DhlteoezDVwQSte5U8CMJZfdTtERhOLlr-Hd1k87IpsnvZQsI-7SS9PkjhjejixVjLRLwR7dr4_LqVu-IDq-VdbYIS_0B90h5vrj1752aoJ4NIbZLhhf3UmUx-nNyNy6ZarzycAk24F7If5wAaQk6jTF23wKD63CWaqPd2vg6Mbgt2a_FNuIcJj28kKWI_mag5DzkyCHzwiPE1Og'
+            });
+            console.log("Payments initialized");
+            //The following method loads the payment_method_category in the container with the id of 'klarna_container'
+            Klarna.Payments.load({
+                container: '#klarna_container',
+                payment_method_category: 'pay_over_time'
+
+            }, function (res) {
+                console.log("Load function called")
+                console.debug(res);
+            });
+        };
+
+
+
+        /*The following is the authorize function, which triggers Klarna to perform a risk assessment of the purchase
+          The successful response of this risk assessment is an authorization token, which in this example is logged in the console
+        */
+        $(function () {
+            $("button.authorize").on('click', function () {
+                Klarna.Payments.authorize({
+                    payment_method_category: 'pay_over_time'
+                }, {
+                    billing_address: {
+                        given_name: "Jane",
+                        family_name: "Doe",
+                        email: "jane@doe.com",
+                        title: "Ms",
+                        street_address: "512 City Park Ave",
+                        postal_code: "43215",
+                        city: "Columbus",
+                        region: "oh",
+                        phone: "6142607295",
+                        country: "SE"
+                    },
+                    order_amount: 20000,
+                    order_tax_amount: 0,
+                    order_lines: [{
+                        type: "physical",
+                        reference: "19-402",
+                        name: "black T-Shirt",
+                        quantity: 2,
+                        unit_price: 5000,
+                        tax_rate: 0,
+                        total_amount: 10000,
+                        total_discount_amount: 0,
+                        total_tax_amount: 0
+                    },
+                    {
+                        type: "physical",
+                        reference: "19-402",
+                        name: "red trousers",
+                        quantity: 1,
+                        unit_price: 10000,
+                        tax_rate: 0,
+                        total_amount: 10000,
+                        total_discount_amount: 0,
+                        total_tax_amount: 0
+                    }],
+                }, function (res) {
+                    console.log("Response from the authorize call:")
+                    console.log(res)
+
+                })
+            })
+        })
+    </script>
+
+
+    <div style="width: 500px; margin: auto; padding-top: 150px; padding-bottom: 30px;">
+        <img src="https://x.klarnacdn.net/payment-method/assets/badges/generic/klarna.svg" style="width: 500px; margin: auto;">
+    </div>
+
+    <!--Klarna container-->
+    <div id="klarna_container" style="width: 500px; margin: auto;"></div>
+    <div style="width: 500px; margin: auto;">
+        <!--Button to trigger authorize call-->
+        <button class="authorize" style="width: 500px; height: 50px; margin: auto;">Your Buy Button</button>
+    </div>
+
+
+
+</body>
+</html>

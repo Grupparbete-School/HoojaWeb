@@ -1,7 +1,9 @@
-﻿
+﻿@using HoojaWeb.ViewModels.Product
+@model List<ProductsViewModel>
 
 @{
     ViewData["Title"] = "Shopping cart";
+    int idOfItem = 0;
 }
 
 
@@ -23,107 +25,61 @@
                     <div class="card border shadow-0">
                         <div class="m-4">
                             <h4 class="card-title mb-4">Your shopping cart</h4>
-                            <div class="row gy-3 mb-4">
-                                <div class="col-lg-5">
-                                    <div class="me-lg-5">
-                                        <div class="d-flex">
-                                            <img src="./css/Images/P10.jpg" class="border rounded me-3" style="width: 96px; height: 96px;" />
-                                            <div class="">
-                                                <a href="#" class="nav-link">Set of shampoo and conditioner</a>
-                                                <p class="text-muted">Yellow, Jeans</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 col-sm-6 col-6 d-flex flex-row flex-lg-column flex-xl-row text-nowrap">
-                                    <div class="">
-                                        <select style="width: 100px;" class="form-select me-4">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
-                                        </select>
-                                    </div>
-                                    <div class="">
-                                        <text class="h6">$1156.00</text> <br />
-                                        <small class="text-muted text-nowrap"> $460.00 / per item </small>
-                                    </div>
-                                </div>
-                                <div class="col-lg col-sm-6 d-flex justify-content-sm-center justify-content-md-start justify-content-lg-center justify-content-xl-end mb-2">
-                                    <div class="float-md-end">
-                                        <a href="#" class="btn btn-light border text-danger icon-hover-danger"> Remove</a>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="row gy-3 mb-4">
-                                <div class="col-lg-5">
-                                    <div class="me-lg-5">
-                                        <div class="d-flex">
-                                            <img src="./css/Images/P7.jpg" class="border rounded me-3" style="width: 96px; height: 96px;" />
-                                            <div class="">
-                                                <a href="#" class="nav-link">Shampoo bar</a>
-                                                <p class="text-muted">Blue, Medium</p>
+                            @foreach (var item in Model)
+                            {
+                                <div class="row gy-3 mb-4">
+                                    <div class="col-lg-5">
+                                        <div class="me-lg-5">
+                                            <div class="d-flex">
+                                                <img src="@item.ProductPicture" class="border rounded me-3" style="width: 96px; height: 96px;" alt="Product picture" />
+                                                <div class="">
+                                                    <a href="#" class="nav-link">@item.ProductName</a>
+                                                    <p class="text-muted">@item.ProductTypeName</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-2 col-sm-6 col-6 d-flex flex-row flex-lg-column flex-xl-row text-nowrap">
-                                    <div class="">
-                                        <select style="width: 100px;" class="form-select me-4">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
-                                        </select>
-                                    </div>
-                                    <div class="">
-                                        <text class="h6">$44.80</text> <br />
-                                        <small class="text-muted text-nowrap"> $12.20 / per item </small>
-                                    </div>
-                                </div>
-                                <div class="col-lg col-sm-6 d-flex justify-content-sm-center justify-content-md-start justify-content-lg-center justify-content-xl-end mb-2">
-                                    <div class="float-md-end">                                       
-                                        <a href="#" class="btn btn-light border text-danger icon-hover-danger"> Remove</a>
-                                    </div>
-                                </div>
-                            </div>
+                                    <div class="col-lg-2 col-sm-6 col-6 d-flex flex-row flex-lg-column flex-xl-row text-nowrap">
+                                        <div class="">
+                                            <select id="quantityDropdown-@item.ProductId" style="width: 120px;" class="form-select me-4">
+                                                @for (int i = 1; i <= item.QuantityStock; i++)
+                                                {
+                                                    @if (item.TotalAmount == i)
+                                                    {
+                                                        <option value="@i" selected>@i</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@i">@i</option>
+                                                        //fix logic so it updates amount of total orders before sending a post request.
+                                                    }
 
-                            <div class="row gy-3">
-                                <div class="col-lg-5">
-                                    <div class="me-lg-5">
-                                        <div class="d-flex">
-                                            <img src="./css/Images/P8.jpg" class="border rounded me-3" style="width: 96px; height: 96px;" />
-                                            <div class="">
-                                                <a href="#" class="nav-link">Moisturizer</a>
-                                                <p class="text-muted">XL size, Jeans, Blue</p>
-                                            </div>
+                                                }
+
+                                            </select>
+                                        </div>
+                                        <div class="">
+                                            @{
+                                                var price = item.TotalAmount * item.Price;
+                                            }
+                                            <text class="h6">@price kr</text> <br />
+                                            <small class="text-muted text-nowrap"> @item.Price kr / per item </small>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg col-sm-6 d-flex justify-content-sm-center justify-content-md-start justify-content-lg-center justify-content-xl-end mb-2">
+                                        <div class="float-md-end">
+                                            <a asp-action="Index" asp-controller="ShoppingCart" asp-route-removeItem="@item.ProductId" class="btn btn-light border text-danger icon-hover-danger">
+                                                Remove
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-2 col-sm-6 col-6 d-flex flex-row flex-lg-column flex-xl-row text-nowrap">
-                                    <div class="">
-                                        <select style="width: 100px;" class="form-select me-4">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
-                                        </select>
-                                    </div>
-                                    <div class="">
-                                        <text class="h6">$1156.00</text> <br />
-                                        <small class="text-muted text-nowrap"> $460.00 / per item </small>
-                                    </div>
-                                </div>
-                                <div class="col-lg col-sm-6 d-flex justify-content-sm-center justify-content-md-start justify-content-lg-center justify-content-xl-end mb-2">
-                                    <div class="float-md-end">
-                                        <a href="#" class="btn btn-light border text-danger icon-hover-danger"> Remove</a>
-                                    </div>
-                                </div>
-                            </div>
+                                @if (item.TotalAmount > item.QuantityStock)
+                                {
+                                    <p>You fucked up brooo!</p>
+                                }
+                            }
                         </div>
 
                         <div class="border-top pt-4 mx-4 mb-4">
@@ -156,20 +112,35 @@
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
                                 <p class="mb-2">Total price:</p>
-                                <p class="mb-2">$329.00</p>
+                                @{
+                                    int total = 0;
+                                }
+                                @foreach (var item in Model)
+                                {
+                                    total += item.Price * item.TotalAmount;
+                                }
+                                <p class="mb-2">@total kr</p>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <p class="mb-2">Discount:</p>
                                 <p class="mb-2 text-success">-$60.00</p>
                             </div>
+                            @*Foreach with the Model and then if-statement to check if coupon code exists and if so apply the math.*@
                             <div class="d-flex justify-content-between">
                                 <p class="mb-2">TAX:</p>
-                                <p class="mb-2">$14.00</p>
+                                @{
+                                    decimal afterTax = 0;
+                                }
+                                @foreach (var item in Model)
+                                {
+                                    afterTax += (int)(item.Price * item.TotalAmount * 0.25);
+                                }
+                                <p class="mb-2">@afterTax kr</p>
                             </div>
                             <hr />
                             <div class="d-flex justify-content-between">
                                 <p class="mb-2">Total price:</p>
-                                <p class="mb-2 fw-bold">$283.00</p>
+                                <p class="mb-2 fw-bold">@total kr</p>
                             </div>
 
                             <div class="mt-3">
@@ -187,7 +158,7 @@
     <section>
         <div class="container my-5">
             <header class="mb-4 container-white">
-                <h3>Recommended items</h3>
+                <h3>Coming soon</h3>
             </header>
 
             <div class="row">
@@ -200,17 +171,14 @@
                             </div>
                         </div>
                         <a href="#" class="">
-                            <img src="./css/Images/P1.jpg" class="card-img-top rounded-2" />
+                            <img src="./css/Images/P1.jpg" class="card-img-top rounded-2" alt="Product picture" />
                         </a>
                         <div class="card-body d-flex flex-column pt-3 border-top">
-                            <a href="#" class="nav-link">Hare|Care set</a>
+                            <a href="#" class="">Hare|Care set</a>
                             <div class="price-wrap mb-2">
                                 <strong class="">299 kr</strong>
                                 <del class="">699 kr</del>
-                            </div>
-                            <div class="card-footer d-flex align-items-end pt-3 px-0 pb-0 mt-auto">
-                                <a href="#" class="btn btn-primary yellow w-100">Add to cart</a>
-                            </div>
+                           </div>   
                         </div>
                     </div>
                 </div>
@@ -220,16 +188,13 @@
                             <a href="#"><i class="fas fa-heart text-primary fa-lg float-end pt-3 m-2"></i></a>
                         </div>
                         <a href="#" class="">
-                            <img src="./css/Images/P5.jpg" class="card-img-top rounded-2" />
+                            <img src="./css/Images/P5.jpg" class="card-img-top rounded-2" alt="Product picture" />
                         </a>
                         <div class="card-body d-flex flex-column pt-3 border-top">
-                            <a href="#" class="nav-link">Set with shampoo, conditioner and hair mask </a>
+                            <a href="#" class="">Set with shampoo, conditioner and hair mask </a>
                             <div class="price-wrap mb-2">
                                 <strong class="">499 kr</strong>
-                            </div>
-                            <div class="card-footer d-flex align-items-end pt-3 px-0 pb-0 mt-auto">
-                                <a href="#" class="btn btn-primary yellow w-100">Add to cart</a>
-                            </div>
+                            </div>                        
                         </div>
                     </div>
                 </div>
@@ -239,16 +204,13 @@
                             <a href="#"><i class="fas fa-heart text-primary fa-lg float-end pt-3 m-2"></i></a>
                         </div>
                         <a href="#" class="">
-                            <img src="./css/Images/P6.jpg" class="card-img-top rounded-2" />
+                            <img src="./css/Images/P6.jpg" class="card-img-top rounded-2" alt="Product picture" />
                         </a>
                         <div class="card-body d-flex flex-column pt-3 border-top">
-                            <a href="#" class="nav-link">Hair mask</a>
+                            <a href="#" class="">Hair mask</a>
                             <div class="price-wrap mb-2">
                                 <strong class="">149 kr</strong>
                             </div>
-                            <div class="card-footer d-flex align-items-end pt-3 px-0 pb-0 mt-auto">
-                                <a href="#" class="btn btn-primary yellow w-100">Add to cart</a>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -258,15 +220,12 @@
                             <a href="#"><i class="fas fa-heart text-primary fa-lg float-end pt-3 m-2"></i></a>
                         </div>
                         <a href="#" class="">
-                            <img src="./css/Images/P9.jpg" class="card-img-top rounded-2" />
+                            <img src="./css/Images/P9.jpg" class="card-img-top rounded-2" alt="Product picture" />
                         </a>
                         <div class="card-body d-flex flex-column pt-3 border-top">
-                            <a href="#" class="nav-link">Hair kit </a>
+                            <a href="#" class="">Hair kit </a>
                             <div class="price-wrap mb-2">
                                 <strong class="">299 kr</strong>
-                            </div>
-                            <div class="card-footer d-flex align-items-end pt-3 px-0 pb-0 mt-auto">
-                                <a href="#" class="btn btn-primary yellow w-100">Add to cart</a>
                             </div>
                         </div>
                     </div>
@@ -276,130 +235,58 @@
     </section>
     <!-- Recommended -->
 </div>
+<script>
+    $(document).ready(function () {
+        // Function to retrieve the value of a cookie by name
+        function getCookie(name) {
+            var cookieArr = document.cookie.split(';');
+            for (var i = 0; i < cookieArr.length; i++) {
+                var cookiePair = cookieArr[i].split('=');
+                if (name === cookiePair[0].trim()) {
+                    return decodeURIComponent(cookiePair[1]);
+                }
+            }
+            return null;
+        }
 
+        // Function to update the cart item in the 'cartItems' cookie
+        function updateCartItem(cartItems, itemId, selectedQuantity) {
+            var cartItemsObj = JSON.parse(cartItems || '{}');
+            cartItemsObj[itemId] = parseInt(selectedQuantity);
+            return JSON.stringify(cartItemsObj);
+        }
 
+        // Function to update the cart counter in localStorage and on the page
+        function updateCartCounter(cartCounter) {
+            localStorage.setItem('cartCounter', cartCounter);
+            $("#cartCounter").text(cartCounter);
+        }
 
+        $('select[id^="quantityDropdown"]').change(function () {
+            var selectedQuantity = $(this).val();
+            var itemId = $(this).attr('id').split('-')[1];
 
-@*
-<div class="container">
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Shopping Cart</li>
-        </ol>
-    </nav>
-</div>
-<div class="container px-3 my-5 clearfix">
-    <!-- Shopping cart table -->
-    <div class="card">
-        <div class="card-header">
-            <h2>Shopping Cart</h2>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered m-0">
-                    <thead>
-                        <tr>
-                            <!-- Set columns width -->
-                            <th class="text-center py-3 px-4" style="min-width: 400px;">Product Name &amp; Details</th>
-                            <th class="text-right py-3 px-4" style="width: 100px;">Price</th>
-                            <th class="text-center py-3 px-4" style="width: 120px;">Quantity</th>
-                            <th class="text-right py-3 px-4" style="width: 100px;">Total</th>
-                            <th class="text-center align-middle py-3 px-0" style="width: 40px;"><a href="#" class="shop-tooltip float-none text-light" title="" data-original-title="Clear cart"><i class="ino ion-md-trash"></i></a></th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            var cartItems = getCookie('cartItems');
+            var updatedCartItems = updateCartItem(cartItems, itemId, selectedQuantity);
+            document.cookie = 'cartItems=' + updatedCartItems + '; path=/';
 
-                        <tr>
-                            <td class="p-4">
-                                <div class="media align-items-center">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="d-block ui-w-40 ui-bordered mr-4" alt="">
-                                    <div class="media-body">
-                                        <a href="#" class="d-block text-dark">Product 1</a>
-                                        <small>
-                                            <span class="text-muted">Color:</span>
-                                            <span class="ui-product-color ui-product-color-sm align-text-bottom" style="background:#e81e2c;"></span> &nbsp;
-                                            <span class="text-muted">Size: </span> EU 37 &nbsp;
-                                            <span class="text-muted">Ships from: </span> China
-                                        </small>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="text-right font-weight-semibold align-middle p-4">$57.55</td>
-                            <td class="align-middle p-4"><input type="text" class="form-control text-center" value="2"></td>
-                            <td class="text-right font-weight-semibold align-middle p-4">$115.1</td>
-                            <td class="text-center align-middle px-0"><a href="#" class="shop-tooltip close float-none text-danger" title="" data-original-title="Remove">×</a></td>
-                        </tr>
+            var cartCounter = 0;
+            if (updatedCartItems !== null) {
+                var cartItemsObj = JSON.parse(updatedCartItems);
+                for (var key in cartItemsObj) {
+                    cartCounter += cartItemsObj[key];
+                }
+            }
 
-                        <tr>
-                            <td class="p-4">
-                                <div class="media align-items-center">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar6.png" class="d-block ui-w-40 ui-bordered mr-4" alt="">
-                                    <div class="media-body">
-                                        <a href="#" class="d-block text-dark">Product 2</a>
-                                        <small>
-                                            <span class="text-muted">Color:</span>
-                                            <span class="ui-product-color ui-product-color-sm align-text-bottom" style="background:#000;"></span> &nbsp;
-                                            <span class="text-muted">Storage: </span> 32GB &nbsp;
-                                            <span class="text-muted">Warranty: </span> Standard - 1 year &nbsp;
-                                            <span class="text-muted">Ships from: </span> China
-                                        </small>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="text-right font-weight-semibold align-middle p-4">$1049.00</td>
-                            <td class="align-middle p-4"><input type="text" class="form-control text-center" value="1"></td>
-                            <td class="text-right font-weight-semibold align-middle p-4">$1049.00</td>
-                            <td class="text-center align-middle px-0"><a href="#" class="shop-tooltip close float-none text-danger" title="" data-original-title="Remove">×</a></td>
-                        </tr>
+            updateCartCounter(cartCounter);
+        });
 
-                        <tr>
-                            <td class="p-4">
-                                <div class="media align-items-center">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar2.png" class="d-block ui-w-40 ui-bordered mr-4" alt="">
-                                    <div class="media-body">
-                                        <a href="#" class="d-block text-dark">Product 3</a>
-                                        <small>
-                                            <span class="text-muted">Ships from: </span> Germany
-                                        </small>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="text-right font-weight-semibold align-middle p-4">$20.55</td>
-                            <td class="align-middle p-4"><input type="text" class="form-control text-center" value="1"></td>
-                            <td class="text-right font-weight-semibold align-middle p-4">$20.55</td>
-                            <td class="text-center align-middle px-0"><a href="#" class="shop-tooltip close float-none text-danger" title="" data-original-title="Remove">×</a></td>
-                        </tr>
-
-                    </tbody>
-                </table>
-            </div>
-            <!-- / Shopping cart table -->
-
-            <div class="d-flex flex-wrap justify-content-between align-items-center pb-4">
-                <div class="mt-4">
-                    <label class="font-weight-normal">Promocode</label>
-                    <input type="text" placeholder="ABC" class="form-control">
-                </div>
-                <!-- Fix luft mellan dom-->
-                <div class="d-flex justify-content-lg-between">
-                    <div class="text-end mt-4 mr-5">
-                        <label class="text-muted font-weight-normal m-0">Discount   </label>
-                        <div class="text-large"><strong>$20</strong></div>
-                    </div>
-                    <div class="text-end mt-4 ml-5">
-                        <label class="text-muted font-weight-normal m-0">Total price</label>
-                        <div class="text-large"><strong>$1164.65</strong></div>
-                    </div>
-                </div>
-            </div>
-
-            <br/>
-            <div class="float-end">
-                <button class="btn btn-primary"><a asp-controller="Products" asp-action="Index">Back to shopping</a></button>
-                <button class="btn btn-primary"><a asp-controller="ShoppingCart" asp-action="CheckOut">CHECK OUT</a></button>
-            </div>
-
-        </div>
-    </div>
-</div>*@
+        // Update the cart counter when the page loads
+        var storedCartCounter = localStorage.getItem('cartCounter');
+        if (storedCartCounter !== null) {
+            $("#cartCounter").text(storedCartCounter);
+        } else {
+            updateCartCounter(0);
+        }
+    });
+</script>

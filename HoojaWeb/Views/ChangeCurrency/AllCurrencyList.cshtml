@@ -1,0 +1,32 @@
+﻿@model HoojaWeb.ViewModels.Currency.CurrencyGetViewModel
+
+<h1>Currency List</h1>
+
+
+<div>
+    <form method="get" action="@Url.Action("AllCurrencyList")">
+        <input type="text" name="searchCurrency" placeholder="Search Currency" value="@ViewBag.SearchCurrency" />
+        <button type="submit">Search</button>
+    </form>
+</div>
+
+<p class="text-white">Last updated: @Model.LastUpdated.ToString("yyyy-MM-dd HH:mm:ss")</p>
+
+
+<table class="table table-striped table-light">
+    <thead>
+        <tr>
+            <th>Currency</th>
+            <th>Exchange Rate</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var rate in Model.Rates)
+        {
+            <tr>
+                <td>@rate.Key</td>
+                <td>@rate.Value</td>
+            </tr>
+        }
+    </tbody>
+</table>
