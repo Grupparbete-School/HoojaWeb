@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Data;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace HoojaWeb.Controllers
@@ -120,6 +121,10 @@ namespace HoojaWeb.Controllers
 
             using (var httpClient = new HttpClient())
             {
+                var sessiontoken = Request.Cookies["Token"];
+
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
+
                 var resp = await httpClient.PostAsync($"{link}api/CampaignCode/AddCampaign", newCampaignString);
 
                 if (resp.IsSuccessStatusCode)

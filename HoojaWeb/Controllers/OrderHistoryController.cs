@@ -16,6 +16,7 @@ using Newtonsoft.Json.Linq;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
+using System.Net.Http.Headers;
 
 namespace HoojaWeb.Controllers
 {
@@ -32,6 +33,10 @@ namespace HoojaWeb.Controllers
 
             try
             {
+                var sessiontoken = Request.Cookies["Token"];
+                //Lägger in denna token som vi får tillbaka via cookien i vår httpClient så att den skickas till apiet.
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
+
                 // Retrieve the list of customers
                 HttpResponseMessage customerResponse = await httpClient.GetAsync($"{historyLink}/api/Customer/GetAllUser");
 
