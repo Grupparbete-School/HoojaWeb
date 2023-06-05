@@ -1,0 +1,52 @@
+﻿@model HoojaWeb.ViewModels.User.UserGetViewModel
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h1 class="card-title">Delete User</h1>
+
+                    <p class="card-text">Are you sure you want to delete this user?</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <tr>
+                            <th>First Name</th>
+                            <td>@Model.FirstName</td>
+                        </tr>
+                        <tr>
+                            <th>Last Name</th>
+                            <td>@Model.LastName</td>
+                        </tr>
+                        <tr>
+                            <th>Username</th>
+                            <td>@Model.UserName</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>@Model.Email</td>
+                        </tr>
+                        <tr>
+                            <th>Security Number</th>
+                            <td>@Model.SecurityNumber</td>
+                        </tr>
+                    </table>
+
+                    @using (Html.BeginForm())
+                    {
+                        <input type="submit" value="Delete" class="btn btn-danger" />
+                        <a asp-controller="User" asp-action="Index" class="btn btn-dark">Cancel</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

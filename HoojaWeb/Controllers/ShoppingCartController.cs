@@ -1,11 +1,15 @@
 ﻿using HoojaWeb.ViewModels.Product;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Http;
+using System.Linq;
 
 namespace HoojaWeb.Controllers
 {
@@ -16,7 +20,7 @@ namespace HoojaWeb.Controllers
         private readonly IHttpContextAccessor httpContext;
         HttpClient httpClient = new HttpClient();
         string link = "https://localhost:7097/";
-
+        
         public ShoppingCartController(IHttpContextAccessor _httpContext)
         {
             httpContext = _httpContext;
@@ -48,20 +52,19 @@ namespace HoojaWeb.Controllers
             var productData = JsonConvert.DeserializeObject<List<ProductsViewModel>>(productsRespBody);
             var productTypesData = JsonConvert.DeserializeObject<List<ProductsViewModel>>(productTypesRespBody);
 
-            foreach (var product in productData)
+            foreach(var product in productData)
             {
-                if (product.ProductId == removeItem)
+                if(product.ProductId == removeItem)
                 {
                     productData.Remove(product);
-
                     break;
                 }
             }
-
+            
             foreach (var product in productData)
             {
                 var matchingProductType = productTypesData?.FirstOrDefault(pt => pt.ProductTypeId == product.fK_ProductTypeId);
-
+                
                 if (matchingProductType != null)
                 {
                     product.ProductTypeName = matchingProductType.ProductTypeName;
@@ -100,6 +103,7 @@ namespace HoojaWeb.Controllers
 
             //we map the value into a dictionary and add it to cartItems.
             var cartItems = JsonConvert.DeserializeObject<Dictionary<int, int>>(cartItemsJson);
+
 
             if (cartItems != null)
             {
@@ -142,14 +146,12 @@ namespace HoojaWeb.Controllers
                             {
                                 product.TotalAmount = productId.Value;
                             }
-
                             orders.Add(product);
                         }
                     }
                 }
                 return View(orders);
             }
-
             else
             {
                 return View(orders);

@@ -1,0 +1,33 @@
+﻿@model HoojaWeb.ViewModels.User.UserEditViewModel
+
+<h1>Edit User</h1>
+
+<div class="card">
+    <form asp-action="Edit" method="post">
+        <div class="form-group">
+            <label for="FirstName">First Name:</label>
+            <input type="text" id="FirstName" name="FirstName" class="form-control" value="@Model.FirstName" required>
+        </div>
+        <div class="form-group">
+            <label for="LastName">Last Name:</label>
+            <input type="text" id="LastName" name="LastName" class="form-control" value="@Model.LastName" required>
+        </div>
+        <div class="form-group">
+            <label for="UserName">Username:</label>
+            <input type="text" id="UserName" name="UserName" class="form-control" value="@Model.UserName" required>
+        </div>
+        <div class="form-group">
+            <label for="Email">Email:</label>
+            <input type="email" id="Email" name="Email" class="form-control" value="@Model.Email" required>
+        </div>
+        <div class="form-group">
+            <label for="PasswordHash">Password:</label>
+            <input type="password" id="PasswordHash" name="PasswordHash" class="form-control" value="@Model.PasswordHash" required>
+        </div>
+        <div class="form-group">
+            <label for="SecurityNumber">Security Number:</label>
+            <input type="text" id="SecurityNumber" name="SecurityNumber" class="form-control" value="@Model.SecurityNumber" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>

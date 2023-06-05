@@ -1,44 +1,99 @@
 ﻿@model HoojaWeb.ViewModels.ProductReview.ProductReviewEditViewModel
-<div class="card mt-3">
-    <form asp-action="EditConfirm" method="post" class="mt-3">
-        <div class="form-group">
-            <label for="reviewId">Review ID:</label>
-            <input type="text" class="form-control" id="reviewId" name="reviewId" value="@Model.ReviewId" readonly>
+
+@{
+    ViewData["Title"] = "Edit review";
+}
+
+<!-- Breadcrumbs -->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+        <li class="breadcrumb-item"><a asp-area="" asp-controller="ProductReview" asp-action="Index">Reviews</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Edit review</li>
+    </ol>
+</nav>
+<!-- Breadcrumbs end -->
+
+<div class="container container-fluid mt-5 container-lightblue">
+    <div class="text-center mt-2">
+        <h2>Edit review</h2>
+        <hr />
+    </div>
+
+    <div class="row my-3 mx-3">
+        <div class="col-md-5 mt-4">
+            <img src="https://images.unsplash.com/photo-1580618864180-f6d7d39b8ff6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80" class="frame-img" />
+
         </div>
-        <div class="form-group">
-            <label for="productId">Product:</label>
-            <select class="form-select" id="productId" name="productId">
-                @foreach (var item in Model.ProductsList)
-                {
-                    <option value="@item.ProductId" selected="@(item.ProductId == Model.FK_ProductId)">@item.ProductName</option>
-                }
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="review">Review:</label>
-            <textarea class="form-control" id="review" name="review">@Model.Review</textarea>
-        </div>
-        <div class="form-group">
-            <label for="rating">Rating:</label>
-            <div class="star-rating">
-                <input type="radio" id="star5" name="rating" value="5" @(Model.Rating == 5 ? "checked" : "") />
-                <label for="star5">&#9733;</label>
-                <input type="radio" id="star4" name="rating" value="4" @(Model.Rating == 4 ? "checked" : "") />
-                <label for="star4">&#9733;</label>
-                <input type="radio" id="star3" name="rating" value="3" @(Model.Rating == 3 ? "checked" : "") />
-                <label for="star3">&#9733;</label>
-                <input type="radio" id="star2" name="rating" value="2" @(Model.Rating == 2 ? "checked" : "") />
-                <label for="star2">&#9733;</label>
-                <input type="radio" id="star1" name="rating" value="1" @(Model.Rating == 1 ? "checked" : "") />
-                <label for="star1">&#9733;</label>
+
+
+    <div class="col-md-7">
+        <form asp-action="EditConfirm" method="post" class="mt-3">
+                <div class="form-group col-md-12 mt-3">
+                <label for="reviewId" class="form-label form-label-custom fw-bold">Review ID:</label>
+                <input 
+                    type="text"
+                    class="form-control inputbox"
+                    id="reviewId" 
+                    name="reviewId" 
+                    value="@Model.ReviewId" 
+                    readonly>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="customerName">Customer Name:</label>
-            <input type="text" class="form-control" id="customerName" name="customerName" value="@Model.CustomerName">
-        </div>
-        <button type="submit" class="btn btn-primary">Update</button>
-    </form>
+
+            <div class="form-group col-md-12 mt-3">
+                <label for="productId" class="form-label form-label-custom fw-bold">Product:</label>
+                <select class="form-select inputbox"
+                    id="productId" 
+                    name="productId">
+                    @foreach (var item in Model.ProductsList)
+                    {
+                        <option value="@item.ProductId" selected="@(item.ProductId == Model.FK_ProductId)">@item.ProductName</option>
+                    }
+                </select>
+            </div>
+
+                <div class="form-group col-md-12 mt-3">
+                    <label for="review" class="form-label form-label-custom fw-bold">Review:</label>
+                <textarea class="form-control inputboxText"
+                    id="review" 
+                    name="review">
+                    @Model.Review
+                    </textarea>
+            </div>
+
+                <div class="form-group col-md-12 mt-3">
+                <label for="rating" class="form-label form-label-custom fw-bold">Rating:</label>
+                <div class="star-rating">
+                    <input type="radio" id="star5" name="rating" value="5" @(Model.Rating == 5 ? "checked" : "") />
+                    <label for="star5">&#9733;</label>
+                    <input type="radio" id="star4" name="rating" value="4" @(Model.Rating == 4 ? "checked" : "") />
+                    <label for="star4">&#9733;</label>
+                    <input type="radio" id="star3" name="rating" value="3" @(Model.Rating == 3 ? "checked" : "") />
+                    <label for="star3">&#9733;</label>
+                    <input type="radio" id="star2" name="rating" value="2" @(Model.Rating == 2 ? "checked" : "") />
+                    <label for="star2">&#9733;</label>
+                    <input type="radio" id="star1" name="rating" value="1" @(Model.Rating == 1 ? "checked" : "") />
+                    <label for="star1">&#9733;</label>
+                </div>
+            </div>
+
+                <div class="form-group col-md-12 mt-3">
+                <label for="customerName" class="form-label form-label-custom fw-bold">Customer Name:</label>
+                <input 
+                    type="text"
+                    class="form-control inputbox"
+                    id="customerName" 
+                    name="customerName" 
+                    value="@Model.CustomerName">
+            </div>
+
+            <hr />
+                <div class="col-md-12 mt-3">
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+        </form>
+    </div>
+    </div>
 </div>
 
 

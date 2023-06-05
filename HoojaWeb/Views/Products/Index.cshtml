@@ -14,6 +14,7 @@
 
 <!-- Breadcrumbs -->
 <nav aria-label="breadcrumb">
+    <a class="nav-link text-dark" asp-area="" asp-controller="ShoppingCart" asp-action="Index"><span id="cartCounter" class="badge bg-primary rounded-pill"></span>Cart</a>
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
         <li class="breadcrumb-item active" aria-current="page">Products</li>
@@ -67,7 +68,7 @@
                     <div class="accordion" id="accordionPanelsStayOpenExample">
 
                         <!-- Categories -->
-                        @using (Html.BeginForm("FilterOnCategories", "Products", FormMethod.Get))
+                        @using (Html.BeginForm("FilterOnSideOptions", "Products", FormMethod.Get))
                         {
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="headingOne">
@@ -172,7 +173,7 @@
                         </div>
                         <!-- Brands end -->
                         <!-- Price -->
-                        @using (Html.BeginForm("FilterOnSidePrice", "Products", FormMethod.Get))
+                        @using (Html.BeginForm("FilterOnSideOptions", "Products", FormMethod.Get))
                         {
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="headingThree">
@@ -197,18 +198,20 @@
                                                     Min
                                                 </p>
                                                 <div class="form-outline">
-                                                    <input type="number" id="typeNumber" class="form-control" style="width: 110px" name="minPrice" value="@(ViewBag.MinPrice ?? 0)" />
+                                                    <input type="number" id="typeNumber" class="form-control" style="width: 120px" name="minPrice" value="@(ViewBag.MinPrice ?? 0)" />
                                                     <label class="form-label ms-4" for="typeNumber"></label>
                                                 </div>
                                             </div>
-                                            <div class="col-6">
-                                                <p class="mb-0">
-                                                    Max
-                                                </p>
-                                                <div class="form-outline">
-                                                    <input type="number" id="typeNumber" class="form-control" style="width: 110px" value="@(ViewBag.MaxPrice ?? 10000)" />
-                                                    <label class="form-label" for="typeNumber"></label>
-                                                </div>
+       
+                                        </div>
+                                        <div class="col-6">
+
+                                            <p class="mb-0">
+                                                Max
+                                            </p>
+                                            <div class="form-outline">
+                                                <input type="number" id="typeNumber" class="form-control ms-0" style="width: 120px" value="@(ViewBag.MaxPrice ?? 10000)" />
+                                                <label class="form-label" for="typeNumber"></label>
                                             </div>
                                         </div>
                                         <button type="submit" class="btn btn-primary w-100 border border-secondary">apply</button>
@@ -390,6 +393,7 @@
                 </div>
             </div>
             <!-- sidebar + content end -->
+          
             <!-- Show Products -->
             <div class="col-lg-9">
                 <header class="d-sm-flex align-items-center border-bottom mb-4 pb-3">
@@ -407,6 +411,7 @@
                     <!-- Sort by end-->
 
                 </header>
+              
                 @foreach (var item in products)
                 {
                     <div class="row justify-content-center mb-3">
@@ -453,7 +458,7 @@
                                                 </div>
                                                 <!-- Product ratings -->
 
-                                                <span class="text-muted">154 orders</span>
+                                                <span class="text-muted">54 orders</span>
                                             </div>
 
                                             <p class="text mb-4 mb-md-0">
@@ -480,9 +485,8 @@
                                                 <br />
                                                 @if (User.IsInRole("Admin"))
                                                 {
-                                                    <a asp-controller="Products" asp-action="RemoveProductConfirm" asp-route-productId="@item.ProductId" class="btn btn-primary yellow shadow-0">Remove Product</a>
+                                                    <a asp-controller="Products" asp-action="RemoveProductConfirm" asp-route-productId="@item.ProductId" class="btn btn-danger shadow-0">Remove Product</a>
                                                 }
-
                                             </div>
                                         </div>
                                     </div>
@@ -530,6 +534,7 @@
 
         </div>
     </div>
+  
 </section>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>

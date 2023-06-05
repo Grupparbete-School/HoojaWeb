@@ -19,40 +19,97 @@
 <!-- Breadcrumbs end -->
 
 <!-- sidebar + content -->
-<section class="">
-    <div class="container">
-
-        <!-- Search bar -->
-        <div class="col-lg-3 col-md-12 col-12 mt-5">
-            <div class="input-group float-center">
-                <input type="search" id="form1" class="form-control" placeholder="Search" />
-                <div class="input-group-append">
-                    <button type="button" class="btn btn-primary" style="width: 40px; height: 29px; position: relative;">
-                        <div class="svg-container">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-search" viewBox="0 0 16 16" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                            </svg>
-                        </div>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-            <!-- Search bar -->
-        <div class="container container-fluid mt-5 container-lightblue">
-	        <div class="text-center mt-2">
-		        <h2>Campaign</h2>
-		        <hr />
-	        </div>
-        </div>
-
-        <p>
-            <a asp-action="CreateCampaign">Create New A Campaign</a>
-        </p>
-
+<section class="container container-white mt-5">
+    <div class="text-center mt-2">
+        <h2>Campaign codes</h2>
+        <hr />
+    </div>
         @if (Model != null)
-        @foreach (var item in Model)
-        {
+    { }
+
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CampaignName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CampaignStart)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CampaignEnd)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.DiscountPercentage)
+                            </th>
+                            <th>
+                                Active
+                            </th>
+                            <th>
+
+                            </th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model)
+                    {
+                    <tbody>
+                        <tr>
+                            <th>
+                            @Html.DisplayFor(modelItem => item.CampaignName)
+                            </th>
+                            <th>
+                            @Html.DisplayFor(modelItem => item.CampaignStart)
+                            </th>
+                            <th>
+                            @Html.DisplayFor(modelItem => item.CampaignEnd)
+                            </th>
+                            <th>
+                            @Html.DisplayFor(modelItem => item.DiscountPercentage) %
+                            </th>
+                            <th>
+                                @if (item.CampaignEnd > DateTime.Now)
+                                {
+                                <svg xmlns="http://www.w3.org/2000/svg" 
+                                width="26" 
+                                height="26" 
+                                fill="green" 
+                                class="bi bi-bag-check-fill ms-3" 
+                                viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5v-.5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0zm-.646 5.354a.5.5 0 0 0-.708-.708L7.5 10.793 6.354 9.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z" />
+                                </svg>
+                                }
+                                else
+                                {
+                                <svg xmlns="http://www.w3.org/2000/svg" 
+                                width="26" 
+                                height="26" 
+                                fill="red" 
+                                class="bi bi-bag-x-fill ms-3" 
+                                viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5v-.5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0zM6.854 8.146a.5.5 0 1 0-.708.708L7.293 10l-1.147 1.146a.5.5 0 0 0 .708.708L8 10.707l1.146 1.147a.5.5 0 0 0 .708-.708L8.707 10l1.147-1.146a.5.5 0 0 0-.708-.708L8 9.293 6.854 8.146z" />
+                                </svg>
+                                }
+                            </th>
+                            <th>
+                                <p>
+                                <a asp-controller="CampaignCode" asp-action="EditCampaign" asp-route-campaignCodeId="@item.CampaignCodeId" class="link-text">Edit </a> |
+                            <a asp-controller="CampaignCode" asp-action="RemoveCampaignConfirm" asp-route-campaignCodeId="@item.CampaignCodeId" class="link-text"> Delete</a>
+                                </p>
+
+                            </th>
+                        </tr>
+                        
+                    </tbody>
+                    }
+                </table>
+       
+
+    <div class="text-end me-4 mt-5">
+        <a class="btn btn-primary" asp-action="CreateCampaign">Create New A Campaign</a>
+    </div>
+</section>
+
+@*
             <div class="row justify-content-center mb-3">
                 <div class="col-md-12">
                     <div class="card shadow-0 border rounded-3">
@@ -80,7 +137,4 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        }
-    </div>
-</section>
+            </div>*@

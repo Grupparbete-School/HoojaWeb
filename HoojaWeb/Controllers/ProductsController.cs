@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
 
@@ -74,25 +75,77 @@ namespace HoojaWeb.Controllers
             return View("error");
         }
 
-        public IActionResult Brands()
+        public async Task<IActionResult> Brands()
         {
-            return View();
+            try
+            {
+                HttpResponseMessage brandResponse = await httpClient.GetAsync($"{link}api/Product/GetAllProduct");
+                if (brandResponse.IsSuccessStatusCode)
+                {
+                    var brandJson = await brandResponse.Content.ReadAsStringAsync();
+                    var products = JsonConvert.DeserializeObject<List<BrandsGetViewModel>>(brandJson);
+
+                    var brands = products.Select(p => new BrandsGetViewModel { Brand = p.Brand }).Distinct().ToList();
+
+                    return View(brands);
+                }
+                else if (brandResponse.StatusCode == HttpStatusCode.NotFound)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    return StatusCode((int)brandResponse.StatusCode);
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
 
         public async Task<IActionResult> ProductDetails(int productId)
         {
-
-            var allProducts = await httpClient.GetAsync($"{link}api/Product/Product-By{productId}");
-
-            if (allProducts.IsSuccessStatusCode)
+            try
             {
-                var productsRespBody = await allProducts.Content.ReadAsStringAsync();
+                // Utför en GET-begäran till den specificerade URL:en med hjälp av HttpClient
+                var allProducts = await httpClient.GetAsync($"{link}api/Product/Product-By{productId}");
+                var productRating = await httpClient.GetAsync($"{link}api/ProductReview/GetAllReviews/ByProductId/{productId}");
 
-                var productData = JsonConvert.DeserializeObject<ProductsViewModel>(productsRespBody);
+                if (allProducts.IsSuccessStatusCode)
+                {
+                    // Om begäran lyckades och returnerade en lyckad statuskod, bearbeta svaret
+                    var productsRespBody = await allProducts.Content.ReadAsStringAsync();
+                    var productsReviewsRespBody = await productRating.Content.ReadAsStringAsync();
 
-                return View(productData);
+                    var productData = JsonConvert.DeserializeObject<ProductsViewModel>(productsRespBody);
+
+                    if (productsReviewsRespBody != $"No product with id: {productId} found. You need to create a review.")
+                    {
+                        var productRatingsData = JsonConvert.DeserializeObject<List<ProductReviewViewModel>>(productsReviewsRespBody);
+                        // Fyller listan ProductReviews med productRatingsData
+                        productData.ProductReviews = productRatingsData;
+                    }
+
+                    return View(productData);
+                }
+                else if (allProducts.StatusCode == HttpStatusCode.NotFound)
+                {
+                    // Om resursen inte hittas, returnera NotFound-vyn
+                    return NotFound();
+                }
+                else
+                {
+                    // För alla andra fel, returnera ServerError-vyn
+                    return StatusCode((int)allProducts.StatusCode);
+                }
             }
-            return View("error");
+            catch (Exception ex)
+            {
+                // Hantera undantaget och returnera ServerError-vyn med felmeddelandet
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+  
         }
 
         // Working on drop down list for campaign codes

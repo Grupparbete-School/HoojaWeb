@@ -37,8 +37,6 @@ namespace HoojaWeb.ViewModels.OrderHistory
         [DisplayName("Qty")]
         public int? Amount { get; set; }
 
-        [NotMapped]
-
         [DisplayName("Total price")]
         public decimal TotalPrice
         {
