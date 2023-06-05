@@ -39,8 +39,6 @@ namespace HoojaWeb.Controllers
                         LastUpdated = DateTimeOffset.FromUnixTimeSeconds((long)currencyData["timestamp"]).DateTime
                     };
 
-
-
                     return View(viewModel);
                 }
 
