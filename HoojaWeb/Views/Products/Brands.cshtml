@@ -1,0 +1,17 @@
+﻿@model IEnumerable<HoojaWeb.ViewModels.Product.BrandsGetViewModel>
+
+<h1>Brands</h1>
+
+<div class="row">
+    @foreach (var brand in Model)
+    {
+        <div class="col-md-4">
+            <div class="card mb-4">
+                @*<img src="@brand.BrandLogo" class="card-img-top" alt="@brand.BrandName">*@
+                <div class="card-body">
+                    <h5 class="card-title">@brand.Brand</h5>
+                </div>
+            </div>
+        </div>
+    }
+</div>

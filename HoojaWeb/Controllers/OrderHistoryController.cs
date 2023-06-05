@@ -29,7 +29,7 @@ namespace HoojaWeb.Controllers
             try
             {
                 // Retrieve the list of customers
-                HttpResponseMessage customerResponse = await httpClient.GetAsync($"{historyLink}/api/Customer/GetAllCustomer");
+                HttpResponseMessage customerResponse = await httpClient.GetAsync($"{historyLink}/api/Customer/GetAllUser");
 
                 if (customerResponse.IsSuccessStatusCode)
                 {
