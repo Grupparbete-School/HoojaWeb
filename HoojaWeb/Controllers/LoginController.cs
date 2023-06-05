@@ -105,7 +105,7 @@ namespace HoojaWeb.Controllers
             return View();
         }
 
-        public async Task<IActionResult> OrderDetailsCustomer(int postNumber)
+        public async Task<IActionResult> OrderDetailsCustomer(int postNumber = 85352)
         {
             string ApiKey = Environment.GetEnvironmentVariable("API_KEY_POSTNORD");
 
