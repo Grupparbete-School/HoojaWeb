@@ -69,7 +69,7 @@
                                 <a class="dropdown-item" asp-area="" asp-controller="Chat" asp-action="Index">Support</a>
                                 <a class="dropdown-item" asp-area="" asp-controller="SendEmail" asp-action="SendEmail">Email</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" asp-area="" asp-controller="#" asp-action="#">Log out</a>
+                                <a class="dropdown-item" id="logout-link" style="cursor: pointer;">Log out</a>
                                 <a class="dropdown-item" asp-area="" asp-controller="Login" asp-action="OrderDetailsCustomer">Order Details Customer</a>
                             </div>
                         </li>
@@ -320,3 +320,61 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+<script>
+    $(document).ready(function () {
+        var cartCounter = 0;
+        $('#logout-link').click(function (e) {
+            e.preventDefault(); // Prevent the default link behavior
+
+            // Remove all cookies
+            var cookies = document.cookie.split(";");
+
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i];
+                var eqPos = cookie.indexOf("=");
+                var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+            }
+
+            // Redirect to the logout action or any other desired page
+            window.location.href = "/Login/Logout";
+        });
+
+
+        // Retrieve the initial value of cartCounter if it exists
+        if (localStorage.getItem("cartCounter") !== null) {
+            cartCounter = parseInt(localStorage.getItem("cartCounter"));
+        }
+
+
+
+        // Set the initial value in the span element
+        $("#cartCounter").text(cartCounter);
+
+
+
+        // Add event handler to the Add to Cart button
+        $("#addToCartButton").click(function (e) {
+            e.preventDefault();
+
+
+
+            // Increment the counter
+            cartCounter++;
+
+
+
+            // Update the value in the span element
+            $("#cartCounter").text(cartCounter);
+
+
+
+            // Store the updated counter in local storage
+            localStorage.setItem("cartCounter", cartCounter);
+
+
+
+            // Perform any other logic related to adding the product to the cart
+        });
+    });
+</script>
