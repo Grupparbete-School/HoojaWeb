@@ -145,7 +145,13 @@
                                 <form asp-action="OrderDetailsCustomer" asp-controller="Login" asp-route-postNumber="postNumber">
                                     <span>Enter post number:</span>
                                     <input type="text" name="postNumber" placeholder="ex. 12345" class="mb-3" required pattern="\d{5}">
-                                    <button type="submit" class="btn btn-primary yellow w-100 shadow-0 mb-2">Make Purchase</button>
+                                    @if (!User.Identity.IsAuthenticated)
+                                    {
+                                        <a asp-action="Create" asp-controller="User" class="btn btn-primary yellow w-100 shadow-0 mb-2">Make Purchase</a>
+                                    }else {
+                                        <button type="submit" class="btn btn-primary yellow w-100 shadow-0 mb-2">Make Purchase</button>
+                                    }
+                                    
                                 </form>
 
                                 <a href="#" class="btn btn-primary w-100 border mt-2"> Back to shop </a>

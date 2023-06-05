@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace HoojaWeb.Controllers
 {
-    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+    //[Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
     public class ShoppingCartController : Controller
     {
         private readonly ISession session;

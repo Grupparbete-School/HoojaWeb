@@ -110,6 +110,11 @@ namespace HoojaWeb.Controllers
         [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
         public async Task<IActionResult> OrderDetailsCustomer(int postNumber = 85352)
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                TempData["SignUpToBuy"] = "Registrera dig för att fortsätta med beställningen!";
+                RedirectToAction("Create", "User");
+            }
             string ApiKey = Environment.GetEnvironmentVariable("API_KEY_POSTNORD");
 
             var request = new PostNordRequestModel

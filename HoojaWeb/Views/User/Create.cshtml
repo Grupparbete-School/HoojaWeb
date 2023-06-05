@@ -8,6 +8,10 @@
 </nav>
 
 <div class="container">
+    @if (TempData.ContainsKey("SignUpToBuy"))
+    {
+        <p>@TempData["SignUpToBuy"].ToString()</p>
+    }
     <div class="row justify-content-center">
         <div class="col-lg-6 col-md-8 mx-auto">
             <div class="myform form mt-5">
