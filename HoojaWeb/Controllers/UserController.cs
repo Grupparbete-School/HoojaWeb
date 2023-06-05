@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using HoojaWeb.ViewModels.User;
 using System.Text;
+using System.Net.Http.Headers;
 
 namespace HoojaWeb.Controllers
 {
@@ -57,36 +58,8 @@ namespace HoojaWeb.Controllers
         // GET: UserController/Create
         public async Task<IActionResult> Create()
         {
-            try
-            {
-                // Utför en GET-begäran till den specificerade URL:en med hjälp av HttpClient
-                HttpResponseMessage userResponse = await httpClient.GetAsync($"{reviewLink}api/Customer/GetAllUser");
-
-                if (userResponse.IsSuccessStatusCode)
-                {
-                    // Om begäran lyckades och returnerade en lyckad statuskod, bearbeta svaret
-                    var userJson = await userResponse.Content.ReadAsStringAsync();
-                    var users = JsonConvert.DeserializeObject<List<UserPostViewModel>>(userJson);
-
-                    // Returnera vyn med de hämtade recensionerna
-                    return View(new UserPostViewModel());
-                }
-                else if (userResponse.StatusCode == HttpStatusCode.NotFound)
-                {
-                    // Om resursen inte hittas, returnera NotFound-vyn
-                    return NotFound();
-                }
-                else
-                {
-                    // För alla andra fel, returnera ServerError-vyn
-                    return StatusCode((int)userResponse.StatusCode);
-                }
-            }
-            catch (Exception ex)
-            {
-                // Hantera undantaget och returnera ServerError-vyn med felmeddelandet
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            // Returnera vyn med de hämtade recensionerna
+            return View(new UserPostViewModel());
         }
 
         // POST: UserController/Create

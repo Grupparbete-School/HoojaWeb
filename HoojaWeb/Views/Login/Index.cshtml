@@ -65,75 +65,10 @@
                                     </p>
                                 </div>
                                 <div class="form-group">
-                                    <p class="text-center">Don't have account? <a href="#" id="signup">Sign up here</a></p>
+                                    <p class="text-center">Don't have account? <a asp-action="Create" asp-controller="User" id="signup">Sign up here</a></p>
                                 </div>
                             </form>
                         </div>
-                    </div>
-                    <div id="second">
-                        <div class="myform form ">
-                            <div class="logo mb-3">
-                                <div class="col-md-12 text-center">
-                                    <h1>Signup</h1>
-                                </div>
-                            </div>
-                            <form asp-action="Create" asp-controller="User" method="post" name="registration">
-                                @*<div class="form-group">
-                                    <label for="exampleInputEmail1">First Name</label>
-                                    <input type="text" name="firstname" class="form-control" id="firstname" aria-describedby="emailHelp" placeholder="Enter Firstname">
-                                </div>
-                                <br />
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Last Name</label>
-                                    <input type="text" name="lastname" class="form-control" id="lastname" aria-describedby="emailHelp" placeholder="Enter Lastname">
-                                </div>
-                                <br />
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Email address</label>
-                                    <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
-                                </div>
-                                <br />
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Password</label>
-                                    <input type="password" name="password" id="password" class="form-control" aria-describedby="emailHelp" placeholder="Enter Password">
-                                </div>*@
-                                <div class="form-group">
-                                    <label for="FirstName">First Name:</label>
-                                    <input type="text" id="FirstName" name="FirstName" class="form-control" value="@Model.FirstName" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="LastName">Last Name:</label>
-                                    <input type="text" id="LastName" name="LastName" class="form-control" value="@Model.LastName" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="UserName">Username:</label>
-                                    <input type="text" id="UserName" name="UserName" class="form-control" value="@Model.UserName" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="Email">Email:</label>
-                                    <input type="email" id="Email" name="Email" class="form-control" value="@Model.Email" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="SecurityNumber">Security Number:</label>
-                                    <input type="text" id="SecurityNumber" name="SecurityNumber" class="form-control" value="@Model.SecurityNumber" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="PasswordHash">Password:</label>
-                                    <input type="password" id="PasswordHash" name="PasswordHash" class="form-control" required>
-                                </div>
-                                <br />
-                                <div class="col-md-12 text-center mb-3">
-                                    <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Sign up</button>
-                                </div>
-                                <br />
-                                <div class="col-md-12 ">
-                                    <div class="form-group">
-                                        <p class="text-center"><a href="#" id="signin">Already have an account?</a></p>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-
                     </div>
                 </div>
             </div>

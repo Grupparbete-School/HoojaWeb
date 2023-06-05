@@ -1,39 +1,57 @@
 ﻿@model HoojaWeb.ViewModels.User.UserPostViewModel
 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Signup</li>
+    </ol>
+</nav>
+
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <h1 class="card-title">Create account</h1>
-                    <form asp-action="Create" method="post">
-                        <div class="form-group">
-                            <label for="FirstName">First Name:</label>
-                            <input type="text" id="FirstName" name="FirstName" class="form-control" value="@Model.FirstName" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="LastName">Last Name:</label>
-                            <input type="text" id="LastName" name="LastName" class="form-control" value="@Model.LastName" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="UserName">Username:</label>
-                            <input type="text" id="UserName" name="UserName" class="form-control" value="@Model.UserName" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="Email">Email:</label>
-                            <input type="email" id="Email" name="Email" class="form-control" value="@Model.Email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="SecurityNumber">Security Number:</label>
-                            <input type="text" id="SecurityNumber" name="SecurityNumber" class="form-control" value="@Model.SecurityNumber" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="PasswordHash">Password:</label>
-                            <input type="password" id="PasswordHash" name="PasswordHash" class="form-control" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Create</button>
-                    </form>
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <div class="myform form mt-5">
+                <div class="logo mb-3">
+                    <div class="col-md-12 text-center">
+                        <h1>Signup</h1>
+                    </div>
                 </div>
+                <form asp-action="Create" asp-controller="User" method="post" name="registration">
+                    <div class="form-group">
+                        <label for="FirstName">First Name:</label>
+                        <input type="text" id="FirstName" name="FirstName" class="form-control" value="@Model.FirstName" placeholder="Your first name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="LastName">Last Name:</label>
+                        <input type="text" id="LastName" name="LastName" class="form-control" value="@Model.LastName" placeholder="Your last name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="UserName">Username:</label>
+                        <input type="text" id="UserName" name="UserName" class="form-control" value="@Model.UserName" placeholder="Your username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="Email">Email:</label>
+                        <input type="email" id="Email" name="Email" class="form-control" value="@Model.Email" placeholder="your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="SecurityNumber">Security Number:</label>
+                        <input type="text" id="SecurityNumber" name="SecurityNumber" class="form-control" value="@Model.SecurityNumber" placeholder="10 numbers" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="PasswordHash">Password:</label>
+                        <input type="password" id="PasswordHash" name="PasswordHash" class="form-control" placeholder="type a strong password" required>
+                    </div>
+                    <br />
+                    <div class="col-md-12 text-center mb-3">
+                        <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Sign up</button>
+                    </div>
+                    <br />
+                    <div class="col-md-12 ">
+                        <div class="form-group">
+                            <p class="text-center">Already have an account? <a asp-action="index" asp-controller="Login" id="signin">Login here</a></p>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
