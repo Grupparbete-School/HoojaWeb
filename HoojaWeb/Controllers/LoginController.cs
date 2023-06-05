@@ -13,6 +13,7 @@ using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Security.Cryptography.Xml;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace HoojaWeb.Controllers
 {
@@ -104,7 +105,7 @@ namespace HoojaWeb.Controllers
             return View();
         }
 
-        public async Task<IActionResult> OrderDetailsCustomer(int postNumber)
+        public async Task<IActionResult> OrderDetailsCustomer(int postNumber = 85352)
         {
             string ApiKey = Environment.GetEnvironmentVariable("API_KEY_POSTNORD");
 
