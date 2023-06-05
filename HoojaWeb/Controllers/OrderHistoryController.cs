@@ -13,9 +13,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using HoojaWeb.Models;
 using HoojaWeb.ViewModels.Currency;
 using Newtonsoft.Json.Linq;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace HoojaWeb.Controllers
 {
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "Admin, Employee")]
     public class OrderHistoryController : Controller
     {
         HttpClient httpClient = new HttpClient();

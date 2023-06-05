@@ -30,11 +30,15 @@
             <p><strong>Discount :</strong> @Model.DiscountPercentage %</p>
             <hr />
 
-            <div class="col-md-6 text-start">
-                <form method="post" asp-action="RemoveCampaign" asp-route-campaignCodeId="@Model.CampaignCodeId">
-                    <button type="submit" class="btn btn-danger">Confirm</button>
-                </form>
-            </div>
+            @if (User.IsInRole("Admin"))
+            {
+                <div class="col-md-6 text-start">
+                    <form method="post" asp-action="RemoveCampaign" asp-route-campaignCodeId="@Model.CampaignCodeId">
+                        <button type="submit" class="btn btn-danger">Confirm</button>
+                    </form>
+                </div>
+            }
+            
         </div>
     </div>
 

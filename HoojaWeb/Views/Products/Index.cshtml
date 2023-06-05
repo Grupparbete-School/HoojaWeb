@@ -477,7 +477,6 @@
                                                 </a>
                                                 <br />
                                                 <br />
-
                                                 @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
                                                 {
                                                     <a asp-controller="Products" asp-action="EditProduct" asp-route-productId="@item.ProductId" class="btn btn-primary yellow shadow-0">Edit Product</a>

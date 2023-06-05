@@ -10,6 +10,7 @@ using System.Text;
 
 namespace HoojaWeb.Controllers
 {
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
     public class ProductsController : Controller
     {
         HttpClient httpClient = new HttpClient();
@@ -22,7 +23,8 @@ namespace HoojaWeb.Controllers
             httpContextAccessor = _httpContextAccessor;
             session = _httpContextAccessor.HttpContext.Session;
         }
-        //[Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+
+        [AllowAnonymous]
         public async Task<IActionResult> Index(int page = 1)
         {
             int productsPerPage = 5;
@@ -398,6 +400,7 @@ namespace HoojaWeb.Controllers
             }
         }
 
+        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<IActionResult> RemoveProductConfirm(int productId)
         {
             var prodTypeResp = await httpClient.GetAsync($"{link}api/Product/GetProductType");
@@ -431,6 +434,7 @@ namespace HoojaWeb.Controllers
             return View(theproduct);
         }
 
+        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> RemoveProduct(int productId)
         {

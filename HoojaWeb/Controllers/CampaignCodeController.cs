@@ -1,17 +1,22 @@
 ﻿using HoojaWeb.ViewModels.CampaignCode;
 using HoojaWeb.ViewModels.Product;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Data;
 using System.Net;
 using System.Text;
 
 namespace HoojaWeb.Controllers
 {
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "Admin, Employee")]
     public class CampaignCodeController : Controller
     {
         HttpClient httpClient = new HttpClient();
         string link = "https://localhost:7097/";
 
+        [AllowAnonymous]
         public async Task<ActionResult> Index()
         {
             var allCampaignCodes = await httpClient.GetAsync("https://localhost:7097/api/CampaignCode/GetAllCampaignCode");
@@ -128,6 +133,7 @@ namespace HoojaWeb.Controllers
             }
         }
 
+        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<IActionResult> RemoveCampaignConfirm(int campaignCodeId)
         {
             var campaignCode = await httpClient.GetAsync($"{link}api/CampaignCode/CampaignCode-By{campaignCodeId}");
@@ -153,6 +159,7 @@ namespace HoojaWeb.Controllers
             return View(thecampaign);
         }
 
+        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> RemoveCampaign(int campaignCodeId)
         {

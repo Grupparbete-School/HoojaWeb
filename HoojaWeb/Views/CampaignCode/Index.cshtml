@@ -124,11 +124,14 @@
                                             <h5>@item.DiscountPercentage</h5>
                                         </a>
                                     </div>
-                                        <a asp-controller="CampaignCode" asp-action="EditCampaign" asp-route-campaignCodeId="@item.CampaignCodeId" class="btn btn-primary yellow shadow-0">Edit campaign</a>
-                                        <a asp-controller="CampaignCode" asp-action="CreateCampaign" asp-route-campaignCodeId="@item.CampaignCodeId" class="btn btn-primary yellow shadow-0">Create campaign</a>
-                                    <br/>
-                                    <br />
-                                        <a asp-controller="CampaignCode" asp-action="RemoveCampaignConfirm" asp-route-campaignCodeId="@item.CampaignCodeId" class="btn btn-primary yellow shadow-0">Remove campaign</a>
+                                        @if (User.IsInRole("Admin"))
+                                        {
+                                            <a asp-controller="CampaignCode" asp-action="EditCampaign" asp-route-campaignCodeId="@item.CampaignCodeId" class="btn btn-primary yellow shadow-0">Edit campaign</a>
+                                            <a asp-controller="CampaignCode" asp-action="CreateCampaign" asp-route-campaignCodeId="@item.CampaignCodeId" class="btn btn-primary yellow shadow-0">Create campaign</a>
+                                            <br />
+                                            <br />
+                                            <a asp-controller="CampaignCode" asp-action="RemoveCampaignConfirm" asp-route-campaignCodeId="@item.CampaignCodeId" class="btn btn-primary yellow shadow-0">Remove campaign</a>
+                                        }
                                 </div>
                             </div>
                         </div>
