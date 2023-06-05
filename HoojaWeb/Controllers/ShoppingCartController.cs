@@ -1,9 +1,14 @@
 ﻿using HoojaWeb.ViewModels.Product;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Net.Http;
 using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Http;
+using System.Linq;
+
 
 namespace HoojaWeb.Controllers
 {
@@ -82,6 +87,7 @@ namespace HoojaWeb.Controllers
             //that does not include a ";"-sign.
             var cartItemsMatch = Regex.Match(cookieValue, @"cartItems=([^;]+)");
 
+
             if (cartItemsMatch == null)
             {
                 //det ska returneras att cartItems är tom istället för badrequest.
@@ -96,6 +102,7 @@ namespace HoojaWeb.Controllers
             //we map the value into a dictionary and add it to cartItems.
             var cartItems = JsonConvert.DeserializeObject<Dictionary<int, int>>(cartItemsJson);
 
+
             if (cartItems != null)
             {
                 foreach (var item in cartItems)
@@ -108,7 +115,6 @@ namespace HoojaWeb.Controllers
                         break;
                     }
                 }
-                
                 // Serialize the modified cartItems dictionary back to JSON
                 cartItemsJson = JsonConvert.SerializeObject(cartItems);
 
@@ -138,14 +144,12 @@ namespace HoojaWeb.Controllers
                             {
                                 product.TotalAmount = productId.Value;
                             }
-
                             orders.Add(product);
                         }
                     }
                 }
                 return View(orders);
             }
-
             else
             {
                 return View(orders);

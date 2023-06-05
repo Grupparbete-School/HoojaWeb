@@ -14,6 +14,7 @@
 
 <!-- Breadcrumbs -->
 <nav aria-label="breadcrumb">
+    <a class="nav-link text-dark" asp-area="" asp-controller="ShoppingCart" asp-action="Index"><span id="cartCounter" class="badge bg-primary rounded-pill"></span>Cart</a>
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
         <li class="breadcrumb-item active" aria-current="page">Products</li>
@@ -392,6 +393,7 @@
                 </div>
             </div>
             <!-- sidebar + content end -->
+          
             <!-- Show Products -->
             <div class="col-lg-9">
                 <header class="d-sm-flex align-items-center border-bottom mb-4 pb-3">
@@ -409,6 +411,7 @@
                     <!-- Sort by end-->
 
                 </header>
+              
                 @foreach (var item in products)
                 {
                     <div class="row justify-content-center mb-3">
@@ -474,6 +477,7 @@
                                                 </a>
                                                 <br />
                                                 <br />
+
                                                 @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
                                                 {
                                                     <a asp-controller="Products" asp-action="EditProduct" asp-route-productId="@item.ProductId" class="btn btn-primary yellow shadow-0">Edit Product</a>
@@ -531,6 +535,7 @@
 
         </div>
     </div>
+  
 </section>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>

@@ -25,14 +25,13 @@
                     <div class="card border shadow-0">
                         <div class="m-4">
                             <h4 class="card-title mb-4">Your shopping cart</h4>
-
-                            @foreach (var item in Model)
+                            @foreach(var item in Model)
                             {
                                 <div class="row gy-3 mb-4">
                                     <div class="col-lg-5">
                                         <div class="me-lg-5">
                                             <div class="d-flex">
-                                                <img src="@item.ProductPicture" class="border rounded me-3" style="width: 96px; height: 96px;" alt="Product picture" />
+                                                <img src="@item.ProductPicture" class="border rounded me-3" style="width: 96px; height: 96px;" />
                                                 <div class="">
                                                     <a href="#" class="nav-link">@item.ProductName</a>
                                                     <p class="text-muted">@item.ProductTypeName</p>
@@ -42,23 +41,24 @@
                                     </div>
                                     <div class="col-lg-2 col-sm-6 col-6 d-flex flex-row flex-lg-column flex-xl-row text-nowrap">
                                         <div class="">
-                                            <select id="quantityDropdown-@item.ProductId" style="width: 120px;" class="form-select me-4">
-                                                @for (int i = 1; i <= item.QuantityStock; i++)
+                                            <select id="quantityDropdown-@item.ProductId" style="width: 120px;" class="form-select me-4" onchange="reloadPage(this)">
+                                                @for(int i = 1; i <= item.QuantityStock; i++)
                                                 {
-                                                    @if (item.TotalAmount == i)
+                                                    
+                                                    @if(item.TotalAmount == i)
                                                     {
                                                         <option value="@i" selected>@i</option>
+
                                                     }
                                                     else
                                                     {
-                                                        <option value="@i">@i</option>
+                                                        <option value ="@i">@i</option>
                                                         //fix logic so it updates amount of total orders before sending a post request.
                                                     }
-
                                                 }
-
                                             </select>
                                         </div>
+                          
                                         <div class="">
                                             @{
                                                 var price = item.TotalAmount * item.Price;
@@ -69,9 +69,9 @@
                                     </div>
                                     <div class="col-lg col-sm-6 d-flex justify-content-sm-center justify-content-md-start justify-content-lg-center justify-content-xl-end mb-2">
                                         <div class="float-md-end">
-                                            <a asp-action="Index" asp-controller="ShoppingCart" asp-route-removeItem="@item.ProductId" class="btn btn-light border text-danger icon-hover-danger">
+                                            <a id="removeItem-@item.ProductId" data-value="@item.TotalAmount" asp-action="Index" asp-controller="ShoppingCart" asp-route-removeItem="@item.ProductId" class="btn btn-light border text-danger icon-hover-danger">
                                                 Remove
-                                            </a>
+                                                </a>
                                         </div>
                                     </div>
                                 </div>
@@ -144,7 +144,12 @@
                             </div>
 
                             <div class="mt-3">
-                                <a href="#" class="btn btn-primary yellow w-100 shadow-0 mb-2"> Make Purchase </a>
+                                <form asp-action="OrderDetailsCustomer" asp-controller="Login" asp-route-postNumber="postNumber">
+                                    <span>Enter post number:</span>
+                                    <input type="text" name="postNumber" placeholder="ex. 12345" class="mb-3" required pattern="\d{5}">
+                                    <button type="submit" class="btn btn-primary yellow w-100 shadow-0 mb-2">Make Purchase</button>
+                                </form>
+
                                 <a href="#" class="btn btn-primary w-100 border mt-2"> Back to shop </a>
                             </div>
                         </div>
@@ -267,6 +272,8 @@
             var itemId = $(this).attr('id').split('-')[1];
 
             var cartItems = getCookie('cartItems');
+            console.log(cartItems);
+
             var updatedCartItems = updateCartItem(cartItems, itemId, selectedQuantity);
             document.cookie = 'cartItems=' + updatedCartItems + '; path=/';
 
@@ -280,6 +287,35 @@
 
             updateCartCounter(cartCounter);
         });
+
+        // Update the cart counter when the page loads
+        var storedCartCounter = localStorage.getItem('cartCounter');
+        if (storedCartCounter !== null) {
+            $("#cartCounter").text(storedCartCounter);
+        } else {
+            updateCartCounter(0);
+        }
+        function getCartCounter() {
+            var total = localStorage.getItem('cartCounter');
+            return parseInt(total)
+        }
+        $('a[id^="removeItem"]').click(function () {
+            var selectedQuantity = getCookie('cartItems');
+            
+            var itemId = $(this).attr('id').split('-')[1];
+            var parsedQuantity = JSON.parse(selectedQuantity);
+            var total = getCartCounter();
+            total = total - parsedQuantity[itemId];
+
+            updateCartCounter(total);
+        });
+    });
+    function reloadPage(selectElement) {
+        var selectedValue = selectElement.value;
+        // Add any additional logic or data processing you need before reloading the page
+
+        // Reload the page
+        window.location.reload();
 
         // Update the cart counter when the page loads
         var storedCartCounter = localStorage.getItem('cartCounter');
