@@ -89,25 +89,32 @@
             </div>
             <div class="d-flex flex-row">
                 <div class="mr-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                    </svg>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                    </svg>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                    </svg>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-half" viewBox="0 0 16 16">
-                        <path d="M5.354 5.119 7.538.792A.516.516 0 0 1 8 .5c.183 0 .366.097.465.292l2.184 4.327 4.898.696A.537.537 0 0 1 16 6.32a.548.548 0 0 1-.17.445l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256a.52.52 0 0 1-.146.05c-.342.06-.668-.254-.6-.642l.83-4.73L.173 6.765a.55.55 0 0 1-.172-.403.58.58 0 0 1 .085-.302.513.513 0 0 1 .37-.245l4.898-.696zM8 12.027a.5.5 0 0 1 .232.056l3.686 1.894-.694-3.957a.565.565 0 0 1 .162-.505l2.907-2.77-4.052-.576a.525.525 0 0 1-.393-.288L8.001 2.223 8 2.226v9.8z" />
-                    </svg>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
-                        <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
-                    </svg>
-                    <span>
-                        <br />
-                        1200 ratings &amp; 564 reviews
-                    </span>
+
+                    @if (Model.ProductReviews != null)
+                    {
+                        <p>Reviews:</p>
+                        <div class="star-rating mt-2">
+                            @{
+                                int rating = 0;
+
+                                foreach (var item in Model.ProductReviews)
+                                {
+                                    rating += item.Rating;
+                                }
+                                double avergeRating = rating / Model.ProductReviews.Count;
+
+                                for (int i = 1; i <= 5; i++)
+                                {
+                                    <span class="star @(i <= avergeRating ? "filled" : "")">&#9733;</span>
+                                }
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p>No reviews</p>
+                    }
+
                 </div>
             </div>
             <div class="d-flex align-items-center mt-4 offers mb-1">
@@ -119,17 +126,108 @@
                 <span class="badge bg-primary rounded-pill">@Model.QuantityStock</span>
                 <br />
                 <br />
-                <a class="btn btn-primary yellow shadow-0 addToCartButton addToCart" data-product-id="@Model.ProductId" data-quantity="1">
+                <a 
+                    class="btn btn-primary yellow shadow-0 addToCartButton addToCart mt-3" 
+                    data-product-id="@Model.ProductId" 
+                    data-quantity="1">
                     Add to cart
+                </a>
+                <br/>
+                <a class="btn btn-primary shadow-0 addToCartButton addToCart mt-2"
+                   asp-controller="ProductReview"
+                   asp-action="Create">
+                    Add review
                 </a>
             </div>
         </div>
 
-        <!--Recommended items-->
+
+        <!-- Reviews -->
+        <div class="container container-fluid mt-4"></div>
+        <header class="mb-4 container-white">
+            <h3>Reviews</h3>
+        </header>
+        <div class="container container-fluid mt-1 d-flex justify-content-center">
+        <div id="carouselReviews" class="carousel slide w-75" data-bs-ride="carousel">
+
+            @if (Model.ProductReviews != null)
+            {
+            <div class="carousel-inner">
+
+                    @foreach (var item in Model.ProductReviews)
+                {
+                    var index = Model.ProductReviews.IndexOf(item);
+                    <div class="carousel-item @(index == 0 ? "active" : "")">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <div class="flex-grow-1">
+                                        <h4 class="card-title">@item.ProductName</h4>
+                                        <p class="card-text">@item.Review</p>
+                                        <p class="card-text">By: @item.CustomerName</p>
+                                        <p class="card-text">@item.ReviewOfDate.ToString("yyyy-MM-dd")</p>
+                                    </div>
+                                    <div class="flex-shrink-0">
+                                        <div class="avatar">
+                                            <img 
+                                                src="https://images.unsplash.com/photo-1580618864180-f6d7d39b8ff6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80" 
+                                                style="width: 200px;" 
+                                                alt="Pic of hair products" 
+                                                class="img-fluid">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="star-rating mt-2">
+                                    @{
+                                        int rating2 = item.Rating;
+                                        for (int i = 1; i <= 5; i++)
+                                        {
+                                            <span class="star @(i <= rating2 ? "filled" : "")">&#9733;</span>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselReviews" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselReviews" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+
+        }
+        else
+        {
+            <div class="text-center">
+                <p>No reviews available.</p>
+                <p>Be the first one to add one</p>
+                
+                <a class="btn btn-primary shadow-0 addToCartButton addToCart mt-2"
+                    asp-controller="ProductReview"
+                    asp-action="Create">
+                    Add review
+                </a>
+            </div>
+        }
+        </div>
+        </div>
+        <!-- Reviews -->
+
+
+
+
+
+        <!--Coming soon-->
         <section>
-            <div class="container my-5">
+            <div class="container">
                 <header class="mb-4 container-white">
-                    <h3>Recommended items</h3>
+                    <h3>Coming soon</h3>
                 </header>
 
                 <div class="row">
@@ -141,20 +239,18 @@
                                     <a href="#"><i class="fas fa-heart text-primary fa-lg float-end pt-3 m-2"></i></a>
                                 </div>
                             </div>
-                            <a href="#" class="">
-                                <img src="https://images.unsplash.com/photo-1605683131665-1394d008c5bb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80"
-                                     class="card-img-top rounded-2"
-                                     alt="Product picture" />
-                            </a>
+                            
+                            <img src="https://images.unsplash.com/photo-1605683131665-1394d008c5bb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80"
+                                    class="card-img-top rounded-2"
+                                    alt="Product picture" />
+                            
                             <div class="card-body d-flex flex-column pt-3 border-top">
-                                <a href="#" class="nav-link">Hare|Care set</a>
+                                <p class="">Hare|Care set</p>
                                 <div class="price-wrap mb-2">
                                     <strong class="">299 kr</strong>
                                     <del class="">699 kr</del>
                                 </div>
-                                <div class="card-footer d-flex align-items-end pt-3 px-0 pb-0 mt-auto">
-                                    <a href="#" class="btn btn-primary yellow w-100">Add to cart</a>
-                                </div>
+                  
                             </div>
                         </div>
                     </div>
@@ -163,19 +259,17 @@
                             <div class="mask px-2" style="height: 50px;">
                                 <a href="#"><i class="fas fa-heart text-primary fa-lg float-end pt-3 m-2"></i></a>
                             </div>
-                            <a href="#" class="">
-                                <img src="https://images.unsplash.com/photo-1611224596242-2326c5484b57?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
-                                     class="card-img-top rounded-2"
-                                     alt="Product picture" />
-                            </a>
+                            
+                            <img src="https://images.unsplash.com/photo-1611224596242-2326c5484b57?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
+                                    class="card-img-top rounded-2"
+                                    alt="Product picture" />
+                            
                             <div class="card-body d-flex flex-column pt-3 border-top">
-                                <a href="#" class="nav-link">Set with shampoo, conditioner and hair mask </a>
+                                <p class="">Set with shampoo, conditioner and hair mask </p>
                                 <div class="price-wrap mb-2">
                                     <strong class="">499 kr</strong>
                                 </div>
-                                <div class="card-footer d-flex align-items-end pt-3 px-0 pb-0 mt-auto">
-                                    <a href="#" class="btn btn-primary yellow w-100">Add to cart</a>
-                                </div>
+          
                             </div>
                         </div>
                     </div>
@@ -184,19 +278,17 @@
                             <div class="mask px-2" style="height: 50px;">
                                 <a href="#"><i class="fas fa-heart text-primary fa-lg float-end pt-3 m-2"></i></a>
                             </div>
-                            <a href="#" class="">
-                                <img src="https://images.unsplash.com/photo-1588514899099-e2df6951dde6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=869&q=80"
-                                     class="card-img-top rounded-2"
-                                     alt="Product picture" />
-                            </a>
+                            
+                            <img src="https://images.unsplash.com/photo-1588514899099-e2df6951dde6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=869&q=80"
+                                    class="card-img-top rounded-2"
+                                    alt="Product picture" />
+                            
                             <div class="card-body d-flex flex-column pt-3 border-top">
-                                <a href="#" class="nav-link">Hair mask</a>
+                                <p class="">Hair mask</p>
                                 <div class="price-wrap mb-2">
                                     <strong class="">149 kr</strong>
                                 </div>
-                                <div class="card-footer d-flex align-items-end pt-3 px-0 pb-0 mt-auto">
-                                    <a href="#" class="btn btn-primary yellow w-100">Add to cart</a>
-                                </div>
+                         
                             </div>
                         </div>
                     </div>
@@ -205,19 +297,17 @@
                             <div class="mask px-2" style="height: 50px;">
                                 <a href="#"><i class="fas fa-heart text-primary fa-lg float-end pt-3 m-2"></i></a>
                             </div>
-                            <a href="#" class="">
+                            
                                 <img src="https://images.unsplash.com/photo-1610705267928-1b9f2fa7f1c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
                                      class="card-img-top rounded-2"
                                      alt="Product picture" />
-                            </a>
+                            
                             <div class="card-body d-flex flex-column pt-3 border-top">
-                                <a href="#" class="nav-link">Hair kit </a>
+                                <p class="">Hair kit </p>
                                 <div class="price-wrap mb-2">
                                     <strong class="">299 kr</strong>
                                 </div>
-                                <div class="card-footer d-flex align-items-end pt-3 px-0 pb-0 mt-auto">
-                                    <a href="#" class="btn btn-primary yellow w-100">Add to cart</a>
-                                </div>
+                           
                             </div>
                         </div>
                     </div>
@@ -227,3 +317,19 @@
         <!--Recommended items-->
     </div>
 </div>
+
+@*för rating stars färg/hover effekt*@
+<style>
+    .star-rating {
+        color: #ccc;
+        font-size: 24px;
+    }
+
+        .star-rating .star {
+            display: inline-block;
+        }
+
+            .star-rating .star.filled {
+                color: #ffcc00;
+            }
+</style>

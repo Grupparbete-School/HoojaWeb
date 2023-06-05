@@ -1,13 +1,32 @@
 ﻿@model HoojaWeb.ViewModels.ProductReview.ProductReviewPostViewModel
 
+<!-- Breadcrumbs -->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+        <li class="breadcrumb-item"><a asp-area="" asp-controller="Products" asp-action="Index">Products</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Create review</li>
+    </ol>
+</nav>
+<!-- Breadcrumbs end -->
+
 <form asp-action="Create" method="post">
-    <div class="container">
-        <div class="card mt-5">
-            <div class="card-body">
-                <h2 class="card-title">Create Review</h2>
-                <div class="form-group">
+    <div class="container container-fluid mt-5 container-lightblue">
+        <div class="text-center mt-2">
+            <h2>Create review</h2>
+            <hr />
+        </div>
+
+        <div class="row my-3 mx-3">
+            <div class="col-md-5 mt-4">
+                <img src="https://images.unsplash.com/photo-1580618864180-f6d7d39b8ff6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80" class="frame-img" />
+
+            </div>
+
+            <div class="col-md-7">
+                <div class="form-group col-md-12 mt-3">
                     <label asp-for="FK_ProductId">Product</label>
-                    <select asp-for="FK_ProductId" class="form-select">
+                    <select asp-for="FK_ProductId" class="form-select inputbox">
                         <option value="">-- Select a product --</option>
                         @foreach (var product in Model.ProductsList)
                         {
@@ -18,10 +37,10 @@
 
                 <div class="form-group">
                     <label asp-for="Review"></label>
-                    <textarea asp-for="Review" class="form-control"></textarea>
+                    <textarea asp-for="Review" class="form-control inputboxText"></textarea>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group col-md-12 mt-3">
                     <label>Rating</label>
                     <div class="star-rating">
                         <input type="radio" id="star5" name="rating" value="5"/>
@@ -37,12 +56,12 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group col-md-12 mt-3">
                     <label asp-for="CustomerName"></label>
-                    <input asp-for="CustomerName" class="form-control" />
+                    <input asp-for="CustomerName" class="form-control inputbox" />
                 </div>
 
-                <div class="form-group">
+                <div class="form-group col-md-12 mt-3">
                     <button type="submit" class="btn btn-primary mt-3">Create</button>
                 </div>
             </div>
