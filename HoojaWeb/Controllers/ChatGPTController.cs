@@ -14,7 +14,7 @@ using System.Data;
 
 namespace HoojaWeb.Controllers
 {
-    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "Admin, Employee")]
+    //[Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "Admin, Employee")]
     [ApiController]
     public class ChatGPTController : ControllerBase
     {
@@ -34,56 +34,40 @@ namespace HoojaWeb.Controllers
             ChatRequest oRequest = new ChatRequest();
             oRequest.model = "gpt-3.5-turbo";
 
-            // Ange en prompt för att kontrollera det aktuella året
+            Message oMessage = new Message();
+            oMessage.role = "user";
+            oMessage.content = query;
 
-            oRequest.messages = new Message[]
-            {
-                //new Message { role = "system", content = "Behöver du hjälp med hårvårdsprodukter?" },
-            //    new Message { role = "user", content = "Ja" },
-            //    new Message { role = "system", content = "Vilken produkt handlar det om?" },
-            //    new Message { role = "user", content = "Ja" },
-            //    new Message { role = "system", content = "Ok, låt mig söka!" },
-            //    new Message { role = "user", content = "Ja" },
-            };
+            oRequest.messages = new Message[] { oMessage };
 
-
-            // Serialisera förfrågan till JSON
             string oReqJSON = JsonConvert.SerializeObject(oRequest);
             HttpContent oContent = new StringContent(oReqJSON, Encoding.UTF8, "application/json");
 
-            // Skicka HTTP POST-förfrågan till API-slutpunkten
             HttpResponseMessage oResponseMessage = await oClient.PostAsync(chatURL, oContent);
 
             if (oResponseMessage.IsSuccessStatusCode)
             {
-                // Hantera det lyckade svaret
                 string oResJSON = await oResponseMessage.Content.ReadAsStringAsync();
 
                 ChatResponse oResponse = JsonConvert.DeserializeObject<ChatResponse>(oResJSON);
 
-                string responseInSwedish = string.Empty;
                 foreach (Choice c in oResponse.choices)
                 {
-                    if (c.message.role == "assistant")
-                    {
-                        responseInSwedish = c.message.content;
-                        break;
-                    }
+                    sb.Append(c.message.content);
                 }
 
                 HttpChatGPTResponse oHttpResponse = new HttpChatGPTResponse()
                 {
                     Success = true,
-                    Data = responseInSwedish
+                    Data = sb.ToString()
                 };
 
                 return Ok(oHttpResponse);
             }
             else
             {
-                // Hantera felaktigt svar
                 string oFailReason = await oResponseMessage.Content.ReadAsStringAsync();
-                return BadRequest(oFailReason);
+                return BadRequest(oFailReason); ;
             }
         }
     }

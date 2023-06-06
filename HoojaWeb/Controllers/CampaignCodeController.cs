@@ -20,6 +20,11 @@ namespace HoojaWeb.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> Index()
         {
+            //hämtar "cookie" som sparas med vår token vid inloggningen.
+            var sessiontoken = Request.Cookies["Token"];
+            //Lägger in denna token som vi får tillbaka via cookien i vår httpClient så att den skickas till apiet.
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
+
             var allCampaignCodes = await httpClient.GetAsync("https://localhost:7097/api/CampaignCode/GetAllCampaignCode");
 
             if (allCampaignCodes.IsSuccessStatusCode)
