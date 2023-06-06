@@ -92,6 +92,9 @@ body {
     max-width: 950px!important;
 }
 
+.carousel-awards{
+    max-width: 550px!important;
+}
 /**********************************/
 /******** TEXT ********/
 /**********************************/
@@ -304,6 +307,16 @@ form .error {
     box-shadow: 0 0 0 1px rgba(0,0,0,0.15) inset;
     vertical-align: middle;
 }*/
+
+.position-relative {
+    position: relative;
+}
+
+.badge-top-right {
+    position: absolute;
+    top: -16px;
+    right: -10px;
+}
 
 .icon-hover-primary:hover {
     border-color: #3b71ca !important;
