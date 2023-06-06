@@ -18,96 +18,84 @@
 </nav>
 <!-- Breadcrumbs end -->
 
-<!-- sidebar + content -->
+<!-- content -->
 <section class="container container-white mt-5">
     <div class="text-center mt-2">
         <h2>Campaign codes</h2>
         <hr />
     </div>
-        @if (Model != null)
-    { }
-
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.CampaignName)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.CampaignStart)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.CampaignEnd)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.DiscountPercentage)
-                            </th>
-                            <th>
-                                Active
-                            </th>
-                            <th>
-
-                            </th>
-                        </tr>
-                    </thead>
+    @if (Model != null)
+    {
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CampaignName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CampaignStart)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CampaignEnd)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DiscountPercentage)
+                        </th>
+                        <th>
+                            Active
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
                     @foreach (var item in Model)
                     {
-                    <tbody>
                         <tr>
-                            <th>
-                            @Html.DisplayFor(modelItem => item.CampaignName)
-                            </th>
-                            <th>
-                            @Html.DisplayFor(modelItem => item.CampaignStart)
-                            </th>
-                            <th>
-                            @Html.DisplayFor(modelItem => item.CampaignEnd)
-                            </th>
-                            <th>
-                            @Html.DisplayFor(modelItem => item.DiscountPercentage) %
-                            </th>
-                            <th>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CampaignName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CampaignStart)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CampaignEnd)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DiscountPercentage) %
+                            </td>
+                            <td>
                                 @if (item.CampaignEnd > DateTime.Now)
                                 {
-                                <svg xmlns="http://www.w3.org/2000/svg" 
-                                width="26" 
-                                height="26" 
-                                fill="green" 
-                                class="bi bi-bag-check-fill ms-3" 
-                                viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5v-.5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0zm-.646 5.354a.5.5 0 0 0-.708-.708L7.5 10.793 6.354 9.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z" />
-                                </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="green" class="bi bi-bag-check-fill ms-3" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5v-.5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0zm-.646 5.354a.5.5 0 0 0-.708-.708L7.5 10.793 6.354 9.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z" />
+                                    </svg>
                                 }
                                 else
                                 {
-                                <svg xmlns="http://www.w3.org/2000/svg" 
-                                width="26" 
-                                height="26" 
-                                fill="red" 
-                                class="bi bi-bag-x-fill ms-3" 
-                                viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5v-.5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0zM6.854 8.146a.5.5 0 1 0-.708.708L7.293 10l-1.147 1.146a.5.5 0 0 0 .708.708L8 10.707l1.146 1.147a.5.5 0 0 0 .708-.708L8.707 10l1.147-1.146a.5.5 0 0 0-.708-.708L8 9.293 6.854 8.146z" />
-                                </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="red" class="bi bi-bag-x-fill ms-3" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5v-.5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0zM6.854 8.146a.5.5 0 1 0-.708.708L7.293 10l-1.147 1.146a.5.5 0 0 0 .708.708L8 10.707l1.146 1.147a.5.5 0 0 0 .708-.708L8.707 10l1.147-1.146a.5.5 0 0 0-.708-.708L8 9.293 6.854 8.146z" />
+                                    </svg>
                                 }
-                            </th>
-                            <th>
+                            </td>
+                            <td>
                                 <p>
-                                <a asp-controller="CampaignCode" asp-action="EditCampaign" asp-route-campaignCodeId="@item.CampaignCodeId" class="link-text">Edit </a> |
-                            <a asp-controller="CampaignCode" asp-action="RemoveCampaignConfirm" asp-route-campaignCodeId="@item.CampaignCodeId" class="link-text"> Delete</a>
+                                    <a asp-controller="CampaignCode" asp-action="EditCampaign" asp-route-campaignCodeId="@item.CampaignCodeId" class="link-text">Edit</a> |
+                                    <a asp-controller="CampaignCode" asp-action="RemoveCampaignConfirm" asp-route-campaignCodeId="@item.CampaignCodeId" class="link-text">Delete</a>
                                 </p>
-
-                            </th>
+                            </td>
                         </tr>
-                        
-                    </tbody>
                     }
-                </table>
-       
+                </tbody>
+            </table>
+        </div>
+    }
 
     <div class="text-end me-4 mt-5">
         <a class="btn btn-primary" asp-action="CreateCampaign">Create New A Campaign</a>
     </div>
 </section>
+
 
 @*
             <div class="row justify-content-center mb-3">
