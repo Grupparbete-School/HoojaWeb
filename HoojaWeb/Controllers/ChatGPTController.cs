@@ -38,12 +38,12 @@ namespace HoojaWeb.Controllers
 
             oRequest.messages = new Message[]
             {
-                new Message { role = "system", content = "Behöver du hjälp med hårvårdsprodukter?" },
-                new Message { role = "user", content = "Ja" },
-                new Message { role = "system", content = "Vilken produkt handlar det om?" },
-                new Message { role = "user", content = "Ja" },
-                new Message { role = "system", content = "Ok, låt mig söka!" },
-                new Message { role = "user", content = "Ja" },
+                //new Message { role = "system", content = "Behöver du hjälp med hårvårdsprodukter?" },
+            //    new Message { role = "user", content = "Ja" },
+            //    new Message { role = "system", content = "Vilken produkt handlar det om?" },
+            //    new Message { role = "user", content = "Ja" },
+            //    new Message { role = "system", content = "Ok, låt mig söka!" },
+            //    new Message { role = "user", content = "Ja" },
             };
 
 
