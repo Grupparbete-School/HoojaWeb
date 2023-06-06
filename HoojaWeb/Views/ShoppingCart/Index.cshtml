@@ -13,7 +13,10 @@
     </ol>
 </nav>
 <div class="container">
-
+    @if (TempData.Peek("SuccessMessage") != null)
+    {
+        <p class="bg-success text-center text-danger fw-bold">@TempData["SuccessMessage"].ToString()</p>
+    }
     <!-- cart + summary -->
     <section class="bg-light my-5">
         <div class="container">
@@ -145,13 +148,12 @@
                                     <input type="text" name="postNumber" placeholder="ex. 12345" class="mb-3" required pattern="\d{5}">
                                     @if (!User.Identity.IsAuthenticated)
                                     {
-                                        <a asp-action="Create" asp-controller="User" class="btn btn-primary yellow w-100 shadow-0 mb-2">Make Purchase</a>
+                                        <a asp-action="Create" asp-controller="User" asp-route-redirectToAction="Index" asp-route-redirectToController="ShoppingCart" class="btn btn-primary yellow w-100 shadow-0 mb-2">Make Purchase</a>
                                     }else {
                                         <button type="submit" class="btn btn-primary yellow w-100 shadow-0 mb-2">Make Purchase</button>
                                     }
                                     
                                 </form>
-
                                 <a asp-controller="Products" asp-action="Index" class="btn btn-primary w-100 border mt-2"> Back to shop </a>
                             </div>
                         </div>

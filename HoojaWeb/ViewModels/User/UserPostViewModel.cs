@@ -8,5 +8,7 @@
         public string Email { get; set; }
         public string SecurityNumber { get; set; }
         public string PasswordHash { get; set; }
+        public string? redirectToAction { get; set; }
+        public string? redirectToController { get; set; }
     }
 }
