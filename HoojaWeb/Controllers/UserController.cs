@@ -58,7 +58,7 @@ namespace HoojaWeb.Controllers
         // GET: UserController/Create
         public async Task<IActionResult> Create()
         {
-            // Returnera vyn med de hämtade recensionerna
+            // Returnera vyn med user
             return View(new UserPostViewModel());
         }
 
