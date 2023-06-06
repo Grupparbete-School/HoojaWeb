@@ -113,17 +113,31 @@
                                 <p class="mb-2">Total price:</p>
                                 @{
                                     int total = 0;
+                                    decimal discountPrice = 0;
+                                    decimal discount = 0;
                                 }
                                 @foreach (var item in Model)
                                 {
                                     total += item.Price * item.TotalAmount;
                                 }
-                                <p class="mb-2">@total kr</p>
+                                @if (Model.Any(item => item.DiscountPercentage != null))
+                                {
+                                    discount = total * (Model.First().DiscountPercentage ?? 0) / 100;
+                                    discountPrice = total - discount;
+                                }
+                                @if (discountPrice == 0)
+                                {
+                                    <p class="mb-2">@total kr</p>
+                                }else
+                                {
+                                    <p class="mb-2">@discountPrice kr</p>
+                                }
                             </div>
                             <div class="d-flex justify-content-between">
                                 <p class="mb-2">Discount:</p>
-                                <p class="mb-2 text-success">-$60.00</p>
+                                <p class="mb-2 text-success">@discount kr</p>
                             </div>
+                            
                             @*Foreach with the Model and then if-statement to check if coupon code exists and if so apply the math.*@
                             <div class="d-flex justify-content-between">
                                 <p class="mb-2">TAX:</p>
@@ -290,6 +304,7 @@
             }
 
             updateCartCounter(cartCounter);
+            location.reload();
         });
 
         // Update the cart counter when the page loads
