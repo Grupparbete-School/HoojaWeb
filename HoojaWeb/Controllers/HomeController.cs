@@ -20,7 +20,11 @@ namespace HoojaWeb.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Awards()
+        {
+            return View();
+        }
+        public IActionResult AboutUs()
         {
             return View();
         }
