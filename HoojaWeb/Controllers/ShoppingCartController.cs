@@ -19,7 +19,8 @@ namespace HoojaWeb.Controllers
         private readonly ISession session;
         private readonly IHttpContextAccessor httpContext;
         HttpClient httpClient = new HttpClient();
-        string link = "https://localhost:7097/";
+        //string link = "https://localhost:7097/";
+        string link = "https://hooja.azurewebsites.net/";
         
         public ShoppingCartController(IHttpContextAccessor _httpContext)
         {

@@ -24,7 +24,8 @@ namespace HoojaWeb.Controllers
     public class OrderHistoryController : Controller
     {
         HttpClient httpClient = new HttpClient();
-        string historyLink = "https://localhost:7097";
+        //string historyLink = "https://localhost:7097/";
+        string historyLink = "https://hooja.azurewebsites.net/";
 
         //Get all history
         public async Task<IActionResult> Index(string searchOrder, int? searchOrderId, int? customerId, int page = 1)
@@ -38,7 +39,7 @@ namespace HoojaWeb.Controllers
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
 
                 // Retrieve the list of customers
-                HttpResponseMessage customerResponse = await httpClient.GetAsync($"{historyLink}/api/Customer/GetAllUser");
+                HttpResponseMessage customerResponse = await httpClient.GetAsync($"{historyLink}api/Customer/GetAllUser");
 
                 if (customerResponse.IsSuccessStatusCode)
                 {
@@ -63,7 +64,7 @@ namespace HoojaWeb.Controllers
                 }
 
                 // Fetch order history
-                HttpResponseMessage orderHistoryResponse = await httpClient.GetAsync($"{historyLink}/api/OrderHistory/GetOrderHistory");
+                HttpResponseMessage orderHistoryResponse = await httpClient.GetAsync($"{historyLink}api/OrderHistory/GetOrderHistory");
 
                 if (orderHistoryResponse.IsSuccessStatusCode)
                 {

@@ -15,7 +15,8 @@ namespace HoojaWeb.Controllers
     public class CampaignCodeController : Controller
     {
         HttpClient httpClient = new HttpClient();
-        string link = "https://localhost:7097/";
+        //string link = "https://localhost:7097/";
+        string link = "https://hooja.azurewebsites.net/";
 
         public async Task<ActionResult> Index()
         {
