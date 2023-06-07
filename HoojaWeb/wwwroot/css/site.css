@@ -78,6 +78,7 @@ body {
     object-fit: cover;
     object-position: center;
     margin-top: 2%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .img-products1 {
@@ -86,11 +87,17 @@ body {
     object-fit: cover;
     object-position: center;
     margin-top: 2%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.carouselImg{
-    height: 50vw;
-    width: 100&;
+.carousel-products {
+    max-width: 950px !important;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.carousel-awards {
+    max-width: 550px !important;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 /**********************************/
 /******** TEXT ********/
@@ -304,6 +311,16 @@ form .error {
     box-shadow: 0 0 0 1px rgba(0,0,0,0.15) inset;
     vertical-align: middle;
 }*/
+
+.position-relative {
+    position: relative;
+}
+
+.badge-top-right {
+    position: absolute;
+    top: -16px;
+    right: -10px;
+}
 
 .icon-hover-primary:hover {
     border-color: #3b71ca !important;

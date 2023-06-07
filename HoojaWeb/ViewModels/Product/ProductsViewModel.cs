@@ -21,7 +21,8 @@
         public int ProductTypeId { get; set; }
 
         public string? CampaignName { get; set; }
-        public int? FK_CampaignCode { get; set; }
+        public int? FK_CampaignCodeId { get; set; }
+        public decimal? DiscountPercentage { get; set; }
 
         public int? CampaignCodeId { get; set; }
         public bool? IsActive { get; set; }

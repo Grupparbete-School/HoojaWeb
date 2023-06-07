@@ -81,34 +81,36 @@
 
     @if (Model != null && Model.Count() > 0)
     {
-        <table class="table table-striped table-hover bg-light">
-            <thead>
-                <tr>
-                    <th>@Html.DisplayNameFor(model => model.OrderId)</th>
-                    <th>@Html.DisplayNameFor(model => model.OrderDate)</th>
-                    <th>@Html.DisplayNameFor(model => model.DeliveryDate)</th>
-                    <th>@Html.DisplayNameFor(model => model.FullName)</th>
-                    <th>Number of Products</th> <!-- Add new column for product count -->
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var orderhistory in Model.GroupBy(x => x.OrderId)) // Grouping by OrderId
-                {
-                    var firstOrder = orderhistory.First(); // Assuming at least one order exists for each OrderId
-
+        <div class="table-responsive p-2">
+            <table class="table table-striped table-hover bg-light">
+                <thead>
                     <tr>
-                        <td>@firstOrder.OrderId</td>
-                        <td>@firstOrder.OrderDate</td>
-                        <td>@firstOrder.DeliveryDate</td>
-                        <td>@firstOrder.FullName</td>
-                        <td>@orderhistory.Count()</td> <!-- Display the product count -->
-                        <td>
-                            <a asp-action="Details" asp-route-id="@firstOrder.OrderId" class="btn btn-primary">Details</a>
-                        </td>
+                        <th>@Html.DisplayNameFor(model => model.OrderId)</th>
+                        <th>@Html.DisplayNameFor(model => model.OrderDate)</th>
+                        <th>@Html.DisplayNameFor(model => model.DeliveryDate)</th>
+                        <th>@Html.DisplayNameFor(model => model.FullName)</th>
+                        <th>Number of Products</th> <!-- Add new column for product count -->
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var orderhistory in Model.GroupBy(x => x.OrderId)) // Grouping by OrderId
+                    {
+                        var firstOrder = orderhistory.First(); // Assuming at least one order exists for each OrderId
+
+                        <tr>
+                            <td>@firstOrder.OrderId</td>
+                            <td>@firstOrder.OrderDate</td>
+                            <td>@firstOrder.DeliveryDate</td>
+                            <td>@firstOrder.FullName</td>
+                            <td>@orderhistory.Count()</td> <!-- Display the product count -->
+                            <td>
+                                <a asp-action="Details" asp-route-id="@firstOrder.OrderId" class="btn btn-primary">Details</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     }
     else
     {
