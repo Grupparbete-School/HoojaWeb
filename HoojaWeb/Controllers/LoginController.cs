@@ -27,7 +27,7 @@ namespace HoojaWeb.Controllers
         private readonly IHttpContextAccessor httpContextAccessor;
         private readonly ISession session;
         //string apiUrl = "https://hooja.azurewebsites.net/api/Login";
-        string apiUrl = "https://localhost:7097/";
+        string apiUrl = "https://localhost:7097/api/login";
        
         string link = "https://localhost:7097/";
         public LoginController(ILogger<HomeController> logger, IHttpClientFactory _clientFactory, IHttpContextAccessor _httpContextAccessor)

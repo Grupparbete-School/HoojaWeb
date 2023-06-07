@@ -87,10 +87,15 @@ namespace HoojaWeb.Controllers
             return View("error");
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Brands()
         {
             try
             {
+                var sessiontoken = Request.Cookies["Token"];
+                //Lägger in denna token som vi får tillbaka via cookien i vår httpClient så att den skickas till apiet.
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
+
                 HttpResponseMessage brandResponse = await httpClient.GetAsync($"{link}api/Product/GetAllProduct");
                 if (brandResponse.IsSuccessStatusCode)
                 {
@@ -116,6 +121,7 @@ namespace HoojaWeb.Controllers
             }
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> ProductDetails(int productId)
         {
             try
@@ -266,6 +272,7 @@ namespace HoojaWeb.Controllers
 
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> FilterProductsOnSearch(string searchTerm)
         {
             int productsPerPage = 5;
@@ -318,6 +325,7 @@ namespace HoojaWeb.Controllers
 
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> FilterOnSideOptions(List<int> categories, double minPrice = 0, double maxPrice = 1000000000)
         {
             int productsPerPage = 5;
