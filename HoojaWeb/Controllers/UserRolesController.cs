@@ -13,7 +13,8 @@ namespace HoojaWeb.Controllers
     public class UserRolesController : Controller
     {
         HttpClient httpClient = new HttpClient();
-        string apiLink = "https://localhost:7097/";
+        //string apiLink = "https://localhost:7097/";
+        string apiLink = "https://hooja.azurewebsites.net/";
 
         public async Task<IActionResult> Index()
         {

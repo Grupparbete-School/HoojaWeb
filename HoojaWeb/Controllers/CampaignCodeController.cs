@@ -15,7 +15,8 @@ namespace HoojaWeb.Controllers
     public class CampaignCodeController : Controller
     {
         HttpClient httpClient = new HttpClient();
-        string link = "https://localhost:7097/";
+        //string link = "https://localhost:7097/";
+        string link = "https://hooja.azurewebsites.net/";
 
         [AllowAnonymous]
         public async Task<ActionResult> Index()
@@ -25,7 +26,7 @@ namespace HoojaWeb.Controllers
             //Lägger in denna token som vi får tillbaka via cookien i vår httpClient så att den skickas till apiet.
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
 
-            var allCampaignCodes = await httpClient.GetAsync("https://localhost:7097/api/CampaignCode/GetAllCampaignCode");
+            var allCampaignCodes = await httpClient.GetAsync($"{link}api/CampaignCode/GetAllCampaignCode");
 
             if (allCampaignCodes.IsSuccessStatusCode)
             {

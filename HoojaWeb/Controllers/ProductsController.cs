@@ -15,7 +15,8 @@ namespace HoojaWeb.Controllers
     public class ProductsController : Controller
     {
         HttpClient httpClient = new HttpClient();
-        string link = "https://localhost:7097/";
+        //string link = "https://localhost:7097/";
+        string link = "https://hooja.azurewebsites.net/";
         private readonly IHttpContextAccessor httpContextAccessor;
         private readonly ISession session;
 

@@ -26,10 +26,10 @@ namespace HoojaWeb.Controllers
         private readonly IHttpClientFactory clientFactory;
         private readonly IHttpContextAccessor httpContextAccessor;
         private readonly ISession session;
-        //string apiUrl = "https://hooja.azurewebsites.net/api/Login";
-        string apiUrl = "https://localhost:7097/";
+        string apiUrl = "https://hooja.azurewebsites.net/api/Login";
+        //string apiUrl = "https://localhost:7097/";
        
-        string link = "https://localhost:7097/";
+        string link = "https://hooja.azurewebsites.net/";
         public LoginController(ILogger<HomeController> logger, IHttpClientFactory _clientFactory, IHttpContextAccessor _httpContextAccessor)
         {
             _logger = logger;
@@ -85,11 +85,11 @@ namespace HoojaWeb.Controllers
             var validationParameters = new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("SECRET_KEY"))),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("kXp2s5v8y/B?E(H+MbQeShVmYq3t6w9z")),
                 ValidateIssuer = true,
-                ValidIssuer = Environment.GetEnvironmentVariable("ISSUER"),
+                ValidIssuer = "https://localhost:7097",
                 ValidateAudience = true,
-                ValidAudience = Environment.GetEnvironmentVariable("AUDIENCE"),
+                ValidAudience = "https://localhost:7097",
                 ClockSkew = TimeSpan.Zero,
             };
 

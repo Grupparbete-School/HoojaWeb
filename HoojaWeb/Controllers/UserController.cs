@@ -18,8 +18,10 @@ namespace HoojaWeb.Controllers
     public class UserController : Controller
     {
         HttpClient httpClient = new HttpClient();
-        string reviewLink = "https://localhost:7097/";
-        string apiUrl = "https://localhost:7097/api/Login";
+        //string reviewLink = "https://localhost:7097/";
+        //string apiUrl = "https://localhost:7097/api/Login";
+        string reviewLink = "https://hooja.azurewebsites.net/";
+        string apiUrl = "https://hooja.azurewebsites.net/api/Login";
         // GET: UserController
         public async Task<IActionResult> Index()
         {
