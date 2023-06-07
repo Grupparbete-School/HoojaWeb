@@ -140,6 +140,10 @@ namespace HoojaWeb.Controllers
                     return NotFound();
                 }
 
+                var sessiontoken = Request.Cookies["Token"];
+                //Lägger in denna token som vi får tillbaka via cookien i vår httpClient så att den skickas till apiet.
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
+
                 HttpResponseMessage response = await httpClient.GetAsync($"{historyLink}/api/OrderHistory/GetAllOrderHistoryById{id}");
 
                 if (response.IsSuccessStatusCode)

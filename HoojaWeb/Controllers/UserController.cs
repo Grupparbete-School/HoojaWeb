@@ -27,6 +27,10 @@ namespace HoojaWeb.Controllers
         {
             try
             {
+                var sessiontoken = Request.Cookies["Token"];
+                //Lägger in denna token som vi får tillbaka via cookien i vår httpClient så att den skickas till apiet.
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
+
                 // Utför en GET-begäran till den specificerade URL:en med hjälp av HttpClient
                 HttpResponseMessage userResponse = await httpClient.GetAsync($"{reviewLink}api/Customer/GetAllUser");
 
@@ -95,6 +99,10 @@ namespace HoojaWeb.Controllers
 
                 var newUserString = new StringContent(newUserJson, Encoding.UTF8, "application/json");
 
+                var sessiontoken = Request.Cookies["Token"];
+                //Lägger in denna token som vi får tillbaka via cookien i vår httpClient så att den skickas till apiet.
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
+
                 var response = await httpClient.PostAsync($"{reviewLink}api/Customer/AddNewUser", newUserString);
 
                 var logUserIn = new LoginViewModel();
@@ -125,6 +133,10 @@ namespace HoojaWeb.Controllers
         {
             try
             {
+                var sessiontoken = Request.Cookies["Token"];
+                //Lägger in denna token som vi får tillbaka via cookien i vår httpClient så att den skickas till apiet.
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
+
                 HttpResponseMessage userResponse = await httpClient.GetAsync($"{reviewLink}api/Customer/GetUser/{id}");
 
                 if (userResponse.IsSuccessStatusCode)
@@ -170,6 +182,10 @@ namespace HoojaWeb.Controllers
                 var updatedUserJson = JsonConvert.SerializeObject(apiUpdatedUser);
                 var updatedUserString = new StringContent(updatedUserJson, Encoding.UTF8, "application/json");
 
+                var sessiontoken = Request.Cookies["Token"];
+                //Lägger in denna token som vi får tillbaka via cookien i vår httpClient så att den skickas till apiet.
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
+
                 var response = await httpClient.PutAsync($"{reviewLink}api/Customer/EditUser/{Id}", updatedUserString);
 
                 if (response.IsSuccessStatusCode)
@@ -192,6 +208,10 @@ namespace HoojaWeb.Controllers
         {
             try
             {
+                var sessiontoken = Request.Cookies["Token"];
+                //Lägger in denna token som vi får tillbaka via cookien i vår httpClient så att den skickas till apiet.
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
+
                 HttpResponseMessage userResponse = await httpClient.GetAsync($"{reviewLink}api/Customer/GetUser/{id}");
 
                 if (userResponse.IsSuccessStatusCode)
@@ -222,6 +242,10 @@ namespace HoojaWeb.Controllers
         {
             try
             {
+                var sessiontoken = Request.Cookies["Token"];
+                //Lägger in denna token som vi får tillbaka via cookien i vår httpClient så att den skickas till apiet.
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
+
                 var response = await httpClient.DeleteAsync($"{reviewLink}api/Customer/DeleteUser/{id}");
 
                 if (response.IsSuccessStatusCode)
