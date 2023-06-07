@@ -25,6 +25,7 @@ namespace HoojaWeb.Controllers
 
             var allCampaignCodes = await httpClient.GetAsync($"{link}api/CampaignCode/GetAllCampaignCode");
 
+
             if (allCampaignCodes.IsSuccessStatusCode)
             {
                 var campaignRespBody = await allCampaignCodes.Content.ReadAsStringAsync();

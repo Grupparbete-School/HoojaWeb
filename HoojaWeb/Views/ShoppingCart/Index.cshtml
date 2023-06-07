@@ -13,7 +13,10 @@
     </ol>
 </nav>
 <div class="container">
-
+    @if (TempData.Peek("SuccessMessage") != null)
+    {
+        <p class="bg-success text-center text-danger fw-bold">@TempData["SuccessMessage"].ToString()</p>
+    }
     <!-- cart + summary -->
     <section class="bg-light my-5">
         <div class="container">
@@ -110,17 +113,31 @@
                                 <p class="mb-2">Total price:</p>
                                 @{
                                     int total = 0;
+                                    decimal discountPrice = 0;
+                                    decimal discount = 0;
                                 }
                                 @foreach (var item in Model)
                                 {
                                     total += item.Price * item.TotalAmount;
                                 }
-                                <p class="mb-2">@total kr</p>
+                                @if (Model.Any(item => item.DiscountPercentage != null))
+                                {
+                                    discount = total * (Model.First().DiscountPercentage ?? 0) / 100;
+                                    discountPrice = total - discount;
+                                }
+                                @if (discountPrice == 0)
+                                {
+                                    <p class="mb-2">@total kr</p>
+                                }else
+                                {
+                                    <p class="mb-2">@discountPrice kr</p>
+                                }
                             </div>
                             <div class="d-flex justify-content-between">
                                 <p class="mb-2">Discount:</p>
-                                <p class="mb-2 text-success">-$60.00</p>
+                                <p class="mb-2 text-success">@discount kr</p>
                             </div>
+                            
                             @*Foreach with the Model and then if-statement to check if coupon code exists and if so apply the math.*@
                             <div class="d-flex justify-content-between">
                                 <p class="mb-2">TAX:</p>
@@ -145,13 +162,12 @@
                                     <input type="text" name="postNumber" placeholder="ex. 12345" class="mb-3" required pattern="\d{5}">
                                     @if (!User.Identity.IsAuthenticated)
                                     {
-                                        <a asp-action="Create" asp-controller="User" class="btn btn-primary yellow w-100 shadow-0 mb-2">Make Purchase</a>
+                                        <a asp-action="Create" asp-controller="User" asp-route-redirectToAction="Index" asp-route-redirectToController="ShoppingCart" class="btn btn-primary yellow w-100 shadow-0 mb-2">Make Purchase</a>
                                     }else {
                                         <button type="submit" class="btn btn-primary yellow w-100 shadow-0 mb-2">Make Purchase</button>
                                     }
                                     
                                 </form>
-
                                 <a asp-controller="Products" asp-action="Index" class="btn btn-primary w-100 border mt-2"> Back to shop </a>
                             </div>
                         </div>
@@ -288,6 +304,7 @@
             }
             
             updateCartCounter(cartCounter);
+            location.reload();
         });
 
         // Update the cart counter when the page loads

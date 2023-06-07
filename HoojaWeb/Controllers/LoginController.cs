@@ -26,7 +26,9 @@ namespace HoojaWeb.Controllers
         private readonly IHttpClientFactory clientFactory;
         private readonly IHttpContextAccessor httpContextAccessor;
         private readonly ISession session;
-        string apiUrl = "https://localhost:7097/api/Login";
+        //string apiUrl = "https://hooja.azurewebsites.net/api/Login";
+        string apiUrl = "https://localhost:7097/";
+       
         string link = "https://localhost:7097/";
         public LoginController(ILogger<HomeController> logger, IHttpClientFactory _clientFactory, IHttpContextAccessor _httpContextAccessor)
         {
@@ -181,17 +183,20 @@ namespace HoojaWeb.Controllers
 
             var allProducts = await httpClient.GetAsync($"{link}api/Product/GetAllProduct");
             var productTypes = await httpClient.GetAsync($"{link}api/Product/GetProductType");
+            var campaignCode = await httpClient.GetAsync($"{link}api/CampaignCode/GetAllCampaignCode");
 
-            if (!allProducts.IsSuccessStatusCode && productTypes.IsSuccessStatusCode)
+            if (!allProducts.IsSuccessStatusCode && productTypes.IsSuccessStatusCode && campaignCode.IsSuccessStatusCode)
             {
                 return BadRequest();
             }
 
             var productsRespBody = await allProducts.Content.ReadAsStringAsync();
             var productTypesRespBody = await productTypes.Content.ReadAsStringAsync();
+            var campaignCodeRespBody = await campaignCode.Content.ReadAsStringAsync();
 
             var productData = JsonConvert.DeserializeObject<List<ProductsViewModel>>(productsRespBody);
             var productTypesData = JsonConvert.DeserializeObject<List<ProductsViewModel>>(productTypesRespBody);
+            var campaignCodeData = JsonConvert.DeserializeObject<List<ProductsViewModel>>(campaignCodeRespBody);
 
             foreach (var product in productData)
             {
@@ -201,6 +206,17 @@ namespace HoojaWeb.Controllers
                 {
                     product.ProductTypeName = matchingProductType.ProductTypeName;
                     product.ProductTypeId = matchingProductType.ProductTypeId;
+                }
+            }
+            foreach (var product in productData)
+            {
+                var matchingCampaignCode = campaignCodeData?.FirstOrDefault(cc => cc.CampaignCodeId == product.FK_CampaignCodeId);
+
+                if (matchingCampaignCode != null)
+                {
+                    product.CampaignName = matchingCampaignCode.CampaignName;
+                    product.CampaignCodeId = matchingCampaignCode.CampaignCodeId;
+                    product.DiscountPercentage = matchingCampaignCode.DiscountPercentage;
                 }
             }
 

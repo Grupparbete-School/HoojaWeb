@@ -7,6 +7,11 @@ using Newtonsoft.Json;
 using HoojaWeb.ViewModels.User;
 using System.Text;
 using System.Net.Http.Headers;
+using HoojaWeb.ViewModels;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace HoojaWeb.Controllers
 {
@@ -14,6 +19,7 @@ namespace HoojaWeb.Controllers
     {
         HttpClient httpClient = new HttpClient();
         string reviewLink = "https://localhost:7097/";
+        string apiUrl = "https://localhost:7097/api/Login";
         // GET: UserController
         public async Task<IActionResult> Index()
         {
@@ -60,10 +66,14 @@ namespace HoojaWeb.Controllers
         }
 
         // GET: UserController/Create
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create(string redirectToAction, string redirectToController)
         {
-            // Returnera vyn med de hämtade recensionerna
-            return View(new UserPostViewModel());
+
+            var newUser = new UserPostViewModel();
+            newUser.redirectToAction = redirectToAction;
+            newUser.redirectToController = redirectToController;
+            return View(newUser);
+            
         }
 
         // POST: UserController/Create
@@ -93,10 +103,17 @@ namespace HoojaWeb.Controllers
 
                 var response = await httpClient.PostAsync($"{reviewLink}api/Customer/AddNewUser", newUserString);
 
+                var logUserIn = new LoginViewModel();
+                logUserIn.Email = newUser.Email;
+                string pass = newUser.PasswordHash;
+                logUserIn.Password = pass;
+
+                var resp = await loginUser(logUserIn);
+
                 if (response.IsSuccessStatusCode)
                 {
                     TempData["SuccessMessage"] = "User successfully created."; // Store the success message in TempData
-                    return RedirectToAction("Index");
+                    return RedirectToAction($"{newUser.redirectToAction}", $"{newUser.redirectToController}");
                 }
                 else
                 {
@@ -245,5 +262,54 @@ namespace HoojaWeb.Controllers
             }
         }
 
+        public async Task<bool> loginUser(LoginViewModel logUserIn)
+        {
+            var requestBody = new StringContent(JsonConvert.SerializeObject(logUserIn), Encoding.UTF8, "application/json");
+            var response = await httpClient.PostAsync(apiUrl, requestBody);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var responseBody = await response.Content.ReadAsStringAsync();
+                var tokenResponse = JsonConvert.DeserializeObject<TokenResponseModel>(responseBody);
+                var token = tokenResponse.Token;
+
+                Response.Cookies.Append("Token", token, new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.Strict,
+                    Expires = DateTime.UtcNow.AddHours(5) // Set the appropriate expiration time
+                });
+
+                ClaimsPrincipal principal = ValidateToken(token);
+
+                await HttpContext.SignInAsync(principal);
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public ClaimsPrincipal ValidateToken(string token)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            var validationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("SECRET_KEY"))),
+                ValidateIssuer = true,
+                ValidIssuer = Environment.GetEnvironmentVariable("ISSUER"),
+                ValidateAudience = true,
+                ValidAudience = Environment.GetEnvironmentVariable("AUDIENCE"),
+                ClockSkew = TimeSpan.Zero,
+            };
+
+            ClaimsPrincipal principal;
+            principal = tokenHandler.ValidateToken(token, validationParameters, out var _);
+
+            return principal;
+        }
     }
 }
