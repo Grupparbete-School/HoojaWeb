@@ -17,15 +17,14 @@ namespace HoojaWeb.Controllers
         HttpClient httpClient = new HttpClient();
         string link = "https://localhost:7097/";
 
-        [AllowAnonymous]
         public async Task<ActionResult> Index()
         {
-            //hämtar "cookie" som sparas med vår token vid inloggningen.
             var sessiontoken = Request.Cookies["Token"];
             //Lägger in denna token som vi får tillbaka via cookien i vår httpClient så att den skickas till apiet.
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
 
-            var allCampaignCodes = await httpClient.GetAsync("https://localhost:7097/api/CampaignCode/GetAllCampaignCode");
+            var allCampaignCodes = await httpClient.GetAsync($"{link}api/CampaignCode/GetAllCampaignCode");
+
 
             if (allCampaignCodes.IsSuccessStatusCode)
             {
@@ -38,9 +37,12 @@ namespace HoojaWeb.Controllers
             return View("error");
         }
 
-
         public async Task<IActionResult> EditCampaign(int campaignCodeId)
         {
+            var sessiontoken = Request.Cookies["Token"];
+            //Lägger in denna token som vi får tillbaka via cookien i vår httpClient så att den skickas till apiet.
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
+
             var campaignCode = await httpClient.GetAsync($"{link}api/CampaignCode/CampaignCode-By{campaignCodeId}");
 
             if (!campaignCode.IsSuccessStatusCode)
@@ -85,6 +87,10 @@ namespace HoojaWeb.Controllers
 
             using (var httpClient = new HttpClient())
             {
+                var sessiontoken = Request.Cookies["Token"];
+                //Lägger in denna token som vi får tillbaka via cookien i vår httpClient så att den skickas till apiet.
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
+
                 var resp = await httpClient.PutAsync($"{link}api/CampaignCode/{editCampaign.CampaignCodeId}", content);
 
                 if (resp.IsSuccessStatusCode)
@@ -146,6 +152,10 @@ namespace HoojaWeb.Controllers
         [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<IActionResult> RemoveCampaignConfirm(int campaignCodeId)
         {
+            var sessiontoken = Request.Cookies["Token"];
+            //Lägger in denna token som vi får tillbaka via cookien i vår httpClient så att den skickas till apiet.
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
+
             var campaignCode = await httpClient.GetAsync($"{link}api/CampaignCode/CampaignCode-By{campaignCodeId}");
 
             if (!campaignCode.IsSuccessStatusCode)
@@ -175,6 +185,10 @@ namespace HoojaWeb.Controllers
         {
             using (var httpClient = new HttpClient())
             {
+                var sessiontoken = Request.Cookies["Token"];
+                //Lägger in denna token som vi får tillbaka via cookien i vår httpClient så att den skickas till apiet.
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
+
                 var resp = await httpClient.DeleteAsync($"{link}api/CampaignCode/Delete-CampaignCode{campaignCodeId}");
 
                 if (resp.IsSuccessStatusCode)
