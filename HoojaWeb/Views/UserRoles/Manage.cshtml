@@ -1,0 +1,26 @@
+﻿@using HoojaWeb.ViewModels.UserRole
+
+@model UserRolesGetViewModel
+
+<div class="card">
+    <h2>Manage User Roles</h2>
+
+    <p>User ID: @Model.UserId</p>
+    <p>Name: @Model.FirstName @Model.LastName</p>
+    <p>Email: @Model.Email</p>
+
+    <form method="post" asp-action="Manage" asp-controller="UserRoles">
+        <input type="hidden" name="userId" value="@Model.UserId"/>
+        <h3>Select Role:</h3>
+        <p>Current Role: @Model.SelectedRole</p> <!-- Display current role -->
+
+        <select name="selectedRole">
+            @foreach (var role in Model.AllRoles)
+            {
+                <option value="@role">@role</option>
+            }
+        </select>
+
+        <button type="submit">Save Changes</button>
+    </form>
+</div>

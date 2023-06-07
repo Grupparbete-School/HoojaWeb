@@ -64,10 +64,12 @@ namespace HoojaWeb.Controllers
         // GET: UserController/Create
         public async Task<IActionResult> Create(string redirectToAction, string redirectToController)
         {
+
             var newUser = new UserPostViewModel();
             newUser.redirectToAction = redirectToAction;
             newUser.redirectToController = redirectToController;
             return View(newUser);
+            
         }
 
         // POST: UserController/Create
