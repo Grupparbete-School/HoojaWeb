@@ -49,6 +49,10 @@ namespace HoojaWeb.Controllers
                 return View(loginViewModel);
             }
 
+            var sessiontoken = Request.Cookies["Token"];
+            //Lägger in denna token som vi får tillbaka via cookien i vår httpClient så att den skickas till apiet.
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
+
             var requestBody = new StringContent(JsonConvert.SerializeObject(loginViewModel), Encoding.UTF8, "application/json");
             var response = await httpClient.PostAsync(apiUrl, requestBody);
 
@@ -173,7 +177,6 @@ namespace HoojaWeb.Controllers
             var cartItems = JsonConvert.DeserializeObject<Dictionary<int, int>>(cartItemsJson);
 
             var sessiontoken = Request.Cookies["Token"];
-
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
 
             var allProducts = await httpClient.GetAsync($"{link}api/Product/GetAllProduct");

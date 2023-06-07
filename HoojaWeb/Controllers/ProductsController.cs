@@ -120,6 +120,10 @@ namespace HoojaWeb.Controllers
         {
             try
             {
+                var sessiontoken = Request.Cookies["Token"];
+                //Lägger in denna token som vi får tillbaka via cookien i vår httpClient så att den skickas till apiet.
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
+
                 // Utför en GET-begäran till den specificerade URL:en med hjälp av HttpClient
                 var allProducts = await httpClient.GetAsync($"{link}api/Product/Product-By{productId}");
                 var productRating = await httpClient.GetAsync($"{link}api/ProductReview/GetAllReviews/ByProductId/{productId}");
@@ -163,6 +167,10 @@ namespace HoojaWeb.Controllers
         // Working on drop down list for campaign codes
         public async Task<IActionResult> EditProduct(int productId)
         {
+            var sessiontoken = Request.Cookies["Token"];
+            //Lägger in denna token som vi får tillbaka via cookien i vår httpClient så att den skickas till apiet.
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
+
             var prodTypeResp = await httpClient.GetAsync($"{link}api/Product/GetProductType");
             var campaignCodeResp = await httpClient.GetAsync($"{link}api/CampaignCode/GetAllCampaignCode");
 
@@ -239,6 +247,10 @@ namespace HoojaWeb.Controllers
 
             using (var httpClient = new HttpClient())
             {
+                var sessiontoken = Request.Cookies["Token"];
+                //Lägger in denna token som vi får tillbaka via cookien i vår httpClient så att den skickas till apiet.
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
+
                 var resp = await httpClient.PutAsync($"{link}api/Product/{editProduct.ProductId}", content);
 
                 if (resp.IsSuccessStatusCode)
@@ -362,6 +374,10 @@ namespace HoojaWeb.Controllers
 
         public async Task<IActionResult> CreateProduct()
         {
+            var sessiontoken = Request.Cookies["Token"];
+            //Lägger in denna token som vi får tillbaka via cookien i vår httpClient så att den skickas till apiet.
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
+
             var prodTypeResp = await httpClient.GetAsync($"{link}api/Product/GetProductType");
 
             if (!prodTypeResp.IsSuccessStatusCode)
@@ -399,6 +415,10 @@ namespace HoojaWeb.Controllers
 
             using (var httpClient = new HttpClient())
             {
+                var sessiontoken = Request.Cookies["Token"];
+                //Lägger in denna token som vi får tillbaka via cookien i vår httpClient så att den skickas till apiet.
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
+
                 var resp = await httpClient.PostAsync($"{link}api/Product/Create-Product", newProductString);
 
                 if (resp.IsSuccessStatusCode)
@@ -415,6 +435,10 @@ namespace HoojaWeb.Controllers
         [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<IActionResult> RemoveProductConfirm(int productId)
         {
+            var sessiontoken = Request.Cookies["Token"];
+            //Lägger in denna token som vi får tillbaka via cookien i vår httpClient så att den skickas till apiet.
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
+
             var prodTypeResp = await httpClient.GetAsync($"{link}api/Product/GetProductType");
 
             if (!prodTypeResp.IsSuccessStatusCode)

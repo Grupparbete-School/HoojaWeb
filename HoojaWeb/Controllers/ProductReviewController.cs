@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
+using System.Net.Http.Headers;
 
 namespace HoojaWeb.Controllers
 {
@@ -24,8 +25,12 @@ namespace HoojaWeb.Controllers
         {
             try
             {
-                    // Utför en GET-begäran till den specificerade URL:en med hjälp av HttpClient
-                    HttpResponseMessage reviewResponse = await httpClient.GetAsync($"{reviewLink}api/ProductReview/GetAllReviews");
+                var sessiontoken = Request.Cookies["Token"];
+                //Lägger in denna token som vi får tillbaka via cookien i vår httpClient så att den skickas till apiet.
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
+
+                // Utför en GET-begäran till den specificerade URL:en med hjälp av HttpClient
+                HttpResponseMessage reviewResponse = await httpClient.GetAsync($"{reviewLink}api/ProductReview/GetAllReviews");
 
                 if (reviewResponse.IsSuccessStatusCode)
                     {
@@ -67,6 +72,10 @@ namespace HoojaWeb.Controllers
         {
             try
             {
+                var sessiontoken = Request.Cookies["Token"];
+                //Lägger in denna token som vi får tillbaka via cookien i vår httpClient så att den skickas till apiet.
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
+
                 // Perform a GET request to retrieve the list of products
                 HttpResponseMessage productsResponse = await httpClient.GetAsync($"{reviewLink}api/Product/GetAllProduct");
 
@@ -118,6 +127,10 @@ namespace HoojaWeb.Controllers
 
                 var newProductString = new StringContent(newReviewsJson, Encoding.UTF8, "application/json");
 
+                var sessiontoken = Request.Cookies["Token"];
+                //Lägger in denna token som vi får tillbaka via cookien i vår httpClient så att den skickas till apiet.
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
+
                 var response = await httpClient.PostAsync($"{reviewLink}api/ProductReview/AddProductReview", newProductString);
 
                 if (response.IsSuccessStatusCode)
@@ -139,6 +152,10 @@ namespace HoojaWeb.Controllers
         {
             try
             {
+                var sessiontoken = Request.Cookies["Token"];
+                //Lägger in denna token som vi får tillbaka via cookien i vår httpClient så att den skickas till apiet.
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
+
                 // Perform a GET request to retrieve the review details for editing
                 //Hämtar mot endpoint för review id för att kunna editera specific review
                 HttpResponseMessage reviewResponse = await httpClient.GetAsync($"{reviewLink}api/ProductReview/GetAllReviews/ByReviewId/{reviewId}");
@@ -226,6 +243,10 @@ namespace HoojaWeb.Controllers
 
                 var updatedReviewString = new StringContent(updatedReviewJson, Encoding.UTF8, "application/json");
 
+                var sessiontoken = Request.Cookies["Token"];
+                //Lägger in denna token som vi får tillbaka via cookien i vår httpClient så att den skickas till apiet.
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
+
                 var response = await httpClient.PutAsync($"{reviewLink}api/ProductReview/UpdateProductReview/{reviewId}", updatedReviewString);
 
                 if (response.IsSuccessStatusCode)
@@ -250,6 +271,10 @@ namespace HoojaWeb.Controllers
         {
             try
             {
+                var sessiontoken = Request.Cookies["Token"];
+                //Lägger in denna token som vi får tillbaka via cookien i vår httpClient så att den skickas till apiet.
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
+
                 // Retrieve the review details
                 HttpResponseMessage reviewResponse = await httpClient.GetAsync($"{reviewLink}api/ProductReview/GetAllReviews/ByReviewId/{reviewId}");
 
@@ -282,6 +307,10 @@ namespace HoojaWeb.Controllers
         {
             try
             {
+                var sessiontoken = Request.Cookies["Token"];
+                //Lägger in denna token som vi får tillbaka via cookien i vår httpClient så att den skickas till apiet.
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessiontoken);
+
                 HttpResponseMessage deleteResponse = await httpClient.DeleteAsync($"{reviewLink}api/ProductReview/DeleteProductReview/{reviewId}");
 
                 if (deleteResponse.IsSuccessStatusCode)
