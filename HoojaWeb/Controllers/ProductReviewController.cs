@@ -18,8 +18,8 @@ namespace HoojaWeb.Controllers
     public class ProductReviewController : Controller
     {
         HttpClient httpClient = new HttpClient();
-        string reviewLink = "https://localhost:7097/";
-        //string reviewLink = "https://hooja.azurewebsites.net/";
+        //string reviewLink = "https://localhost:7097/";
+        string reviewLink = "https://hooja.azurewebsites.net/";
 
         // GET: ProductReviewController
         public async Task<IActionResult> Index()
